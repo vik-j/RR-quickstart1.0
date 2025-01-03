@@ -422,6 +422,7 @@ public class Robot {
         return new p2p(this, targetPose);
     }
     public void runPidToPoint(p2p p2p, Pose2d targetPose) {
+        p2p.updateTarget(targetPose);
         p2p.run();
     }
     public static class p2p implements Action {
