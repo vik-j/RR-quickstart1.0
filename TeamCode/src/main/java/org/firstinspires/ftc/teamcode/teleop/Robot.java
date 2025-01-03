@@ -229,8 +229,8 @@ public class Robot {
         }
         if (gamepad1.x) {
             flippy.setPosition(0.3);
-            armTarget = 900;
-            slideTarget = 1400;
+            armTarget = 1800;
+            slideTarget = 800;
         }
         if (gamepad2.a) {
             slideTarget = 0;
