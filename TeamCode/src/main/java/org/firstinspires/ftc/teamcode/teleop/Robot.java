@@ -10,20 +10,29 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDController;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.Path;
+import com.pedropathing.pathgen.PathChain;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.R;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +47,11 @@ public class Robot {
     public Servo grippy, twisty, flippy;
     public MecanumDrive drive;
     public PIDController armController, slideController;
+    public double epsilon = 0.1;
+
+    public PIDCoefficients x = new PIDCoefficients(0,0,0);
+    public PIDCoefficients h = new PIDCoefficients(0,0,0);
+    public double lateralMultiplier = 1;
 
     public final double gripClawOpen = 0, gripClawClosed = 0.1;
     public double flipPos, slidePos;
@@ -205,7 +219,11 @@ public class Robot {
         if (gamepad2.right_bumper) {
             slideTarget = 3300;
         }
-        if (gamepad1.b) flippy.setPosition(0.25);
+        if (gamepad1.b) {
+            armTarget = 0;
+            slideTarget = 0;
+            flippy.setPosition(0.25);
+        }
         if (gamepad1.x) {
             flippy.setPosition(0.3);
             armTarget = 900;
@@ -282,7 +300,29 @@ public class Robot {
 //            slideTarget = 3000;
 //        }
     }
+    public Action followPathInstant(Follower follower, PathChain path) {
+        return new InstantAction(() -> follower.followPath(path, true));
+    }
 
+    public Action followPath(Follower follower, PathChain path) {
+        return new followingPath(follower, path);
+    }
+
+    public class followingPath implements Action {
+        Follower follower;
+        PathChain path;
+
+        public followingPath(Follower follower, PathChain path) {
+            this.follower = follower;
+            this.path = path;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            follower.followPath(path, true);
+            return follower.isBusy();
+        }
+    }
     public void clawControl(Gamepad gamepad) {
         if (gamepad.dpad_left) grippy.setPosition(0);
 
@@ -377,6 +417,74 @@ public class Robot {
 //        else if (gamepad.right_bumper) {
 //            wrist.setPosition(0.5);
 //        }
+    }
+    public Action pidToPoint(Pose2d targetPose) {
+        return new p2p(this, targetPose);
+    }
+    public void runPidToPoint(p2p p2p, Pose2d targetPose) {
+        p2p.run();
+    }
+    public static class p2p implements Action {
+        MecanumDrive drive;
+        PIDCoefficients x, h;
+        double lateralMultiplier;
+        public PIDController xController, yController, hController;
+        public Pose2d target;
+        Robot bot;
+
+        public p2p(Robot bot, Pose2d target) {
+            this.bot = bot;
+            drive = bot.drive;
+            x = bot.x;
+            h = bot.h;
+            lateralMultiplier = bot.lateralMultiplier;
+
+            xController = new PIDController(x.p, x.i, x.d);
+            yController = new PIDController(x.p, x.i, x.d);
+            hController = new PIDController(h.p, h.i, h.d);
+
+            this.target = target;
+        }
+        public void updateTarget(Pose2d newTarget) {
+            target = newTarget;
+        }
+        public void updatePids() {
+            xController = new PIDController(bot.x.p, bot.x.i, bot.x.d);
+            yController = new PIDController(bot.x.p, bot.x.i, bot.x.d);
+            hController = new PIDController(bot.h.p, bot.h.i, bot.h.d);
+        }
+        public boolean closeEnough(double epsilon) {
+            return ((Math.abs(drive.pose.position.x - target.position.x) < epsilon) && (Math.abs(drive.pose.position.y - target.position.y) < epsilon) && (Math.abs(drive.pose.heading.toDouble() - target.heading.toDouble()) < 0.5*epsilon));
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            updatePids();
+
+            double xPower = xController.calculate(drive.pose.position.x, target.position.x);
+            double yPower = lateralMultiplier * yController.calculate(drive.pose.position.y, target.position.y);
+            double hPower = hController.calculate(drive.pose.heading.toDouble(), target.heading.toDouble());
+
+            xPower = Range.clip(xPower, -1, 1);
+            yPower = Range.clip(yPower, -1, 1);
+            hPower = Range.clip(hPower, -1, 1);
+
+            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(xPower, yPower), hPower));
+            return !closeEnough(bot.epsilon);
+        }
+        public void run() {
+            updatePids();
+
+            double xPower = xController.calculate(drive.pose.position.x, target.position.x);
+            double yPower = lateralMultiplier * yController.calculate(drive.pose.position.y, target.position.y);
+            double hPower = hController.calculate(drive.pose.heading.toDouble(), target.heading.toDouble());
+
+            xPower = Range.clip(xPower, -1, 1);
+            yPower = Range.clip(yPower, -1, 1);
+            hPower = Range.clip(hPower, -1, 1);
+
+            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(xPower, yPower), hPower));
+        }
     }
     public void startPID() {
         if (currentThread == null || !currentThread.isAlive()) {
