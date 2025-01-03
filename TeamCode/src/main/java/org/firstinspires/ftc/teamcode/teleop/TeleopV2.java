@@ -19,6 +19,7 @@ public class TeleopV2 extends LinearOpMode {
            bot.TeleopPID(gamepad2);
            bot.clawControl(gamepad2);
            bot.twistyControl(gamepad2);
+           bot.hangControl(gamepad2);
 //            bot.slidesPID(gamepad2);
 //            bot.wristControl(gamepad2);
 //            bot.intakeControl(gamepad2);
