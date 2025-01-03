@@ -79,6 +79,9 @@ public class Robot {
         twisty = hardwareMap.servo.get("twist");
         flippy = hardwareMap.servo.get("flippy");
 
+        leftHang = hardwareMap.servo.get("leftHang");
+        rightHang = hardwareMap.servo.get("rightHang");
+
         List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
         slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -100,8 +103,8 @@ public class Robot {
 //        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 //        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
 //
-//        rightHang.setDirection(Servo.Direction.REVERSE);
-//        leftHang.setDirection(Servo.Direction.FORWARD);
+        rightHang.setDirection(Servo.Direction.REVERSE);
+        leftHang.setDirection(Servo.Direction.FORWARD);
 
 
         for (DcMotor motor: motors) {
@@ -331,6 +334,16 @@ public class Robot {
     public void twistyControl(Gamepad gamepad) {
         if (gamepad.dpad_up) twisty.setPosition(0);
         else if (gamepad.dpad_down) twisty.setPosition(1);
+    }
+    public void hangControl(Gamepad gamepad) {
+        if (gamepad.left_trigger > 0) {
+            leftHang.setPosition(0);
+            rightHang.setPosition(0);
+        }
+        else if (gamepad.right_trigger > 0) {
+            leftHang.setPosition(1);
+            rightHang.setPosition(1);
+        }
     }
     public void TeleopPID(Gamepad gamepad) {
         armTarget += (int) ((int) -gamepad.right_stick_y * 30);
