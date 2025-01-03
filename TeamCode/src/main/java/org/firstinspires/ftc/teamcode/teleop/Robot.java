@@ -354,7 +354,7 @@ public class Robot {
         if (armTarget < 0) armTarget = 0;
         else if (armTarget > 2200) armTarget = 2200;
 
-        if (slideTarget < 0) slideTarget = 0;
+        if (slideTarget < 0 && armTarget < 1600) slideTarget = 0;
 //        else if (slideTarget > targetLength && flipPos < 1850) slideTarget = targetLength;
         else if (slideTarget > 3600) slideTarget = 3600;
 
