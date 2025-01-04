@@ -12,6 +12,7 @@ import static com.pedropathing.follower.FollowerConstants.rightRearMotorDirectio
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.pedropathing.localization.constants.TwoWheelConstants;
 import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -27,6 +28,7 @@ import com.pedropathing.util.Drawing;
 import java.util.Arrays;
 import java.util.List;
 
+import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.*;
 
 /**
@@ -49,6 +51,7 @@ public class PedroLocalizationTest extends OpMode {
     private DcMotorEx rightFront;
     private DcMotorEx rightRear;
     private List<DcMotorEx> motors;
+    public static boolean corrected = false;
 
     /**
      * This initializes the PoseUpdater, the mecanum drive motors, and the FTC Dashboard telemetry.
@@ -117,8 +120,17 @@ public class PedroLocalizationTest extends OpMode {
         rightFront.setPower(rightFrontPower);
         rightRear.setPower(rightRearPower);
 
-        telemetryA.addData("x", poseUpdater.getPose().getX());
-        telemetryA.addData("y", poseUpdater.getPose().getY());
+        if (!corrected) {
+            telemetryA.addData("x", poseUpdater.getPose().getX());
+            telemetryA.addData("y", poseUpdater.getPose().getY());
+        }
+        else if (corrected) {
+            double correctedX = poseUpdater.getPose().getX() + TwoWheelConstants.forwardY - (TwoWheelConstants.forwardY * Math.cos(poseUpdater.getPose().getHeading()));
+            double correctedY = poseUpdater.getPose().getY() - (TwoWheelConstants.forwardY * Math.sin(poseUpdater.getPose().getHeading()));
+
+            telemetryA.addData("x", correctedX);
+            telemetryA.addData("y", correctedY);
+        }
         telemetryA.addData("heading", poseUpdater.getPose().getHeading());
         telemetryA.addData("total heading", poseUpdater.getTotalHeading());
         telemetryA.update();
