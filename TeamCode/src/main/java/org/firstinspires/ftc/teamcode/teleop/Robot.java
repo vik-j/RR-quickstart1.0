@@ -229,6 +229,7 @@ public class Robot {
         }
         if (gamepad1.x) {
             flippy.setPosition(0.3);
+            twisty.setPosition(0);
             armTarget = 1800;
             slideTarget = 800;
         }
@@ -242,7 +243,7 @@ public class Robot {
 //            wrist.setPosition(0.35);
             armTarget = 0;
             flippy.setPosition(0);
-            twisty.setPosition(0);
+            twisty.setPosition(1);
             grippy.setPosition(0);
         }
         if (gamepad2.x) {
@@ -255,7 +256,7 @@ public class Robot {
                 arcadeDrive(gamepad1);
             }
 
-            twisty.setPosition(0);
+            twisty.setPosition(1);
             grippy.setPosition(0);
         }
         else if (gamepad2.b) {
@@ -276,7 +277,7 @@ public class Robot {
 
             Actions.runBlocking(new SleepAction(0.25));
 
-            twisty.setPosition(0);
+            twisty.setPosition(1);
             slideTarget = 0;
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
                 TeleopPID(gamepad2);
@@ -332,8 +333,8 @@ public class Robot {
         else if (gamepad.dpad_right) grippy.setPosition(1);
     }
     public void twistyControl(Gamepad gamepad) {
-        if (gamepad.dpad_up) twisty.setPosition(0);
-        else if (gamepad.dpad_down) twisty.setPosition(1);
+        if (gamepad.dpad_up) twisty.setPosition(1);
+        else if (gamepad.dpad_down) twisty.setPosition(0.625);
     }
     public void hangControl(Gamepad gamepad) {
         if (gamepad.left_trigger > 0) {
