@@ -126,9 +126,9 @@ public class Robot {
     }
 
     public void arcadeDrive(Gamepad gamepad1) {
-        double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x;
-        double rx = 0.75*gamepad1.right_stick_x;
+        double y = gamepad1.left_stick_y;
+        double x = -gamepad1.left_stick_x;
+        double rx = -0.75*gamepad1.right_stick_x;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double leftFrontPower = (y + x + rx) / denominator;
@@ -210,15 +210,16 @@ public class Robot {
 
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.y) {
-            armTarget = 1850;
+            armTarget = 1900;
 //            wrist.setPosition(0.51);
             intakeMultiplier = 0.2;
-            flippy.setPosition(0);
+            flippy.setPosition(0.15);
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 100) {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
             }
         }
+        if (gamepad2.left_bumper) flippy.setPosition(1);
         if (gamepad2.right_bumper) {
             slideTarget = 3300;
         }
@@ -230,8 +231,8 @@ public class Robot {
         if (gamepad1.x) {
             flippy.setPosition(0.3);
             twisty.setPosition(0);
-            armTarget = 1800;
-            slideTarget = 800;
+            armTarget = 2010;
+            slideTarget = 632;
         }
         if (gamepad2.a) {
             slideTarget = 0;
@@ -267,7 +268,7 @@ public class Robot {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
             }
-            Actions.runBlocking(new SleepAction(0.15));
+            Actions.runBlocking(new SleepAction(0.05));
 
             grippy.setPosition(1);
 
@@ -340,10 +341,12 @@ public class Robot {
         if (gamepad.left_trigger > 0) {
             leftHang.setPosition(0);
             rightHang.setPosition(0);
+            flippy.setPosition(1);
         }
         else if (gamepad.right_trigger > 0) {
             leftHang.setPosition(1);
             rightHang.setPosition(1);
+            flippy.setPosition(0);
         }
     }
     public void TeleopPID(Gamepad gamepad) {
