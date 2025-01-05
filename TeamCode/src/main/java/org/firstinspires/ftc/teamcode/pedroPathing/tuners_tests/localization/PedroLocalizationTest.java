@@ -12,6 +12,7 @@ import static com.pedropathing.follower.FollowerConstants.rightRearMotorDirectio
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.pedropathing.localization.Pose;
 import com.pedropathing.localization.constants.TwoWheelConstants;
 import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -123,6 +124,13 @@ public class PedroLocalizationTest extends OpMode {
         if (!corrected) {
             telemetryA.addData("x", poseUpdater.getPose().getX());
             telemetryA.addData("y", poseUpdater.getPose().getY());
+            telemetryA.addData("heading", poseUpdater.getPose().getHeading());
+            telemetryA.addData("total heading", poseUpdater.getTotalHeading());
+            telemetryA.update();
+
+            Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
+            Drawing.drawRobot(poseUpdater.getPose(), "#4CAF50");
+            Drawing.sendPacket();
         }
         else  {
             double correctedX = poseUpdater.getPose().getX() + TwoWheelConstants.forwardY - (TwoWheelConstants.forwardY * Math.cos(poseUpdater.getPose().getHeading()));
@@ -130,13 +138,14 @@ public class PedroLocalizationTest extends OpMode {
 
             telemetryA.addData("x", correctedX);
             telemetryA.addData("y", correctedY);
-        }
-        telemetryA.addData("heading", poseUpdater.getPose().getHeading());
-        telemetryA.addData("total heading", poseUpdater.getTotalHeading());
-        telemetryA.update();
+            telemetryA.addData("heading", poseUpdater.getPose().getHeading());
+            telemetryA.addData("total heading", poseUpdater.getTotalHeading());
+            telemetryA.update();
 
-        Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
-        Drawing.drawRobot(poseUpdater.getPose(), "#4CAF50");
-        Drawing.sendPacket();
+            Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
+            Drawing.drawRobot(new Pose(correctedX, correctedY, poseUpdater.getPose().getHeading()), "#4CAF50");
+            Drawing.sendPacket();
+        }
+
     }
 }
