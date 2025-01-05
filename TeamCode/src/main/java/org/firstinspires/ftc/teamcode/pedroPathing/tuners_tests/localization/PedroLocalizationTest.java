@@ -133,14 +133,16 @@ public class PedroLocalizationTest extends OpMode {
             Drawing.sendPacket();
         }
         else  {
-            double correctedX = poseUpdater.getPose().getX() + TwoWheelConstants.forwardY - (TwoWheelConstants.forwardY * Math.cos(poseUpdater.getPose().getHeading()));
-            double correctedY = poseUpdater.getPose().getY() - (TwoWheelConstants.forwardY * Math.sin(poseUpdater.getPose().getHeading()));
+            double correctedX = poseUpdater.getPose().getX() - TwoWheelConstants.forwardY*Math.sin(poseUpdater.getPose().getHeading());
+            double correctedY = poseUpdater.getPose().getY() - TwoWheelConstants.forwardY + TwoWheelConstants.forwardY*Math.cos(poseUpdater.getPose().getHeading());
 
             telemetryA.addData("x", correctedX);
             telemetryA.addData("y", correctedY);
             telemetryA.addData("heading", poseUpdater.getPose().getHeading());
             telemetryA.addData("total heading", poseUpdater.getTotalHeading());
             telemetryA.update();
+
+            
 
             Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
             Drawing.drawRobot(new Pose(correctedX, correctedY, poseUpdater.getPose().getHeading()), "#4CAF50");
