@@ -39,9 +39,6 @@ public class BasketSideAuto extends LinearOpMode {
                 //intake
                 .strafeToLinearHeading(new Vector2d(-58,-45), Math.toRadians(90))
                 .waitSeconds(0.5)
-//                .strafeToLinearHeading(new Vector2d(-56.75,-36), Math.toRadians(90))
-//                .strafeToLinearHeading(new Vector2d(-51,-52), Math.toRadians(45))
-//                .waitSeconds(5.3)
                 .splineToSplineHeading(new Pose2d(-19,-9.5, Math.toRadians(180)), Math.toRadians(0));
 
 
@@ -104,56 +101,7 @@ public class BasketSideAuto extends LinearOpMode {
                 })
                 .afterTime(14.41, bot.setPidVals(2000,0))
                 .afterTime(14.8, bot.setPidVals(0,0))
-//                .afterTime(14.9, telemetryPacket -> {
-//                    bot.grippy.setPosition(1);
-//                    return false;
-//                })
-//                .afterTime(17.5, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(0.3);
-//                    bot.intakeRight.setPower(-0.3);
-//                    return false;
-//                })
-//                .afterTime(19.5, telemetryPacket -> {
-//                    bot.wrist.setPosition(0.5);
-//                    return false;
-//                })
-//                .afterTime(20,bot.setPidVals(2000,500))
-//                .afterTime(22, bot.setPidVals(2000,6500))
-//                .afterTime(24.1, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(-0.3);
-//                    bot.intakeRight.setPower(0.3);
-//                    return false;
-//                })
-//                .afterTime(24.11, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(-0.3);
-//                    bot.intakeRight.setPower(0.3);
-//                    return false;
-//                })
-//                .afterTime(24.12, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(-0.3);
-//                    bot.intakeRight.setPower(0.3);
-//                    return false;
-//                })
-//                .afterTime(24.5, telemetryPacket -> {
-//                    bot.wrist.setPosition(0);
-//                    return false;
-//                })
-//                .afterTime(24.51, telemetryPacket -> {
-//                    bot.wrist.setPosition(0);
-//                    return false;
-//                })
-//                .afterTime(24.7, bot.setPidVals(2000,0))
-//                .afterTime(24.2, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(1);
-//                    bot.intakeRight.setPower(-1);
-//                    return false;
-//                })
-//                .afterTime(26.2, bot.setPidVals(0,0))
-//                .afterTime(26.3, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(0);
-//                    bot.intakeRight.setPower(0);
-//                    return false;
-//                })
+
                 .afterTime(27.2, telemetryPacket -> {
                     bot.flippy.setPosition(1);
                     bot.rightHang.setPosition(0.4);
