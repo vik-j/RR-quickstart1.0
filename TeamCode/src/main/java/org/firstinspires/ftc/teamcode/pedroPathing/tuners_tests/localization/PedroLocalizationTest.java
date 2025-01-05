@@ -124,7 +124,7 @@ public class PedroLocalizationTest extends OpMode {
             telemetryA.addData("x", poseUpdater.getPose().getX());
             telemetryA.addData("y", poseUpdater.getPose().getY());
         }
-        else if (corrected) {
+        else  {
             double correctedX = poseUpdater.getPose().getX() + TwoWheelConstants.forwardY - (TwoWheelConstants.forwardY * Math.cos(poseUpdater.getPose().getHeading()));
             double correctedY = poseUpdater.getPose().getY() - (TwoWheelConstants.forwardY * Math.sin(poseUpdater.getPose().getHeading()));
 
