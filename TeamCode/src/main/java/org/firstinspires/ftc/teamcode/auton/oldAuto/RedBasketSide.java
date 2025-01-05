@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.auton;
+package org.firstinspires.ftc.teamcode.auton.oldAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -11,13 +12,14 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "BasketFinalUSE_THIS", group = "Autonomous", preselectTeleOp = "TeleopV1")
-public class BasketFinalUSE_THIS extends LinearOpMode {
+@Autonomous(name = "RedBasketSide", group = "Autonomous", preselectTeleOp = "TeleopV1")
+public class RedBasketSide extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Starting position of the robot (x = -11.8, y = -61.7, heading = -90 degrees)
@@ -33,16 +35,16 @@ public class BasketFinalUSE_THIS extends LinearOpMode {
                 //Arm to high speci and back down
                 .strafeToLinearHeading(new Vector2d(-49,-48), Math.toRadians(90))
                 .waitSeconds(0.5)
-                .strafeToLinearHeading(new Vector2d(-48.25,-36), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-49,-38), Math.toRadians(90))
                 .strafeToLinearHeading(new Vector2d(-51,-52), Math.toRadians(45))
                 .waitSeconds(7.4)
                 //intake
                 .strafeToLinearHeading(new Vector2d(-58,-45), Math.toRadians(90))
                 .waitSeconds(0.5)
-//                .strafeToLinearHeading(new Vector2d(-56.75,-36), Math.toRadians(90))
-//                .strafeToLinearHeading(new Vector2d(-51,-52), Math.toRadians(45))
-//                .waitSeconds(5.3)
-                .splineToSplineHeading(new Pose2d(-19,-9.5, Math.toRadians(180)), Math.toRadians(0));
+                .strafeToLinearHeading(new Vector2d(-57.5,-38), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-51,-52), Math.toRadians(45))
+                .waitSeconds(5.3)
+                .splineToSplineHeading(new Pose2d(-19,-8, Math.toRadians(180)), Math.toRadians(0));
 
 
         // Final action to close out the trajectory
@@ -99,68 +101,54 @@ public class BasketFinalUSE_THIS extends LinearOpMode {
                 })
                 .afterTime(9.7,bot.setPidVals(2000,500))
                 .afterTime(12.1, bot.setPidVals(2000,6500))
-                .afterTime(14.2, telemetryPacket -> {
-                    bot.intakeLeft.setPower(-0.25);
-                    bot.intakeRight.setPower(0.25);
+                .afterTime(13.9, telemetryPacket -> {
+                    bot.intakeLeft.setPower(-0.4);
+                    bot.intakeRight.setPower(0.4);
                     return false;
                 })
-                .afterTime(14.4, telemetryPacket -> {
+                .afterTime(14.3, telemetryPacket -> {
                     bot.wrist.setPosition(0);
                     return false;
                 })
-                .afterTime(14.41, bot.setPidVals(2000,0))
+                .afterTime(14.31, bot.setPidVals(2000,0))
                 .afterTime(14.8, bot.setPidVals(0,0))
-//                .afterTime(14.9, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(1);
-//                    bot.intakeRight.setPower(-1);
-//                    return false;
-//                })
-//                .afterTime(17.5, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(0.3);
-//                    bot.intakeRight.setPower(-0.3);
-//                    return false;
-//                })
-//                .afterTime(19.5, telemetryPacket -> {
-//                    bot.wrist.setPosition(0.5);
-//                    return false;
-//                })
-//                .afterTime(20,bot.setPidVals(2000,500))
-//                .afterTime(22, bot.setPidVals(2000,6500))
-//                .afterTime(24.1, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(-0.3);
-//                    bot.intakeRight.setPower(0.3);
-//                    return false;
-//                })
-//                .afterTime(24.11, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(-0.3);
-//                    bot.intakeRight.setPower(0.3);
-//                    return false;
-//                })
-//                .afterTime(24.12, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(-0.3);
-//                    bot.intakeRight.setPower(0.3);
-//                    return false;
-//                })
-//                .afterTime(24.5, telemetryPacket -> {
-//                    bot.wrist.setPosition(0);
-//                    return false;
-//                })
-//                .afterTime(24.51, telemetryPacket -> {
-//                    bot.wrist.setPosition(0);
-//                    return false;
-//                })
-//                .afterTime(24.7, bot.setPidVals(2000,0))
-//                .afterTime(24.2, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(1);
-//                    bot.intakeRight.setPower(-1);
-//                    return false;
-//                })
-//                .afterTime(26.2, bot.setPidVals(0,0))
-//                .afterTime(26.3, telemetryPacket -> {
-//                    bot.intakeLeft.setPower(0);
-//                    bot.intakeRight.setPower(0);
-//                    return false;
-//                })
+                .afterTime(14.9, telemetryPacket -> {
+                    bot.intakeLeft.setPower(1);
+                    bot.intakeRight.setPower(-1);
+                    return false;
+                })
+                .afterTime(17.5, telemetryPacket -> {
+                    bot.intakeLeft.setPower(0.3);
+                    bot.intakeRight.setPower(-0.3);
+                    return false;
+                })
+                .afterTime(19, telemetryPacket -> {
+                    bot.wrist.setPosition(0.5);
+                    return false;
+                })
+                .afterTime(19.7,bot.setPidVals(2000,500))
+                .afterTime(21, bot.setPidVals(2000,6500))
+                .afterTime(23.2, telemetryPacket -> {
+                    bot.intakeLeft.setPower(-0.3);
+                    bot.intakeRight.setPower(0.3);
+                    return false;
+                })
+                .afterTime(23.7, bot.setPidVals(2000,0))
+                .afterTime(23.8, telemetryPacket -> {
+                    bot.wrist.setPosition(0);
+                    return false;
+                })
+                .afterTime(24.2, telemetryPacket -> {
+                    bot.intakeLeft.setPower(1);
+                    bot.intakeRight.setPower(-1);
+                    return false;
+                })
+                .afterTime(26.2, bot.setPidVals(0,0))
+                .afterTime(26.3, telemetryPacket -> {
+                    bot.intakeLeft.setPower(0);
+                    bot.intakeRight.setPower(0);
+                    return false;
+                })
                 .afterTime(27.2, telemetryPacket -> {
                     bot.wrist.setPosition(1);
                     bot.rightHang.setPosition(0.4);
@@ -168,6 +156,12 @@ public class BasketFinalUSE_THIS extends LinearOpMode {
 
                     return false;
                 })
+//                .afterTime(28.3, bot.setPidVals(1400,1000))
+//                .afterTime(28.8, bot.setPidVals(1400,2400))
+//                .afterTime(29.5, telemetryPacket -> {
+//                    bot.wrist.setPosition(0);
+//                    return false;
+//                })
                 .build();
 
         bot.slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
