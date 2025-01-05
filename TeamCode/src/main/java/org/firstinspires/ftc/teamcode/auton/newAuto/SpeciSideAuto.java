@@ -59,65 +59,62 @@ public class SpeciSideAuto extends LinearOpMode {
                 .afterTime(22, bot.setPidVals(0,0))
 
                 .afterTime(19, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(21.8, telemetryPacket -> {
-                    bot.intakeLeft.setPower(0.3);
-                    bot.intakeRight.setPower(-0.3);
+                    bot.grippy.setPosition(0.3);
                     return false;
                 })
                 .afterTime(20.1, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(20.3, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(20.5, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(20.7, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(22, bot.setPidVals(650,980))
                 .afterTime(25, bot.setPidVals(350, 980))
                 .afterTime(22.01, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })// 1050, 3800 arm out
                 .afterTime(0.05, bot.intake(-0.5))
                 .afterTime(22.02, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(24.3, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(25.2, telemetryPacket -> {
-                    bot.wrist.setPosition(0.35);
+                    bot.flippy.setPosition(0.35);
                     return false;
                 })
                 .afterTime(28.5, telemetryPacket -> {
-                    bot.intakeLeft.setPower(-0.5);
-                    bot.intakeRight.setPower(0.5);
+                    bot.grippy.setPosition(0.5);
                     return false;
                 })
                 .afterTime(26.8, bot.setPidVals(700,0))
                 .afterTime(27.8, telemetryPacket -> {
-                    bot.intakeLeft.setPower(0);
-                    bot.intakeRight.setPower(0);
-                    bot.wrist.setPosition(1);
+                    bot.grippy.setPosition(0);
+                    bot.flippy.setPosition(1);
                     return false;
                 })
 
                 .afterTime(28, bot.setPidVals(0,0))
                 .afterTime(28.5, telemetryPacket -> {
-                    bot.wrist.setPosition(1);
+                    bot.flippy.setPosition(1);
                     return false;
                 })
                 .build();
@@ -128,7 +125,7 @@ public class SpeciSideAuto extends LinearOpMode {
         bot.slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bot.flip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        bot.wrist.setPosition(1);
+        bot.flippy.setPosition(1);
         // Wait for the start of the op mode
         waitForStart();
         if (isStopRequested()) return;
