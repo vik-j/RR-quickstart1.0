@@ -126,6 +126,7 @@ public class SpeciSideAuto extends LinearOpMode {
         bot.flip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         bot.flippy.setPosition(1);
+        bot.setPidVals(500, 0);
         // Wait for the start of the op mode
         waitForStart();
         if (isStopRequested()) return;
