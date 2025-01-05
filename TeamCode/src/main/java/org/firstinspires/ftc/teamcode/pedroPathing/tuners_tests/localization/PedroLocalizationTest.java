@@ -142,8 +142,6 @@ public class PedroLocalizationTest extends OpMode {
             telemetryA.addData("total heading", poseUpdater.getTotalHeading());
             telemetryA.update();
 
-            
-
             Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
             Drawing.drawRobot(new Pose(correctedX, correctedY, poseUpdater.getPose().getHeading()), "#4CAF50");
             Drawing.sendPacket();
