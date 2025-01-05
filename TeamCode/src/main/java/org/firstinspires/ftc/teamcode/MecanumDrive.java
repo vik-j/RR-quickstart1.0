@@ -47,6 +47,7 @@ import org.firstinspires.ftc.teamcode.messages.MecanumLocalizerInputsMessage;
 import org.firstinspires.ftc.teamcode.messages.PoseMessage;
 
 import java.lang.Math;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -90,6 +91,8 @@ public final class MecanumDrive {
         public double axialVelGain = 0.0;
         public double lateralVelGain = 0.0;
         public double headingVelGain = 0.0; // shared with turn
+
+        public List<Double> motorPowers = new ArrayList<>();
     }
 
     public static Params PARAMS = new Params();
@@ -112,6 +115,8 @@ public final class MecanumDrive {
     public final VoltageSensor voltageSensor;
 
     public final LazyImu lazyImu;
+
+    public List<DcMotorEx> motors = new ArrayList<>();
 
     public final Localizer localizer;
     public Pose2d pose;
@@ -240,6 +245,11 @@ public final class MecanumDrive {
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
         lazyImu = new LazyImu(hardwareMap, "imu", new RevHubOrientationOnRobot(
                 PARAMS.logoFacingDirection, PARAMS.usbFacingDirection));
+
+        motors.add(leftFront);
+        motors.add(leftBack);
+        motors.add(rightFront);
+        motors.add(rightBack);
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 

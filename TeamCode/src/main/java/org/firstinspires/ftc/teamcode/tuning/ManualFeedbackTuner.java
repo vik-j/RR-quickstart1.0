@@ -1,16 +1,52 @@
 package org.firstinspires.ftc.teamcode.tuning;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.TankDrive;
 import org.firstinspires.ftc.teamcode.ThreeDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 
+import java.util.List;
+
 public final class ManualFeedbackTuner extends LinearOpMode {
     public static double DISTANCE = 64;
+
+    public class getMotorPowers implements Action {
+        MecanumDrive drive;
+
+        public getMotorPowers(MecanumDrive drive) {
+            this.drive = drive;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            MecanumDrive.PARAMS.motorPowers.clear();
+
+            for (DcMotorEx motor: drive.motors) {
+                MecanumDrive.PARAMS.motorPowers.add(motor.getPower());
+            }
+
+            telemetryPacket.put("LeftFront", MecanumDrive.PARAMS.motorPowers.get(0));
+            telemetryPacket.put("LeftBack", MecanumDrive.PARAMS.motorPowers.get(1));
+            telemetryPacket.put("RightFront", MecanumDrive.PARAMS.motorPowers.get(2));
+            telemetryPacket.put("RightBack", MecanumDrive.PARAMS.motorPowers.get(3));
+
+            return true;
+        }
+    }
+    public Action getMotorPowers(MecanumDrive drive) {
+        return new getMotorPowers(drive);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -28,12 +64,15 @@ public final class ManualFeedbackTuner extends LinearOpMode {
             }
             waitForStart();
 
+            Action driveAction = drive.actionBuilder(new Pose2d(0, 0, 0))
+                    .lineToX(DISTANCE)
+                    .lineToX(0)
+                    .build();
+
             while (opModeIsActive()) {
                 Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(0, 0, 0))
-                            .lineToX(DISTANCE)
-                            .lineToX(0)
-                            .build());
+                        new ParallelAction(driveAction, getMotorPowers(drive))
+                );
             }
         } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
             TankDrive drive = new TankDrive(hardwareMap, new Pose2d(0, 0, 0));
