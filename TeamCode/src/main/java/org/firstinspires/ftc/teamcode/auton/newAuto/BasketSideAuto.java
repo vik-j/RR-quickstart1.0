@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "BasketFinalUSE_THIS", group = "Autonomous", preselectTeleOp = "TeleopV1")
+@Autonomous(name = "BasketSideAuto", group = "Autonomous", preselectTeleOp = "TeleopV1")
 public class BasketSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

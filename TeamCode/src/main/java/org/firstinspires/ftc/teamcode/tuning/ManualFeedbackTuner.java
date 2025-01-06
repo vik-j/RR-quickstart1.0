@@ -30,16 +30,16 @@ public final class ManualFeedbackTuner extends LinearOpMode {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            MecanumDrive.PARAMS.motorPowers.clear();
+            MecanumDrive.motorPowers.clear();
 
             for (DcMotorEx motor: drive.motors) {
-                MecanumDrive.PARAMS.motorPowers.add(motor.getPower());
+                MecanumDrive.motorPowers.add(motor.getPower());
             }
 
-            telemetryPacket.put("LeftFront", MecanumDrive.PARAMS.motorPowers.get(0));
-            telemetryPacket.put("LeftBack", MecanumDrive.PARAMS.motorPowers.get(1));
-            telemetryPacket.put("RightFront", MecanumDrive.PARAMS.motorPowers.get(2));
-            telemetryPacket.put("RightBack", MecanumDrive.PARAMS.motorPowers.get(3));
+            telemetryPacket.put("LeftFront", MecanumDrive.motorPowers.get(0));
+            telemetryPacket.put("LeftBack", MecanumDrive.motorPowers.get(1));
+            telemetryPacket.put("RightFront", MecanumDrive.motorPowers.get(2));
+            telemetryPacket.put("RightBack", MecanumDrive.motorPowers.get(3));
 
             return true;
         }
