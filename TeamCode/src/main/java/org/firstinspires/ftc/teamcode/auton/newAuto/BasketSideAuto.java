@@ -123,6 +123,7 @@ public class BasketSideAuto extends LinearOpMode {
 
         bot.rightHang.setPosition(0.9);
         bot.leftHang.setPosition(0.9);
+        Actions.runBlocking(bot.setPidVals(1000, 0));
         waitForStart();
 
 
