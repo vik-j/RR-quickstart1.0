@@ -214,25 +214,25 @@ public class Robot {
 //            wrist.setPosition(0.51);
             intakeMultiplier = 0.2;
             flippy.setPosition(0.15);
-            while (Math.abs(armTarget - flip.getCurrentPosition()) > 100) {
+            while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
             }
-        }
-        if (gamepad2.left_bumper) flippy.setPosition(0.95);
-        if (gamepad2.right_bumper) {
             slideTarget = 4600;
         }
+        if (gamepad2.left_bumper) flippy.setPosition(0.95);
+        if (gamepad2.right_bumper) flippy.setPosition(0);
         if (gamepad1.b) {
             armTarget = 0;
             slideTarget = 0;
             flippy.setPosition(0.25);
+            twisty.setPosition(0);
         }
         if (gamepad1.x) {
             flippy.setPosition(0.3);
             twisty.setPosition(1);
-            armTarget = 2010;
-            slideTarget = 632;
+            armTarget = 1950;
+            slideTarget = 800;
         }
         if (gamepad2.a) {
             slideTarget = 0;
@@ -244,7 +244,7 @@ public class Robot {
 //            wrist.setPosition(0.35);
             armTarget = 0;
             flippy.setPosition(0);
-            twisty.setPosition(1);
+            twisty.setPosition(0);
             grippy.setPosition(0);
         }
         if (gamepad2.x) {
@@ -257,7 +257,7 @@ public class Robot {
                 arcadeDrive(gamepad1);
             }
 
-            twisty.setPosition(1);
+            twisty.setPosition(0);
             grippy.setPosition(0);
         }
         else if (gamepad2.b) {
@@ -278,7 +278,7 @@ public class Robot {
 
             Actions.runBlocking(new SleepAction(0.25));
 
-            twisty.setPosition(1);
+            twisty.setPosition(0);
             slideTarget = 0;
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
                 TeleopPID(gamepad2);
