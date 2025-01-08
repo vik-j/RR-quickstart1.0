@@ -210,7 +210,7 @@ public class Robot {
 
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.y) {
-            armTarget = 1900;
+            armTarget = 1845;
 //            wrist.setPosition(0.51);
             intakeMultiplier = 0.2;
             flippy.setPosition(0.15);
@@ -219,9 +219,9 @@ public class Robot {
                 arcadeDrive(gamepad1);
             }
         }
-        if (gamepad2.left_bumper) flippy.setPosition(1);
+        if (gamepad2.left_bumper) flippy.setPosition(0.95);
         if (gamepad2.right_bumper) {
-            slideTarget = 3300;
+            slideTarget = 4600;
         }
         if (gamepad1.b) {
             armTarget = 0;
@@ -230,7 +230,7 @@ public class Robot {
         }
         if (gamepad1.x) {
             flippy.setPosition(0.3);
-            twisty.setPosition(0);
+            twisty.setPosition(1);
             armTarget = 2010;
             slideTarget = 632;
         }
@@ -249,7 +249,7 @@ public class Robot {
         }
         if (gamepad2.x) {
             slideTarget = 2300;
-            armTarget = 300;
+            armTarget = 230;
             intakeMultiplier = 1;
             flippy.setPosition(1);
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
@@ -360,7 +360,7 @@ public class Robot {
 
         if (slideTarget < 0) slideTarget = 0;
 //        else if (slideTarget > targetLength && flipPos < 1850) slideTarget = targetLength;
-        else if (slideTarget > 3600) slideTarget = 3600;
+        else if (slideTarget > 4600) slideTarget = 4600;
 
         flipPos = flip.getCurrentPosition();
         slidePos = slide.getCurrentPosition();
@@ -374,7 +374,7 @@ public class Robot {
 
         double pid2 = slideController.calculate(slidePos, slideTarget);
 
-        slide.setPower(-pid2);
+        slide.setPower(pid2);
 
     }
     public void slidesPID(Gamepad gamepad) {

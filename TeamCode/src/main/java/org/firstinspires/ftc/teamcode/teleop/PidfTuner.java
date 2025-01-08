@@ -85,7 +85,7 @@ public class PidfTuner extends OpMode {
             slidePos = slide.getCurrentPosition();
             double pid2 = slideController.calculate(slidePos, slideTarget);
 
-            slide.setPower(-pid2);
+            slide.setPower(pid2);
 
             telemetry.addData("flipPower", power);
         }
