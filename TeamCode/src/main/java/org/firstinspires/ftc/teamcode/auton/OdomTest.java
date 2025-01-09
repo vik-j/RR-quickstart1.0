@@ -16,10 +16,10 @@ public class OdomTest extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive() && !isStopRequested()) {
-            telemetry.addData("ForwardPodTicks", bot.leftBack.getCurrentPosition());
-            telemetry.addData("StrafePodTicks", bot.rightFront.getCurrentPosition());
-            telemetry.update();
-        }
+//        while (opModeIsActive() && !isStopRequested()) {
+//            telemetry.addData("ForwardPodTicks", bot.leftBack.getCurrentPosition());
+//            telemetry.addData("StrafePodTicks", bot.rightFront.getCurrentPosition());
+//            telemetry.update();
+//        }
     }
 }

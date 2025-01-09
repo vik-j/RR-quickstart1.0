@@ -32,17 +32,17 @@ public class NoRRvsRR extends LinearOpMode {
             Actions.runBlocking(moveForward);
         }
         else {
-            timer.reset();
-            while (timer.seconds() < 4) {
-                bot.leftFront.setPower(0.6);
-                bot.leftBack.setPower(0.6);
-                bot.rightBack.setPower(0.6);
-                bot.rightFront.setPower(0.6);
-            }
-            bot.leftFront.setPower(0);
-            bot.leftBack.setPower(0);
-            bot.rightBack.setPower(0);
-            bot.rightFront.setPower(0);
+//            timer.reset();
+//            while (timer.seconds() < 4) {
+//                bot.leftFront.setPower(0.6);
+//                bot.leftBack.setPower(0.6);
+//                bot.rightBack.setPower(0.6);
+//                bot.rightFront.setPower(0.6);
+//            }
+//            bot.leftFront.setPower(0);
+//            bot.leftBack.setPower(0);
+//            bot.rightBack.setPower(0);
+//            bot.rightFront.setPower(0);
         }
 
     }

@@ -40,7 +40,7 @@ import java.util.List;
 @Config
 //TODO: change claw opened and closed values
 public class Robot {
-    public DcMotor leftFront, leftBack, rightFront, rightBack;
+//    public DcMotor leftFront, leftBack, rightFront, rightBack;
     public DcMotor flip, slide;
     public Servo wrist, leftHang, rightHang;
     public CRServo intakeLeft, intakeRight;
@@ -52,6 +52,7 @@ public class Robot {
     public PIDCoefficients x = new PIDCoefficients(0,0,0);
     public PIDCoefficients h = new PIDCoefficients(0,0,0);
     public double lateralMultiplier = 1;
+
 
     public final double gripClawOpen = 0, gripClawClosed = 0.1;
     public double flipPos, slidePos;
@@ -67,10 +68,10 @@ public class Robot {
     public Robot(HardwareMap hardwareMap) {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
 
-        leftFront = hardwareMap.dcMotor.get("leftFront");
-        leftBack = hardwareMap.dcMotor.get("leftBack");
-        rightFront = hardwareMap.dcMotor.get("rightFront");
-        rightBack = hardwareMap.dcMotor.get("rightBack");
+//        leftFront = hardwareMap.dcMotor.get("leftFront");
+//        leftBack = hardwareMap.dcMotor.get("leftBack");
+//        rightFront = hardwareMap.dcMotor.get("rightFront");
+//        rightBack = hardwareMap.dcMotor.get("rightBack");
 
         flip = hardwareMap.dcMotor.get("flip");
         slide = hardwareMap.dcMotor.get("slide");
@@ -82,7 +83,7 @@ public class Robot {
         leftHang = hardwareMap.servo.get("leftHang");
         rightHang = hardwareMap.servo.get("rightHang");
 
-        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
+//        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
         slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         flip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -90,10 +91,10 @@ public class Robot {
         slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+//        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+//        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+//        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+//        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         flip.setDirection(DcMotorSimple.Direction.FORWARD);
         flip.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -107,14 +108,14 @@ public class Robot {
         leftHang.setDirection(Servo.Direction.FORWARD);
 
 
-        for (DcMotor motor: motors) {
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        }
-
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        for (DcMotor motor: motors) {
+//            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+//        }
+//
+//        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         armController = new PIDController(armPIDValues.fP, armPIDValues.fI, armPIDValues.fD);
         slideController = new PIDController(armPIDValues.sP,armPIDValues.sI,armPIDValues.sD);
@@ -130,16 +131,18 @@ public class Robot {
         double x = -gamepad1.left_stick_x;
         double rx = -0.75*gamepad1.right_stick_x;
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double leftFrontPower = (y + x + rx) / denominator;
-        double leftBackPower = (y - x + rx) / denominator;
-        double rightFrontPower = (y - x - rx) / denominator;
-        double rightBackPower = (y + x - rx) / denominator;
+//        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+//        double leftFrontPower = (y + x + rx) / denominator;
+//        double leftBackPower = (y - x + rx) / denominator;
+//        double rightFrontPower = (y - x - rx) / denominator;
+//        double rightBackPower = (y + x - rx) / denominator;
+//
+//        leftFront.setPower(leftFrontPower);
+//        leftBack.setPower(leftBackPower);
+//        rightFront.setPower(rightFrontPower);
+//        rightBack.setPower(rightBackPower);
 
-        leftFront.setPower(leftFrontPower);
-        leftBack.setPower(leftBackPower);
-        rightFront.setPower(rightFrontPower);
-        rightBack.setPower(rightBackPower);
+        drive.setDrivePowers(new PoseVelocity2d(new Vector2d(x,y), rx));
     }
 
     public void arcadeDriveWithSlowMode(Gamepad gamepad) {
@@ -155,16 +158,18 @@ public class Robot {
             rx = -0.75*gamepad.right_stick_x;
         }
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double leftFrontPower = (y + x + rx) / denominator;
-        double leftBackPower = (y - x + rx) / denominator;
-        double rightFrontPower = (y - x - rx) / denominator;
-        double rightBackPower = (y + x - rx) / denominator;
+//        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+//        double leftFrontPower = (y + x + rx) / denominator;
+//        double leftBackPower = (y - x + rx) / denominator;
+//        double rightFrontPower = (y - x - rx) / denominator;
+//        double rightBackPower = (y + x - rx) / denominator;
+//
+//        leftFront.setPower(leftFrontPower);
+//        leftBack.setPower(leftBackPower);
+//        rightFront.setPower(rightFrontPower);
+//        rightBack.setPower(rightBackPower);
 
-        leftFront.setPower(leftFrontPower);
-        leftBack.setPower(leftBackPower);
-        rightFront.setPower(rightFrontPower);
-        rightBack.setPower(rightBackPower);
+        drive.setDrivePowers(new PoseVelocity2d(new Vector2d(x,y), rx));
     }
     public void arcadeDriveWithSlowModeForLittleChildren(Gamepad gamepad) {
         double y,x,rx;
@@ -179,41 +184,53 @@ public class Robot {
             rx = 0.2*gamepad.right_stick_x;
         }
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double leftFrontPower = (y + x + rx) / denominator;
-        double leftBackPower = (y - x + rx) / denominator;
-        double rightFrontPower = (y - x - rx) / denominator;
-        double rightBackPower = (y + x - rx) / denominator;
-
-        leftFront.setPower(leftFrontPower);
-        leftBack.setPower(leftBackPower);
-        rightFront.setPower(rightFrontPower);
-        rightBack.setPower(rightBackPower);
+//        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+//        double leftFrontPower = (y + x + rx) / denominator;
+//        double leftBackPower = (y - x + rx) / denominator;
+//        double rightFrontPower = (y - x - rx) / denominator;
+//        double rightBackPower = (y + x - rx) / denominator;
+//
+//        leftFront.setPower(leftFrontPower);
+//        leftBack.setPower(leftBackPower);
+//        rightFront.setPower(rightFrontPower);
+//        rightBack.setPower(rightBackPower);
+        drive.setDrivePowers(new PoseVelocity2d(new Vector2d(x,y), rx));
     }
 
     public void slideControl(Gamepad gamepad) {
         slide.setPower(-gamepad.left_stick_y * 0.3);
     }
 
-//    public void tiltControl(Gamepad gamepad) {
-//        flip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        flip.setDirection(DcMotorSimple.Direction.FORWARD);
-//        flip.setPower(-gamepad.right_stick_y * 0.9);
-//    }
 
-
-//    public void intakeControl(Gamepad gamepad) {
-//        intakeRight.setPower(intakeMultiplier*(-gamepad.left_trigger + gamepad.right_trigger));
-//        intakeLeft.setPower(intakeMultiplier*(gamepad.left_trigger - gamepad.right_trigger));
-//    }
-
-
+    public void grippyClose() {
+        grippy.setPosition(1);
+    }
+    public void grippyOpen() {
+        grippy.setPosition(0);
+    }
+    public void speciMacro() {
+        flippy.setPosition(0.1);
+        twisty.setPosition(1);
+        Actions.runBlocking(setPidVals(755, 2884));
+    }
+    public void speciPickup() {
+        flippy.setPosition(0);
+        Actions.runBlocking(setPidVals(2250,0));
+        twisty.setPosition(0);
+        grippy.setPosition(0);
+    }
+    public void reset() {
+        intakeMultiplier = 1;
+        Actions.runBlocking(setPidVals(0,0));
+        flippy.setPosition(0.95);
+        twisty.setPosition(0);
+        grippy.setPosition(0);
+    }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.y) {
-            armTarget = 1845;
-//            wrist.setPosition(0.51);
-            intakeMultiplier = 0.2;
-            flippy.setPosition(0.15);
+            flippy.setPosition(0.53);
+            armTarget = 1870;
+
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
@@ -223,18 +240,20 @@ public class Robot {
         if (gamepad2.left_bumper) flippy.setPosition(0.95);
         if (gamepad2.right_bumper) flippy.setPosition(0);
         if (gamepad1.b) {
-            armTarget = 0;
+            flippy.setPosition(0);
+            armTarget = 2250;
             slideTarget = 0;
-            flippy.setPosition(0.25);
             twisty.setPosition(0);
+            grippy.setPosition(0);
         }
         if (gamepad1.x) {
-            flippy.setPosition(0.3);
+            flippy.setPosition(0);
             twisty.setPosition(1);
-            armTarget = 1950;
-            slideTarget = 800;
+            armTarget = 760;
+            slideTarget = 2856;
         }
         if (gamepad2.a) {
+            flippy.setPosition(0.95);
             slideTarget = 0;
             intakeMultiplier = 1;
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 1000) {
@@ -243,13 +262,12 @@ public class Robot {
             }
 //            wrist.setPosition(0.35);
             armTarget = 0;
-            flippy.setPosition(0);
             twisty.setPosition(0);
             grippy.setPosition(0);
         }
         if (gamepad2.x) {
             slideTarget = 2300;
-            armTarget = 230;
+            armTarget = 270;
             intakeMultiplier = 1;
             flippy.setPosition(1);
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
@@ -356,11 +374,12 @@ public class Robot {
 //        slideExtensionLimit = targetLength;
 
         if (armTarget < 0) armTarget = 0;
-        else if (armTarget > 2200) armTarget = 2200;
+        else if (armTarget > 2300) armTarget = 2300;
 
         if (slideTarget < 0) slideTarget = 0;
 //        else if (slideTarget > targetLength && flipPos < 1850) slideTarget = targetLength;
-        else if (slideTarget > 4600) slideTarget = 4600;
+        else if (slideTarget > 4600 && armTarget > 1000) slideTarget = 4600;
+        else if (slideTarget > 1830 && armTarget < 1000) slideTarget = 1830;
 
         flipPos = flip.getCurrentPosition();
         slidePos = slide.getCurrentPosition();
@@ -565,6 +584,33 @@ public class Robot {
     public void stopPidAction() {
         stopPid = true;
     }
+    public Action pidfLoopSingular(int armTarget) {
+        return new pidfLoopActionSingular(armTarget);
+    }
+    public class pidfLoopActionSingular implements Action {
+        int armTarget;
+        public pidfLoopActionSingular(int armTarget) {
+            this.armTarget = armTarget;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            flipPos = flip.getCurrentPosition();
+            slidePos = slide.getCurrentPosition();
+
+            double pid = armController.calculate(flipPos, armTargetAuto);
+            double ff = Math.cos(Math.toRadians(armTargetAuto / armPIDValues.ticks_in_degree)) * armPIDValues.fF;
+
+            double power = pid + ff;
+
+            flip.setPower(power);
+
+            double pid2 = slideController.calculate(slidePos, slideTargetAuto);
+
+            slide.setPower(pid2);
+
+            return (Math.abs(flipPos - armTarget) > 10);
+        }
+    }
     public class pidfLoopAction implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -658,7 +704,7 @@ public class Robot {
     }
 
     public static class armPIDValues {
-        public static double fP = 0.008, fI = 0, fD = 0;  //fD = 0.00001, fP = 0.002
+        public static double fP = 0.01, fI = 0, fD = 0;  //fD = 0.00001, fP = 0.002
         public static double fF = 0.01; //fF = 0.0022
         public static double sP = 0.005, sI, sD;
 
