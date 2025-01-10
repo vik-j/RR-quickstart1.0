@@ -145,7 +145,7 @@ public class Robot {
 //        rightFront.setPower(rightFrontPower);
 //        rightBack.setPower(rightBackPower);
 
-        drive.setDrivePowers(new PoseVelocity2d(new Vector2d(y,x), rx));
+        drive.setDrivePowers(new PoseVelocity2d(new Vector2d(-y,x), rx));
     }
 
     public void arcadeDriveWithSlowMode(Gamepad gamepad) {
@@ -244,7 +244,7 @@ public class Robot {
         }
         if (gamepad2.left_bumper) flippy.setPosition(0.95);
         if (gamepad2.right_bumper) flippy.setPosition(0);
-        if (gamepad1Ex.getButton(GamepadKeys.Button.B)) {
+        if (gamepad1.b) {
             rightBumperCounter = 0;
             grippyOpen();
             flippy.setPosition(0);
@@ -252,20 +252,18 @@ public class Robot {
             slideTarget = 0;
             twisty.setPosition(0);
         }
-        if (gamepad1Ex.getButton(GamepadKeys.Button.X)) {
+        if (gamepad1.x) {
             rightBumperCounter = 0;
             grippy.close();
             flippy.setPosition(0);
             twisty.setPosition(1);
-            armTarget = 740;
+            armTarget = 758;
             slideTarget = 2856;
         }
-        if (gamepad1Ex.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) rightBumperCounter ++;
-
-        if (((rightBumperCounter % 2) == 1) && (rightBumperCounter != 0)) {
+        if (gamepad1.right_bumper) {
             twisty.setPosition(1);
         }
-        else if (((rightBumperCounter % 2) == 0) && (rightBumperCounter != 0)) {
+        else if (gamepad1.left_bumper) {
             twisty.setPosition(0.625);
         }
 
@@ -286,7 +284,7 @@ public class Robot {
         if (gamepad2.x) {
             rightBumperCounter = 0;
             slideTarget = 2300;
-            armTarget = 250;
+            armTarget = 260;
             intakeMultiplier = 1;
             flippy.setPosition(1);
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
