@@ -266,6 +266,7 @@ public class Robot {
         else if (gamepad1.left_bumper) {
             twisty.setPosition(0.625);
         }
+        
 
         if (gamepad2.a) {
             rightBumperCounter = 0;
