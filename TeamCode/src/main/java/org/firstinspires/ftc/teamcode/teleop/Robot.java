@@ -16,6 +16,8 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDController;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.Path;
@@ -52,6 +54,7 @@ public class Robot {
     public PIDCoefficients x = new PIDCoefficients(0,0,0);
     public PIDCoefficients h = new PIDCoefficients(0,0,0);
     public double lateralMultiplier = 1;
+    public int rightBumperCounter = 0;
 
 
     public final double gripClawOpen = 0, gripClawClosed = 0.1;
@@ -142,7 +145,7 @@ public class Robot {
 //        rightFront.setPower(rightFrontPower);
 //        rightBack.setPower(rightBackPower);
 
-        drive.setDrivePowers(new PoseVelocity2d(new Vector2d(x,y), rx));
+        drive.setDrivePowers(new PoseVelocity2d(new Vector2d(y,x), rx));
     }
 
     public void arcadeDriveWithSlowMode(Gamepad gamepad) {
@@ -227,7 +230,9 @@ public class Robot {
         grippy.setPosition(0);
     }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
+        GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.y) {
+            rightBumperCounter = 0;
             flippy.setPosition(0.53);
             armTarget = 1870;
 
@@ -239,20 +244,33 @@ public class Robot {
         }
         if (gamepad2.left_bumper) flippy.setPosition(0.95);
         if (gamepad2.right_bumper) flippy.setPosition(0);
-        if (gamepad1.b) {
+        if (gamepad1Ex.getButton(GamepadKeys.Button.B)) {
+            rightBumperCounter = 0;
+            grippyOpen();
             flippy.setPosition(0);
             armTarget = 2250;
             slideTarget = 0;
             twisty.setPosition(0);
-            grippy.setPosition(0);
         }
-        if (gamepad1.x) {
+        if (gamepad1Ex.getButton(GamepadKeys.Button.X)) {
+            rightBumperCounter = 0;
+            grippy.close();
             flippy.setPosition(0);
             twisty.setPosition(1);
-            armTarget = 760;
+            armTarget = 740;
             slideTarget = 2856;
         }
+        if (gamepad1Ex.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) rightBumperCounter ++;
+
+        if (((rightBumperCounter % 2) == 1) && (rightBumperCounter != 0)) {
+            twisty.setPosition(1);
+        }
+        else if (((rightBumperCounter % 2) == 0) && (rightBumperCounter != 0)) {
+            twisty.setPosition(0.625);
+        }
+
         if (gamepad2.a) {
+            rightBumperCounter = 0;
             flippy.setPosition(0.95);
             slideTarget = 0;
             intakeMultiplier = 1;
@@ -266,8 +284,9 @@ public class Robot {
             grippy.setPosition(0);
         }
         if (gamepad2.x) {
+            rightBumperCounter = 0;
             slideTarget = 2300;
-            armTarget = 270;
+            armTarget = 250;
             intakeMultiplier = 1;
             flippy.setPosition(1);
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
@@ -279,6 +298,7 @@ public class Robot {
             grippy.setPosition(0);
         }
         else if (gamepad2.b) {
+            rightBumperCounter = 0;
             armTarget = 0;
             intakeMultiplier = 1;
 
