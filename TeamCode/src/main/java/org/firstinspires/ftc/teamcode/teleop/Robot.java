@@ -260,10 +260,10 @@ public class Robot {
             armTarget = 758;
             slideTarget = 2856;
         }
-        if (gamepad1.right_bumper) {
+        if (gamepad1Ex.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
             twisty.setPosition(1);
         }
-        else if (gamepad1.left_bumper) {
+        else if (gamepad1Ex.wasJustReleased(GamepadKeys.Button.RIGHT_BUMPER)) {
             twisty.setPosition(0.625);
         }
         
@@ -322,25 +322,7 @@ public class Robot {
                 arcadeDrive(gamepad1);
             }
         }
-//        else if (gamepad1.b) {
-//            armTarget = 575;
-////            wrist.setPosition(0);
-//            slideTarget = 0;
-//        }
-//        else if (gamepad1.x) {
-//            armTarget = 940;
-////            wrist.setPosition(0.35);
-//            slideTarget = 980;
-//        }
-//        else if (gamepad1.y) {
-//            armTarget = 2190;
-////            wrist.setPosition(0);
-//            while (Math.abs(armTarget - flip.getCurrentPosition()) > 100) {
-//                TeleopPID(gamepad2);
-//                arcadeDrive(gamepad1);
-//            }
-//            slideTarget = 3000;
-//        }
+        gamepad1Ex.readButtons();
     }
     public Action followPathInstant(Follower follower, PathChain path) {
         return new InstantAction(() -> follower.followPath(path, true));
