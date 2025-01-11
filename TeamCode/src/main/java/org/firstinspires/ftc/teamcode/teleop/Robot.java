@@ -214,7 +214,7 @@ public class Robot {
     public void speciMacro() {
         flippy.setPosition(0.53);
         twisty.setPosition(1);
-        Actions.runBlocking(setPidVals(880, 1688));
+        Actions.runBlocking(setPidVals(2120, 1156));
     }
     public void speciPickup() {
         flippy.setPosition(0);
@@ -228,6 +228,12 @@ public class Robot {
         flippy.setPosition(0.95);
         twisty.setPosition(0);
         grippy.setPosition(0);
+    }
+    public void samplePickup() {
+        flippy.setPosition(1);
+        grippyOpen();
+        twisty.setPosition(0.425);
+        Actions.runBlocking(setPidVals(120, 1830));
     }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);

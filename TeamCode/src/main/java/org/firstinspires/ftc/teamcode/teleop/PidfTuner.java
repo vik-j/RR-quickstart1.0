@@ -4,6 +4,8 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -12,6 +14,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.Drawing;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 
 @Config
@@ -26,6 +31,9 @@ public class PidfTuner extends OpMode {
 
     public static boolean PIDon = false;
 
+    public static double grippyPos = 0;
+    public static double twistyPos = 0;
+    public static double flippyPos = 0;
 
     public static int armTarget = 0;
     public static int slideTarget = 0;
@@ -37,15 +45,20 @@ public class PidfTuner extends OpMode {
 
     private DcMotorEx flip, slide;
 //    private Servo wrist;
+    MecanumDrive drive;
+    Robot bot;
+    Pose2d beginPose = new Pose2d(15, -62, Math.toRadians(270));
 
     @Override
     public void init() {
-        Robot bot = new Robot(hardwareMap);
+        bot = new Robot(hardwareMap);
 
         armController = new PIDController(fP, fI, fD);
         slideController = new PIDController(sP,sI,sD);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        drive = new MecanumDrive(hardwareMap, beginPose);
 
         flip = (DcMotorEx) bot.flip;
         slide = (DcMotorEx) bot.slide;
@@ -88,6 +101,22 @@ public class PidfTuner extends OpMode {
             slide.setPower(pid2);
 
             telemetry.addData("flipPower", power);
+
+            bot.flippy.setPosition(flippyPos);
+            bot.twisty.setPosition(twistyPos);
+            bot.grippy.setPosition(grippyPos);
+
+            drive.updatePoseEstimate();
+
+            telemetry.addData("x", drive.pose.position.x);
+            telemetry.addData("y", drive.pose.position.y);
+            telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+            telemetry.update();
+
+            TelemetryPacket packet = new TelemetryPacket();
+            packet.fieldOverlay().setStroke("#3F51B5");
+            Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
+            FtcDashboard.getInstance().sendTelemetryPacket(packet);
         }
 
 //        wrist.setPosition(servoTarget);

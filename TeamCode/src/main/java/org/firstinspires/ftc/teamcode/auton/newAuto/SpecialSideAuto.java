@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class SpecialSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(15, -62, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(15, -62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
 
@@ -36,19 +36,35 @@ public class SpecialSideAuto extends LinearOpMode {
                     bot.speciMacro();
                     return false;
                 })
-//                .afterTime(2.5, telemetryPacket -> {
-//                    bot.grippyOpen();
-//                    bot.reset();
-//                    return false;
-//                })
+                .afterTime(2.5, telemetryPacket -> {
+                    bot.grippyOpen();
+                    bot.reset();
+                    return false;
+                })
+                .afterTime(3, telemetryPacket -> {
+                    bot.samplePickup();
+                    return false;
+                })
+                .build();
+
+        Action driveAction = drive.actionBuilder(beginPose)
+                .splineToConstantHeading(new Vector2d(6, -26), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(34.5515,-43.2), Math.toRadians(53.375))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(34.95, -43.635), Math.toRadians(-50.7))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(43.67, -41.8), Math.toRadians(51.777))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(45.02, -43.37), Math.toRadians(-45.44))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(52.93, -41.32), Math.toRadians(51.15))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(36.481, -46.63), Math.toRadians(-90))
                 .build();
 
         Actions.runBlocking(
                 new ParallelAction(
-                drive.actionBuilder(beginPose)
-                .splineToConstantHeading(new Vector2d(5, -26), Math.toRadians(90))
-//                        .splineToSplineHeading(new Pose2d(36,-36, Math.toRadians(0)), Math.toRadians(0))
-                        .build(), armAction, bot.getPIDAction()
+                driveAction, armAction, bot.getPIDAction()
                 )
         );
     }
