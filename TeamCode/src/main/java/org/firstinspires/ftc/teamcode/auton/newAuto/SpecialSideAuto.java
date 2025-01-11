@@ -49,7 +49,7 @@ public class SpecialSideAuto extends LinearOpMode {
 
         Action driveAction = drive.actionBuilder(beginPose)
                 .splineToConstantHeading(new Vector2d(6, -26), Math.toRadians(90))
-                .strafeToSplineHeading(new Vector2d(34.5515,-43.2), Math.toRadians(53.375))
+                .splineToSplineHeading(new Pose2d(34.5515,-43.2, Math.toRadians(53.375)), Math.toRadians(53.375))
                 .waitSeconds(0.5)
                 .strafeToSplineHeading(new Vector2d(34.95, -43.635), Math.toRadians(-50.7))
                 .waitSeconds(0.5)
