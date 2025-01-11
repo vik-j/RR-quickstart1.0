@@ -36,18 +36,18 @@ public class SpecialSideAuto extends LinearOpMode {
                     bot.speciMacro();
                     return false;
                 })
-                .afterTime(1.8, telemetryPacket -> {
-                    bot.grippyOpen();
-                    bot.reset();
-                    return false;
-                })
+//                .afterTime(2.5, telemetryPacket -> {
+//                    bot.grippyOpen();
+//                    bot.reset();
+//                    return false;
+//                })
                 .build();
 
         Actions.runBlocking(
                 new ParallelAction(
                 drive.actionBuilder(beginPose)
-                .splineToConstantHeading(new Vector2d(7, -26), Math.toRadians(90))
-                        .splineToSplineHeading(new Pose2d(36,-36, Math.toRadians(180)), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(5, -26), Math.toRadians(90))
+//                        .splineToSplineHeading(new Pose2d(36,-36, Math.toRadians(0)), Math.toRadians(0))
                         .build(), armAction, bot.getPIDAction()
                 )
         );
