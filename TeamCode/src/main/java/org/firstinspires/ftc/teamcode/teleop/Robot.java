@@ -216,11 +216,21 @@ public class Robot {
         twisty.setPosition(1);
         Actions.runBlocking(setPidVals(2120, 1050));
     }
+    public void speciMacroPlus(int change) {
+        flippy.setPosition(0.53);
+        twisty.setPosition(1);
+        Actions.runBlocking(setPidVals(2120, 1050 + change));
+    }
     public void speciPickup() {
         flippy.setPosition(0);
         Actions.runBlocking(setPidVals(2250,0));
         twisty.setPosition(0);
         grippy.setPosition(0);
+    }
+    public void speciPickup2() {
+        grippyOpen();
+        flippy.setPosition(0.58);
+        twisty.setPosition(0);
     }
     public void reset() {
         intakeMultiplier = 1;
