@@ -102,7 +102,7 @@ public class PidfTuner extends OpMode {
 
             telemetry.addData("flipPower", power);
 
-            bot.flippy.setPosition(flippyPos);
+            bot.flippy.setPosition(bot.scaleFlippy(flippyPos));
             bot.twisty.setPosition(twistyPos);
             bot.grippy.setPosition(grippyPos);
 
