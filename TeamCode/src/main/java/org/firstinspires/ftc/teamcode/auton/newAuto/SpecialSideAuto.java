@@ -25,7 +25,7 @@ public class SpecialSideAuto extends LinearOpMode {
         Robot bot = new Robot(hardwareMap);
 
         bot.grippyClose();
-        bot.flippy.setPosition(0);
+        bot.flippy.setPosition(1);
         bot.twisty.setPosition(1);
 //        Actions.runBlocking(bot.setPidVals(900, 0));
 //        Actions.runBlocking(bot.pidfLoopSingular(900));
@@ -60,37 +60,43 @@ public class SpecialSideAuto extends LinearOpMode {
                     bot.speciPickup2();
                     return false;
                 })
-                .afterTime(14.5, telemetryPacket -> {
+                .afterTime(12, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(15.25, telemetryPacket -> {
-                    bot.speciMacroPlus(250);
-                    return false;
-                })
+//                .afterTime(14.5, telemetryPacket -> {
+//                    bot.speciMacro();
+//                    return false;
+//                })
 
                 .build();
 
         Action driveAction = drive.actionBuilder(beginPose)
                 .strafeToConstantHeading(new Vector2d(-6, 36))
                 .waitSeconds(0.5)
-                .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(270)), Math.toRadians(180))
                 .waitSeconds(0.1)
-                .splineToConstantHeading(new Vector2d(-46, 16), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-46, 13), Math.toRadians(180))
                 .waitSeconds(0.001)
-                .strafeToConstantHeading(new Vector2d(-46, 47), new TranslationalVelConstraint(100.0), new ProfileAccelConstraint(-150, 150))
+                .strafeToConstantHeading(new Vector2d(-46, 47), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.001)
-                .splineToConstantHeading(new Vector2d(-56, 16), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-56, 13), Math.toRadians(180))
                 .waitSeconds(0.001)
-                .strafeToConstantHeading(new Vector2d(-56, 45), new TranslationalVelConstraint(100.0), new ProfileAccelConstraint(-150, 120))
+                .strafeToConstantHeading(new Vector2d(-56, 45), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.001)
-                .splineToConstantHeading(new Vector2d(-63.5, 16), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(-62.5, 13, Math.toRadians(90)), Math.toRadians(180))
                 .waitSeconds(0.001)
-                .strafeToConstantHeading(new Vector2d(-63.5, 47), new TranslationalVelConstraint(100.0), new ProfileAccelConstraint(-150, 120))
-                .waitSeconds(0.1)
-                .splineToLinearHeading(new Pose2d(-36, 57.5, Math.toRadians(90)), Math.toRadians(90))
+                .strafeToConstantHeading(new Vector2d(-62.5, 53), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.75)
-                .strafeToConstantHeading(new Vector2d(-8.25, 36))
+                .strafeToConstantHeading(new Vector2d(-7, 36))
+                .waitSeconds(0.5)
+                .strafeToConstantHeading(new Vector2d(-36, 54))
+                .waitSeconds(0.5)
+                .strafeToConstantHeading(new Vector2d(-2, 36))
+                .waitSeconds(0.5)
+                .strafeToConstantHeading(new Vector2d(-36, 54))
+                .waitSeconds(0.5)
+                .strafeToConstantHeading(new Vector2d(3, 36))
 //                .waitSeconds(2)
 //                .strafeToSplineHeading(new Vector2d(-34.95, 43.635), Math.toRadians(149.3))
 //                .waitSeconds(2)

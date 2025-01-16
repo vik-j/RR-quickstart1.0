@@ -212,7 +212,7 @@ public class Robot {
         grippy.setPosition(0);
     }
     public void speciMacro() {
-        flippy.setPosition(0.718);
+        flippy.setPosition(0.878);
         twisty.setPosition(1);
         Actions.runBlocking(setPidVals(2120, 1050));
     }
@@ -229,7 +229,7 @@ public class Robot {
     }
     public void speciPickup2() {
         grippyOpen();
-        flippy.setPosition(0.748);
+        flippy.setPosition(0.778);
         twisty.setPosition(0);
     }
     public void reset() {
@@ -249,7 +249,7 @@ public class Robot {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.y) {
             rightBumperCounter = 0;
-            flippy.setPosition(0.718);
+            flippy.setPosition(0.828);
             armTarget = 1870;
 
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
@@ -301,7 +301,7 @@ public class Robot {
             slideTarget = 2300;
             armTarget = 240;
             intakeMultiplier = 1;
-            flippy.setPosition(1);
+            flippy.setPosition(0.4);
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
@@ -325,7 +325,7 @@ public class Robot {
 
             Actions.runBlocking(new SleepAction(0.5));
 
-            flippy.setPosition(0.4);
+            flippy.setPosition(1);
 
             Actions.runBlocking(new SleepAction(0.25));
 
