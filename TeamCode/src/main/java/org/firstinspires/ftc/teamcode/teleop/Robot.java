@@ -217,17 +217,28 @@ public class Robot {
         twisty.setPosition(1);
         Actions.runBlocking(setPidVals(2120, 1050));
     }
+    public void newSpeci() {
+        flippy.setPosition(0.828);
+//            armTarget = 2120;
+//            slideTarget = 1256;
+
+        Actions.runBlocking(setPidVals(890, 1830));
+    }
+    public void newSpeci2() {
+        Actions.runBlocking(setPidVals(1360, 1830));
+    }
     public void speciMacroPlus(int change) {
         flippy.setPosition(0.718);
         twisty.setPosition(1);
         Actions.runBlocking(setPidVals(2120, 1050 + change));
     }
     public void speciPickup() {
-        flippy.setPosition(0.4);
-        Actions.runBlocking(setPidVals(2250,0));
+        flippy.setPosition(0.97);
+        Actions.runBlocking(setPidVals(2300,0));
         twisty.setPosition(0);
-        grippy.setPosition(0);
+        grippyOpen();
     }
+
     public void speciPickup2() {
         grippyOpen();
         flippy.setPosition(0.778);
@@ -301,8 +312,8 @@ public class Robot {
             Actions.runBlocking(new SleepAction(0.1));
             flippy.setPosition(0.828);
 
-            armTarget = 870;
-            slideTarget = 1830;
+            armTarget = 915;
+            slideTarget = 1130;
         }
         else if (gamepad2.left_stick_button) {
             flippy.setPosition(0.4);
@@ -445,7 +456,7 @@ public class Robot {
 
         flip.setPower(power);
 
-        double pid2 = slideController.calculate(slidePos, slideTarget);
+        double pid2 = slideController.calculate(slidePos, scaleSlides(slideTarget));
 
         slide.setPower(pid2);
 
@@ -507,6 +518,9 @@ public class Robot {
 //        else if (gamepad.right_bumper) {
 //            wrist.setPosition(0.5);
 //        }
+    }
+    public int scaleSlides(double unscaled) {
+        return (int) (unscaled * 0.7137546468);
     }
     public Action pidToPoint(Pose2d targetPose) {
         return new p2p(this, targetPose);
@@ -658,7 +672,7 @@ public class Robot {
 
             flip.setPower(power);
 
-            double pid2 = slideController.calculate(slidePos, slideTargetAuto);
+            double pid2 = slideController.calculate(slidePos, scaleSlides(slideTargetAuto));
 
             slide.setPower(pid2);
 
@@ -678,7 +692,7 @@ public class Robot {
 
             flip.setPower(power);
 
-            double pid2 = slideController.calculate(slidePos, slideTargetAuto);
+            double pid2 = slideController.calculate(slidePos, scaleSlides(slideTargetAuto));
 
             slide.setPower(pid2);
 
@@ -712,7 +726,7 @@ public class Robot {
 
             flip.setPower(power);
 
-            double pid2 = slideController.calculate(slidePos, slideTarget);
+            double pid2 = slideController.calculate(slidePos, scaleSlides(slideTarget));
 
             slide.setPower(pid2);
 
@@ -751,7 +765,7 @@ public class Robot {
 
                 flip.setPower(power);
 
-                double pid2 = slideController.calculate(slidePos, slideTargetAuto);
+                double pid2 = slideController.calculate(slidePos, scaleSlides(slideTargetAuto));
 
                 slide.setPower(pid2);
 

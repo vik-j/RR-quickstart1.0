@@ -57,11 +57,23 @@ public class SpecialSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(10, telemetryPacket -> {
-                    bot.speciPickup2();
+                    bot.speciPickup();
                     return false;
                 })
                 .afterTime(12, telemetryPacket -> {
                     bot.grippyClose();
+                    return false;
+                })
+                .afterTime(13.5, telemetryPacket -> {
+                    bot.newSpeci();
+                    return false;
+                })
+                .afterTime(15, telemetryPacket -> {
+                    bot.newSpeci2();
+                    return false;
+                })
+                .afterTime(15.3, telemetryPacket -> {
+                    bot.grippyOpen();
                     return false;
                 })
 //                .afterTime(14.5, telemetryPacket -> {
@@ -86,17 +98,19 @@ public class SpecialSideAuto extends LinearOpMode {
                 .waitSeconds(0.001)
                 .splineToConstantHeading(new Vector2d(-62.5, 13), Math.toRadians(180))
                 .waitSeconds(0.001)
-                .strafeToConstantHeading(new Vector2d(-62.5, 53), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
-                .waitSeconds(0.75)
-                .strafeToConstantHeading(new Vector2d(-7, 36))
-                .waitSeconds(0.5)
-                .strafeToConstantHeading(new Vector2d(-36, 54))
-                .waitSeconds(0.5)
-                .strafeToConstantHeading(new Vector2d(-2, 36))
-                .waitSeconds(0.5)
-                .strafeToConstantHeading(new Vector2d(-36, 54))
-                .waitSeconds(0.5)
-                .strafeToConstantHeading(new Vector2d(3, 36))
+                .strafeToConstantHeading(new Vector2d(-62.5, 48), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
+                .waitSeconds(0.2)
+                .strafeToConstantHeading(new Vector2d(-62.5, 49))
+                .strafeToConstantHeading(new Vector2d(-7, 35))
+
+//                .waitSeconds(0.5)
+//                .strafeToConstantHeading(new Vector2d(-36, 54))
+//                .waitSeconds(0.5)
+//                .strafeToConstantHeading(new Vector2d(-2, 36))
+//                .waitSeconds(0.5)
+//                .strafeToConstantHeading(new Vector2d(-36, 54))
+//                .waitSeconds(0.5)
+//                .strafeToConstantHeading(new Vector2d(3, 36))
 //                .waitSeconds(2)
 //                .strafeToSplineHeading(new Vector2d(-34.95, 43.635), Math.toRadians(149.3))
 //                .waitSeconds(2)
