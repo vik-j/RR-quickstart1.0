@@ -30,6 +30,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -245,6 +246,22 @@ public class Robot {
         twisty.setPosition(0.425);
         Actions.runBlocking(setPidVals(175, 1830));
     }
+    public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
+        if (gamepad2.x) {
+            rightBumperCounter = 0;
+            slideTarget = 2300;
+            armTarget = 240;
+            intakeMultiplier = 1;
+            flippy.setPosition(0.4);
+            while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
+                TeleopPID(gamepad2);
+                arcadeDrive(gamepad1);
+            }
+
+            twisty.setPosition(0);
+            grippy.setPosition(0);
+        }
+    }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.y) {
@@ -255,25 +272,47 @@ public class Robot {
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
+                extendIntoSub(gamepad1, gamepad2);
             }
             slideTarget = 4600;
         }
         if (gamepad2.left_bumper) flippy.setPosition(0.97);
         if (gamepad2.right_bumper) flippy.setPosition(0.4);
         if (gamepad1.b) {
+            armTarget = 1360;
+            Actions.runBlocking(new ParallelAction(new SleepAction(0.35), returnTelePid(0.35)));
             grippyOpen();
-            flippy.setPosition(0.748);
-            armTarget = 0;
+            Actions.runBlocking(new SleepAction(0.1));
+//            flippy.setPosition(0.748);
+//            armTarget = 0;
+//            slideTarget = 0;
+            flippy.setPosition(0.97);
+            armTarget = 2300;
             slideTarget = 0;
             twisty.setPosition(0);
         }
         if (gamepad1.x) {
             grippyClose();
-            flippy.setPosition(0.718);
-            twisty.setPosition(1);
+//            flippy.setPosition(0.718);
+//            twisty.setPosition(1);
+//            Actions.runBlocking(new SleepAction(0.1));
+//            armTarget = 2120;
+//            slideTarget = 1256;
             Actions.runBlocking(new SleepAction(0.1));
-            armTarget = 2120;
-            slideTarget = 1256;
+            flippy.setPosition(0.828);
+
+            armTarget = 870;
+            slideTarget = 1830;
+        }
+        else if (gamepad2.left_stick_button) {
+            flippy.setPosition(0.4);
+            armTarget = 2300;
+            slideTarget = 1820;
+        }
+        else if (gamepad2.right_stick_button) {
+            slideTarget = 0;
+            Actions.runBlocking(new ParallelAction(new SleepAction(0.3), returnTelePid(0.3)));
+            armTarget = 710;
         }
         if (gamepad1Ex.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
             twisty.setPosition(1);
@@ -284,7 +323,7 @@ public class Robot {
 
         if (gamepad2.a) {
             rightBumperCounter = 0;
-            flippy.setPosition(0.97);
+            flippy.setPosition(0.4);
             slideTarget = 0;
             intakeMultiplier = 1;
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 1000) {
@@ -651,6 +690,40 @@ public class Robot {
             return !stopPid;
         }
     }
+    public Action returnTelePid(double timeout) {
+        return new pidfLoopActionTeleTimeout(timeout);
+    }
+    public class pidfLoopActionTeleTimeout implements Action {
+        public double timeout;
+        public ElapsedTime timer = new ElapsedTime();
+        public pidfLoopActionTeleTimeout(double timeout) {
+            this.timeout = timeout;
+            timer.reset();
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            flipPos = flip.getCurrentPosition();
+            slidePos = slide.getCurrentPosition();
+
+            double pid = armController.calculate(flipPos, armTarget);
+            double ff = Math.cos(Math.toRadians(armTargetAuto / armPIDValues.ticks_in_degree)) * armPIDValues.fF;
+
+            double power = pid + ff;
+
+            flip.setPower(power);
+
+            double pid2 = slideController.calculate(slidePos, slideTarget);
+
+            slide.setPower(pid2);
+
+//            try {
+//                Thread.sleep(10); // Adjust the sleep time as needed
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
+            return timer.seconds() <= timeout;
+        }
+    }
     public class ValAction implements Action {
         int armTarget, slidetarget;
         public ValAction(int arm, int slide) {
@@ -719,8 +792,8 @@ public class Robot {
     }
 
     public static class armPIDValues {
-        public static double fP = 0.01, fI = 0, fD = 0;  //fD = 0.00001, fP = 0.002
-        public static double fF = 0.01; //fF = 0.0022
+        public static double fP = 0.0035, fI = 0, fD = 0;  //fD = 0.00001, fP = 0.002
+        public static double fF = 0.008; //fF = 0.0022
         public static double sP = 0.005, sI, sD;
 
         private static final double ticks_in_degree = 1850 / 90.0;

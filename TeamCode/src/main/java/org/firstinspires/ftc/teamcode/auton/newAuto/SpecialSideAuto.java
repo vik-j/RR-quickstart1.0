@@ -84,7 +84,7 @@ public class SpecialSideAuto extends LinearOpMode {
                 .waitSeconds(0.001)
                 .strafeToConstantHeading(new Vector2d(-56, 45), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.001)
-                .splineToLinearHeading(new Pose2d(-62.5, 13, Math.toRadians(90)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-62.5, 13), Math.toRadians(180))
                 .waitSeconds(0.001)
                 .strafeToConstantHeading(new Vector2d(-62.5, 53), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.75)

@@ -24,8 +24,8 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 public class PidfTuner extends OpMode {
     private PIDController armController, slideController;
 
-    public static double fP = 0.008, fI = 0, fD = 0;  //fD = 0.00001, fP = 0.002
-    public static double fF = 0.01; //fF = 0.0022
+    public static double fP = 0.0035, fI = 0, fD = 0;  //fD = 0.00001, fP = 0.002
+    public static double fF = 0.008; //fF = 0.0022
     public static double sP = 0.005, sI, sD;
     public static double sF;
 
