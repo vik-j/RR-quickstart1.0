@@ -92,15 +92,15 @@ public class SpecialSideAuto extends LinearOpMode {
                     bot.speciPickup();
                     return false;
                 })
-                .afterTime(17.2, telemetryPacket -> {
+                .afterTime(17.4, telemetryPacket -> {
                     bot.badClose();
                     return false;
                 })
-                .afterTime(17.6, telemetryPacket -> {
+                .afterTime(17.75, telemetryPacket -> {
                     bot.newSpeci();
                     return false;
                 })
-                .afterTime(18.5, telemetryPacket -> {
+                .afterTime(19.5, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;
                 })
@@ -126,11 +126,11 @@ public class SpecialSideAuto extends LinearOpMode {
                 .waitSeconds(0.001)
                 .strafeToConstantHeading(new Vector2d(-56, 45), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.001)
-                .splineToConstantHeading(new Vector2d(-62.5, 13), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-63, 13), Math.toRadians(180))
                 .waitSeconds(0.001)
-                .strafeToConstantHeading(new Vector2d(-62.5, 48), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
+                .strafeToConstantHeading(new Vector2d(-63, 48), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.1)
-                .strafeToConstantHeading(new Vector2d(-62.5, 49))
+                .strafeToConstantHeading(new Vector2d(-63, 49))
                 .waitSeconds(0.3)
                 .strafeTo(new Vector2d(-4, 49))
                 .waitSeconds(0.5)
