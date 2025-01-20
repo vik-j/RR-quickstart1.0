@@ -20,13 +20,13 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class SpecialSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
 
         bot.grippyClose();
         bot.flippy.setPosition(1);
-        bot.twisty.setPosition(1);
+        bot.twisty.setPosition(0);
 //        Actions.runBlocking(bot.setPidVals(900, 0));
 //        Actions.runBlocking(bot.pidfLoopSingular(900));
 
@@ -36,10 +36,14 @@ public class SpecialSideAuto extends LinearOpMode {
 
         Action armAction = drive.actionBuilder(beginPose)
                 .afterTime(0.01, telemetryPacket -> {
-                    bot.speciMacro();
+                    bot.newSpeci();
                     return false;
                 })
                 .afterTime(1.4, telemetryPacket -> {
+                    bot.newSpeci2();
+                    return false;
+                })
+                .afterTime(1.6, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
@@ -60,20 +64,44 @@ public class SpecialSideAuto extends LinearOpMode {
                     bot.speciPickup();
                     return false;
                 })
-                .afterTime(12, telemetryPacket -> {
-                    bot.grippyClose();
+                .afterTime(11.25, telemetryPacket -> {
+                    bot.badClose();
                     return false;
                 })
-                .afterTime(13.5, telemetryPacket -> {
-                    bot.newSpeci();
+                .afterTime(11.75, telemetryPacket -> {
+                    bot.setPidValues(2300,1000);
                     return false;
                 })
-                .afterTime(15, telemetryPacket -> {
+                .afterTime(12.25, telemetryPacket -> {
+                    bot.newSpeciPivot();
+                    return false;
+                })
+                .afterTime(14, telemetryPacket -> {
+                    bot.newSpeciSlides();
+                    return false;
+                })
+                .afterTime(15.25, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;
                 })
-                .afterTime(15.3, telemetryPacket -> {
+                .afterTime(15.75, telemetryPacket -> {
                     bot.grippyOpen();
+                    return false;
+                })
+                .afterTime(15.8, telemetryPacket -> {
+                    bot.speciPickup();
+                    return false;
+                })
+                .afterTime(17.2, telemetryPacket -> {
+                    bot.badClose();
+                    return false;
+                })
+                .afterTime(17.6, telemetryPacket -> {
+                    bot.newSpeci();
+                    return false;
+                })
+                .afterTime(18.5, telemetryPacket -> {
+                    bot.newSpeci2();
                     return false;
                 })
 //                .afterTime(14.5, telemetryPacket -> {
@@ -83,11 +111,13 @@ public class SpecialSideAuto extends LinearOpMode {
 
                 .build();
 
+        //TODO: 13.38 V
+
         Action driveAction = drive.actionBuilder(beginPose)
-                .strafeToConstantHeading(new Vector2d(-6, 36))
+                .strafeToConstantHeading(new Vector2d(-8.5, 37))
                 .waitSeconds(0.5)
                 .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(270)), Math.toRadians(180))
-                .waitSeconds(0.1)
+                .waitSeconds(0.2)
                 .splineToConstantHeading(new Vector2d(-46, 13), Math.toRadians(180))
                 .waitSeconds(0.001)
                 .strafeToConstantHeading(new Vector2d(-46, 47), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
@@ -99,9 +129,16 @@ public class SpecialSideAuto extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-62.5, 13), Math.toRadians(180))
                 .waitSeconds(0.001)
                 .strafeToConstantHeading(new Vector2d(-62.5, 48), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
-                .waitSeconds(0.2)
+                .waitSeconds(0.1)
                 .strafeToConstantHeading(new Vector2d(-62.5, 49))
-                .strafeToConstantHeading(new Vector2d(-7, 35))
+                .waitSeconds(0.3)
+                .strafeTo(new Vector2d(-4, 49))
+                .waitSeconds(0.5)
+                .strafeTo(new Vector2d(-4, 36))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-36, 49))
+                .waitSeconds(0.5)
+                .strafeTo(new Vector2d(0, 36))
 
 //                .waitSeconds(0.5)
 //                .strafeToConstantHeading(new Vector2d(-36, 54))

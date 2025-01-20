@@ -212,16 +212,31 @@ public class Robot {
     public void grippyOpen() {
         grippy.setPosition(0);
     }
-    public void speciMacro() {
-        flippy.setPosition(0.878);
-        twisty.setPosition(1);
-        Actions.runBlocking(setPidVals(2120, 1050));
+    public void wallMacro() {
+        flippy.setPosition(0.828);
+
+        Actions.runBlocking(setPidVals(915, 1130));
+    }
+    public void wallMacro2() {
+        armTarget = 1360;
+        Actions.runBlocking(setPidVals(1360, 1130));
+    }
+    public void badClose() {
+        grippy.setPosition(0.95);
     }
     public void newSpeci() {
         flippy.setPosition(0.828);
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
+        Actions.runBlocking(setPidVals(890, 1830));
+    }
+    public void newSpeciPivot() {
+        flippy.setPosition(0.828);
+        Actions.runBlocking(setPidVals(890, 0));
+    }
+    public void newSpeciSlides() {
+        flippy.setPosition(0.828);
         Actions.runBlocking(setPidVals(890, 1830));
     }
     public void newSpeci2() {
@@ -297,7 +312,7 @@ public class Robot {
 //            flippy.setPosition(0.748);
 //            armTarget = 0;
 //            slideTarget = 0;
-            flippy.setPosition(0.97);
+            flippy.setPosition(1);
             armTarget = 2300;
             slideTarget = 0;
             twisty.setPosition(0);
@@ -317,7 +332,7 @@ public class Robot {
         }
         else if (gamepad2.left_stick_button) {
             flippy.setPosition(0.4);
-            armTarget = 2300;
+            armTarget = 2090;
             slideTarget = 1820;
         }
         else if (gamepad2.right_stick_button) {
@@ -352,10 +367,7 @@ public class Robot {
             armTarget = 240;
             intakeMultiplier = 1;
             flippy.setPosition(0.4);
-            while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
-                TeleopPID(gamepad2);
-                arcadeDrive(gamepad1);
-            }
+            grippyOpen();
 
             twisty.setPosition(0);
             grippy.setPosition(0);
