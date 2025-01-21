@@ -254,6 +254,13 @@ public class Robot {
         grippyOpen();
     }
 
+    public void sampleScore() {
+        flippy.setPosition(0.828);
+        Actions.runBlocking(setPidVals(1900, 0));
+    }
+    public void sampleScore2() {
+        Actions.runBlocking(setPidVals(1900, 4700));
+    }
     public void speciPickup2() {
         grippyOpen();
         flippy.setPosition(0.778);
@@ -267,10 +274,23 @@ public class Robot {
         grippy.setPosition(0);
     }
     public void samplePickup() {
-        flippy.setPosition((1));
+        flippy.setPosition((0.4));
         grippyOpen();
-        twisty.setPosition(0.425);
+        twisty.setPosition(0);
         Actions.runBlocking(setPidVals(175, 1830));
+    }
+    public void samplePickupPart2() {
+        rightBumperCounter = 0;
+        Actions.runBlocking(setPidVals(0, 1830));
+        armTarget = 0;
+        intakeMultiplier = 1;
+
+        grippy.setPosition(1);
+
+        flippy.setPosition(1);
+
+        twisty.setPosition(0);
+        Actions.runBlocking(setPidVals(0,0));
     }
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.x) {
@@ -532,7 +552,7 @@ public class Robot {
 //        }
     }
     public int scaleSlides(double unscaled) {
-        return (int) (unscaled * 0.7137546468);
+        return (int) (unscaled * 0.7137546468*0.7135416667);
     }
     public Action pidToPoint(Pose2d targetPose) {
         return new p2p(this, targetPose);

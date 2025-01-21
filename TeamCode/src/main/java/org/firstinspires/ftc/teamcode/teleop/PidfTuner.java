@@ -96,7 +96,7 @@ public class PidfTuner extends OpMode {
 
             slideController.setPID(sP,sI,sD);
             slidePos = slide.getCurrentPosition();
-            double pid2 = slideController.calculate(slidePos, slideTarget);
+            double pid2 = slideController.calculate(slidePos, bot.scaleSlides(slideTarget));
 
             slide.setPower(pid2);
 
