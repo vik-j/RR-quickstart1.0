@@ -11,7 +11,6 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -19,10 +18,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -35,10 +31,6 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.R;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Config
 //TODO: change claw opened and closed values
@@ -256,10 +248,13 @@ public class Robot {
 
     public void sampleScore() {
         flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(1900, 0));
+        Actions.runBlocking(setPidVals(1850, 0));
     }
     public void sampleScore2() {
-        Actions.runBlocking(setPidVals(1900, 4700));
+        Actions.runBlocking(setPidVals(1850, 4700));
+    }
+    public void sampleScore3() {
+        Actions.runBlocking(setPidVals(1980, 4700));
     }
     public void speciPickup2() {
         grippyOpen();
@@ -277,7 +272,7 @@ public class Robot {
         flippy.setPosition((0.4));
         grippyOpen();
         twisty.setPosition(0);
-        Actions.runBlocking(setPidVals(175, 1830));
+        Actions.runBlocking(setPidVals(175, 1730));
     }
     public void samplePickupPart2() {
         rightBumperCounter = 0;
@@ -313,7 +308,7 @@ public class Robot {
         if (gamepad2.y) {
             rightBumperCounter = 0;
             flippy.setPosition(0.828);
-            armTarget = 1870;
+            armTarget = 1900;
 
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
@@ -384,7 +379,7 @@ public class Robot {
         if (gamepad2.x) {
             rightBumperCounter = 0;
             slideTarget = 2300;
-            armTarget = 240;
+            armTarget = 280;
             intakeMultiplier = 1;
             flippy.setPosition(0.4);
             grippyOpen();
@@ -505,6 +500,18 @@ public class Robot {
         double pid2 = slideController.calculate(slidePos, slideTarget);
 
         slide.setPower(pid2);
+    }
+    public class PidAction implements Action {
+        int flipPos, slidePos;
+        public PidAction(int flipPos, int slidePos) {
+            this.flipPos = flipPos;
+            this.slidePos = slidePos;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            return false;
+        }
     }
     public void extraD1Features(Gamepad gamepad) {
         if (gamepad.dpad_up) {
