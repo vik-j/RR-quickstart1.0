@@ -32,6 +32,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+import java.util.Objects;
+
 @Config
 //TODO: change claw opened and closed values
 public class Robot {
@@ -60,6 +62,8 @@ public class Robot {
     public double intakeMultiplier = 1;
     public static double leftHangPosUp = 0.9, leftHangPosDown = 0.4, rightHangPosUp = 0.9, rightHangPosDown = 0.4;
     Thread currentThread = null;
+
+    public final double noTimeout = -1.0;
 
     public Robot(HardwareMap hardwareMap) {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
@@ -509,15 +513,24 @@ public class Robot {
         slide.setPower(pid2);
     }
     public class PidAction implements Action {
-        int flipPos, slidePos;
-        public PidAction(int flipPos, int slidePos) {
-            this.flipPos = flipPos;
-            this.slidePos = slidePos;
+        int flipTarget, slideTarget;
+        double timeout;
+        ElapsedTime timer;
+
+
+        public PidAction(int flipTarget, int slideTarget, double timeout) {
+            this.flipTarget = flipTarget;
+            this.slideTarget = slideTarget;
+
+            this.timeout = timeout;
+            timer = new ElapsedTime();
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            timer.reset();
+            setPidValues(flipTarget, slideTarget);
 
-            return false;
+            return (((Math.abs(flipPos - flipTarget) < 50) && (Math.abs(slidePos - slideTarget) < 50))) || timer.seconds() <= timeout);
         }
     }
     public void extraD1Features(Gamepad gamepad) {
