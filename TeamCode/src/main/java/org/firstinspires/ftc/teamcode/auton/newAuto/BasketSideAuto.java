@@ -23,6 +23,7 @@ public class BasketSideAuto extends LinearOpMode {
         Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
+        bot.resetArm();
 
         bot.grippyClose();
         bot.flippy.setPosition(1);
@@ -64,7 +65,7 @@ public class BasketSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(8, telemetryPacket -> {
-                    bot.setPidValues(0, 1630);
+                    bot.setPidValues(0, 1730);
                     return false;
                 })
                 .afterTime(8.25, telemetryPacket -> {
@@ -107,7 +108,7 @@ public class BasketSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(15, telemetryPacket -> {
-                    bot.setPidValues(0, 1630);
+                    bot.setPidValues(0, 1730);
                     return false;
                 })
                 .afterTime(15.2, telemetryPacket -> {
@@ -131,11 +132,11 @@ public class BasketSideAuto extends LinearOpMode {
                     bot.flippy.setPosition(0.87);
                     return false;
                 })
-                .afterTime(18.25, telemetryPacket -> {
+                .afterTime(18.5, telemetryPacket -> {
                     bot.sampleScore3();
                     return false;
                 })
-                .afterTime(18.75, telemetryPacket -> {
+                .afterTime(18.9, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
@@ -150,7 +151,7 @@ public class BasketSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(22, telemetryPacket -> {
-                    bot.setPidValues(0, 1630);
+                    bot.setPidValues(0, 1730);
                     return false;
                 })
                 .afterTime(22.25, telemetryPacket -> {
@@ -174,16 +175,20 @@ public class BasketSideAuto extends LinearOpMode {
                     bot.flippy.setPosition(0.87);
                     return false;
                 })
-                .afterTime(26.1, telemetryPacket -> {
+                .afterTime(26.5, telemetryPacket -> {
                     bot.sampleScore3();
                     return false;
                 })
-                .afterTime(26.45, telemetryPacket -> {
+                .afterTime(26.75, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(26.75, telemetryPacket -> {
+                .afterTime(27, telemetryPacket -> {
                     bot.reset();
+                    return false;
+                })
+                .afterTime(28, telemetryPacket -> {
+                    bot.setPidValues(1100, 2000);
                     return false;
                 })
                 .build();
@@ -193,17 +198,19 @@ public class BasketSideAuto extends LinearOpMode {
         Action driveAction = drive.actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(52,55), Math.toRadians(225))
                 .waitSeconds(4)
-                .strafeToLinearHeading(new Vector2d(49.25, 50), Math.toRadians(282.5), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
+                .strafeToLinearHeading(new Vector2d(49.25, 50), Math.toRadians(280), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
                 .waitSeconds(5)
-                .strafeToLinearHeading(new Vector2d(53,49.5), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(53,49), Math.toRadians(225))
                 .waitSeconds(2)
-                .strafeToLinearHeading(new Vector2d(60, 50), Math.toRadians(277.5), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
+                .strafeToLinearHeading(new Vector2d(60, 49.5), Math.toRadians(275), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
                 .waitSeconds(3)
-                .strafeToLinearHeading(new Vector2d(53.5,54), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(53.5,53), Math.toRadians(225))
                 .waitSeconds(2.4)
-                .strafeToLinearHeading(new Vector2d(62, 48), Math.toRadians(290))
+                .strafeToLinearHeading(new Vector2d(60, 48), Math.toRadians(300))
                 .waitSeconds(2)
-                .strafeToLinearHeading(new Vector2d(53.5,55), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(53.5,54), Math.toRadians(225))
+                .waitSeconds(3.5)
+                .splineToLinearHeading(new Pose2d(22, 10, Math.toRadians(180)), Math.toRadians((180)))
                 .build();
 
         Actions.runBlocking(

@@ -81,11 +81,11 @@ public class Robot {
 
 //        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
-        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        flip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        flip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        flip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//        slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        flip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 //        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
 //        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -209,6 +209,13 @@ public class Robot {
 
         Actions.runBlocking(setPidVals(915, 1130));
     }
+    public void resetArm() {
+        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        flip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        flip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
     public void wallMacro2() {
         armTarget = 1360;
         Actions.runBlocking(setPidVals(1360, 1130));
@@ -254,7 +261,7 @@ public class Robot {
         Actions.runBlocking(setPidVals(1850, 4700));
     }
     public void sampleScore3() {
-        Actions.runBlocking(setPidVals(1980, 4700));
+        Actions.runBlocking(setPidVals(2000, 4700));
     }
     public void speciPickup2() {
         grippyOpen();
