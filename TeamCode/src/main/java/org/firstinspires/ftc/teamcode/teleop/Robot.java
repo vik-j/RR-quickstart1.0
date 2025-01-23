@@ -530,7 +530,7 @@ public class Robot {
             timer.reset();
             setPidValues(flipTarget, slideTarget);
 
-            return (((Math.abs(flipPos - flipTarget) < 50) && (Math.abs(slidePos - slideTarget) < 50))) || timer.seconds() <= timeout);
+            return (((Math.abs(flipPos - flipTarget) < 50) && (Math.abs(slidePos - slideTarget) < 50)) || timer.seconds() <= timeout);
         }
     }
     public void extraD1Features(Gamepad gamepad) {
