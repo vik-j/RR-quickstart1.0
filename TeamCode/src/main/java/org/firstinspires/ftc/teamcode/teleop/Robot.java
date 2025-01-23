@@ -259,10 +259,10 @@ public class Robot {
 
     public void sampleScore() {
         flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(1850, 0));
+        Actions.runBlocking(setPidVals(1800, 0));
     }
     public void sampleScore2() {
-        Actions.runBlocking(setPidVals(1850, 4700));
+        Actions.runBlocking(setPidVals(1800, 4700));
     }
     public void sampleScore3() {
         Actions.runBlocking(setPidVals(2000, 4700));

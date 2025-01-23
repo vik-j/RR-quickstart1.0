@@ -39,7 +39,7 @@ public class BasketSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(1.2, telemetryPacket -> {
-                    bot.flippy.setPosition(0.87);
+                    bot.flippy.setPosition(0.6);
                     return false;
                 })
                 .afterTime(1.5, telemetryPacket -> {
@@ -48,6 +48,7 @@ public class BasketSideAuto extends LinearOpMode {
                 })
                 .afterTime(2.5, telemetryPacket -> {
                     bot.sampleScore3();
+                    bot.flippy.setPosition(0.87);
                     return false;
                 })
                 .afterTime(3.1, telemetryPacket -> {
@@ -58,6 +59,7 @@ public class BasketSideAuto extends LinearOpMode {
                     bot.reset();
                     return false;
                 })
+
 
 
                 .afterTime(7, telemetryPacket -> {
@@ -82,22 +84,23 @@ public class BasketSideAuto extends LinearOpMode {
                 })
                 .afterTime(10.25, telemetryPacket -> {
                     bot.sampleScore();
+                    bot.flippy.setPosition(0.6);
                     return false;
                 })
                 .afterTime(11.25, telemetryPacket -> {
                     bot.sampleScore2();
-                    bot.flippy.setPosition(0.87);
                     return false;
                 })
                 .afterTime(12.1, telemetryPacket -> {
                     bot.sampleScore3();
+                    bot.flippy.setPosition(0.87);
                     return false;
                 })
-                .afterTime(12.45, telemetryPacket -> {
+                .afterTime(12.65, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(12.75, telemetryPacket -> {
+                .afterTime(12.85, telemetryPacket -> {
                     bot.reset();
                     return false;
                 })
@@ -125,15 +128,16 @@ public class BasketSideAuto extends LinearOpMode {
                 })
                 .afterTime(16.5, telemetryPacket -> {
                     bot.sampleScore();
+                    bot.flippy.setPosition(0.6);
                     return false;
                 })
                 .afterTime(17.25, telemetryPacket -> {
                     bot.sampleScore2();
-                    bot.flippy.setPosition(0.87);
                     return false;
                 })
                 .afterTime(18.5, telemetryPacket -> {
                     bot.sampleScore3();
+                    bot.flippy.setPosition(0.87);
                     return false;
                 })
                 .afterTime(18.9, telemetryPacket -> {
@@ -168,26 +172,27 @@ public class BasketSideAuto extends LinearOpMode {
                 })
                 .afterTime(24.25, telemetryPacket -> {
                     bot.sampleScore();
+                    bot.flippy.setPosition(0.6);
                     return false;
                 })
                 .afterTime(25.25, telemetryPacket -> {
                     bot.sampleScore2();
-                    bot.flippy.setPosition(0.87);
                     return false;
                 })
                 .afterTime(26.5, telemetryPacket -> {
                     bot.sampleScore3();
+                    bot.flippy.setPosition(0.87);
                     return false;
                 })
-                .afterTime(26.75, telemetryPacket -> {
+                .afterTime(26.9, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(27, telemetryPacket -> {
+                .afterTime(27.25, telemetryPacket -> {
                     bot.reset();
                     return false;
                 })
-                .afterTime(28, telemetryPacket -> {
+                .afterTime(28.25, telemetryPacket -> {
                     bot.setPidValues(1100, 2000);
                     return false;
                 })
@@ -198,18 +203,19 @@ public class BasketSideAuto extends LinearOpMode {
         Action driveAction = drive.actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(52,55), Math.toRadians(225))
                 .waitSeconds(4)
-                .strafeToLinearHeading(new Vector2d(49.25, 50), Math.toRadians(280), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
+                .strafeToLinearHeading(new Vector2d(49.25, 49.25), Math.toRadians(279), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
                 .waitSeconds(5)
                 .strafeToLinearHeading(new Vector2d(53,49), Math.toRadians(225))
                 .waitSeconds(2)
-                .strafeToLinearHeading(new Vector2d(60, 49.5), Math.toRadians(275), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
+                .strafeToLinearHeading(new Vector2d(60, 49.5), Math.toRadians(275.5), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
                 .waitSeconds(3)
                 .strafeToLinearHeading(new Vector2d(53.5,53), Math.toRadians(225))
                 .waitSeconds(2.4)
-                .strafeToLinearHeading(new Vector2d(60, 48), Math.toRadians(300))
+                .strafeToLinearHeading(new Vector2d(60.5, 48.5), Math.toRadians(300))
                 .waitSeconds(2)
-                .strafeToLinearHeading(new Vector2d(53.5,54), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(53.5,53.5), Math.toRadians(225))
                 .waitSeconds(3.5)
+                .splineToLinearHeading(new Pose2d(36, 10, Math.toRadians(180)), Math.toRadians((180)))
                 .splineToLinearHeading(new Pose2d(22, 10, Math.toRadians(180)), Math.toRadians((180)))
                 .build();
 
