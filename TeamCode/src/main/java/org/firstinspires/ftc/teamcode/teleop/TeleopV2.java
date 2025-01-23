@@ -9,6 +9,7 @@ public class TeleopV2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Robot bot = new Robot(hardwareMap);
         bot.setTelemToDashboard(telemetry);
+        bot.flippy.setPosition(1);
 
         waitForStart();
 
