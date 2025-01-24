@@ -19,6 +19,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.pathgen.PathChain;
+import com.qualcomm.hardware.lynx.LynxController;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -41,7 +42,7 @@ public class Robot {
     public DcMotor flip, slide;
     public Servo wrist, leftHang, rightHang;
     public CRServo intakeLeft, intakeRight;
-    public Servo grippy, twisty, flippy;
+    public Servo grippy, twisty, flippy, touchy;
     public MecanumDrive drive;
     public PIDController armController, slideController;
     public double epsilon = 0.1;
@@ -65,6 +66,8 @@ public class Robot {
 
     public final double noTimeout = -1.0;
 
+    public static Pose2d lastPose = new Pose2d(0,0,0);
+
     public Robot(HardwareMap hardwareMap) {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
 
@@ -79,6 +82,7 @@ public class Robot {
         grippy = hardwareMap.servo.get("claw");
         twisty = hardwareMap.servo.get("twist");
         flippy = hardwareMap.servo.get("flippy");
+        touchy = hardwareMap.servo.get("touchy");
 
         leftHang = hardwareMap.servo.get("leftHang");
         rightHang = hardwareMap.servo.get("rightHang");
@@ -202,6 +206,12 @@ public class Robot {
     }
 
 
+    public void touchyTouch() {
+        touchy.setPosition(0);
+    }
+    public void touchyRetract() {
+        touchy.setPosition(1);
+    }
     public void grippyClose() {
         grippy.setPosition(1);
     }
@@ -213,7 +223,7 @@ public class Robot {
 
         Actions.runBlocking(setPidVals(915, 1130));
     }
-    public void resetArm() {
+    public void resetEncoders() {
         slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         flip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -228,35 +238,57 @@ public class Robot {
         grippy.setPosition(0.95);
     }
     public void newSpeci() {
+        touchyTouch();
         flippy.setPosition(0.828);
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
-        Actions.runBlocking(setPidVals(890, 1830));
+        Actions.runBlocking(setPidVals(945, 1634));
+    }
+    public ArmPosition speciDeposit() {
+        return new ArmPosition(945, 1634, grippy.getPosition(), 0.828, twisty.getPosition(), 0);
     }
     public void newSpeciPivot() {
+        touchyRetract();
         flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(890, 0));
+        Actions.runBlocking(setPidVals(945, 0));
+    }
+    public ArmPosition speciDepositPivot() {
+        return new ArmPosition(945, 0, grippy.getPosition(), 0.828, twisty.getPosition(), 1);
     }
     public void newSpeciSlides() {
+        touchyTouch();
         flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(890, 1830));
+        Actions.runBlocking(setPidVals(945, 1634));
     }
+    public ArmPosition speciDepositSlides() {
+        return speciDeposit();
+    }
+
     public void newSpeci2() {
-        Actions.runBlocking(setPidVals(1360, 1830));
+        touchyRetract();
+        Actions.runBlocking(setPidVals(1360, 1634));
+    }
+
+    public ArmPosition speciDeposit2() {
+        return new ArmPosition(1360, 1634, grippy.getPosition(), flippy.getPosition(), twisty.getPosition(), touchy.getPosition());
     }
     public void speciMacroPlus(int change) {
         flippy.setPosition(0.718);
         twisty.setPosition(1);
         Actions.runBlocking(setPidVals(2120, 1050 + change));
     }
-    public void speciPickup() {
+    public void specPickup() {
+        touchyRetract();
         flippy.setPosition(0.97);
         Actions.runBlocking(setPidVals(2300,0));
         twisty.setPosition(0);
         grippyOpen();
     }
 
+    public ArmPosition speciPickup() {
+        return new ArmPosition(2300, 0, 0, 0.97, 0, 1);
+    }
     public void sampleScore() {
         flippy.setPosition(0.828);
         Actions.runBlocking(setPidVals(1800, 0));
@@ -279,6 +311,9 @@ public class Robot {
         twisty.setPosition(0);
         grippy.setPosition(0);
     }
+    public ArmPosition retract() {
+        return new ArmPosition(0,0,0,0.97,0,1);
+    }
     public void samplePickup() {
         flippy.setPosition((0.4));
         grippyOpen();
@@ -300,6 +335,7 @@ public class Robot {
     }
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.x) {
+            touchyRetract();
             rightBumperCounter = 0;
             slideTarget = 2300;
             armTarget = 240;
@@ -317,9 +353,10 @@ public class Robot {
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.y) {
+            touchyRetract();
             rightBumperCounter = 0;
             flippy.setPosition(0.828);
-            armTarget = 1900;
+            armTarget = 1870;
 
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
@@ -331,6 +368,7 @@ public class Robot {
         if (gamepad2.left_bumper) flippy.setPosition(0.97);
         if (gamepad2.right_bumper) flippy.setPosition(0.4);
         if (gamepad1.b) {
+            touchyRetract();
             armTarget = 1360;
             Actions.runBlocking(new ParallelAction(new SleepAction(0.35), returnTelePid(0.35)));
             grippyOpen();
@@ -344,7 +382,9 @@ public class Robot {
             twisty.setPosition(0);
         }
         if (gamepad1.x) {
-            grippyClose();
+            touchyTouch();
+            badClose();
+
 //            flippy.setPosition(0.718);
 //            twisty.setPosition(1);
 //            Actions.runBlocking(new SleepAction(0.1));
@@ -353,18 +393,20 @@ public class Robot {
             Actions.runBlocking(new SleepAction(0.1));
             flippy.setPosition(0.828);
 
-            armTarget = 915;
-            slideTarget = 1130;
+            armTarget = 945;
+            slideTarget = 1634;
         }
         else if (gamepad2.left_stick_button) {
+            touchyRetract();
             flippy.setPosition(0.4);
-            armTarget = 2090;
-            slideTarget = 1820;
+            armTarget = 1900;
+            slideTarget = 4600;
         }
         else if (gamepad2.right_stick_button) {
-            slideTarget = 0;
-            Actions.runBlocking(new ParallelAction(new SleepAction(0.3), returnTelePid(0.3)));
-            armTarget = 710;
+            touchyRetract();
+            slideTarget = 962;
+            Actions.runBlocking(new ParallelAction(new SleepAction(0.75), returnTelePid(0.75)));
+            armTarget = 1300;
         }
         if (gamepad1Ex.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
             twisty.setPosition(1);
@@ -374,6 +416,7 @@ public class Robot {
         }
 
         if (gamepad2.a) {
+            touchyRetract();
             rightBumperCounter = 0;
             flippy.setPosition(0.4);
             slideTarget = 0;
@@ -381,6 +424,7 @@ public class Robot {
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
+                extendIntoSub(gamepad1, gamepad2);
             }
 //            wrist.setPosition(0.35);
             armTarget = 0;
@@ -388,6 +432,7 @@ public class Robot {
             grippy.setPosition(0);
         }
         if (gamepad2.x) {
+            touchyRetract();
             rightBumperCounter = 0;
             slideTarget = 2300;
             armTarget = 280;
@@ -399,6 +444,7 @@ public class Robot {
             grippy.setPosition(0);
         }
         else if (gamepad2.b) {
+            touchyRetract();
             rightBumperCounter = 0;
             armTarget = 0;
             intakeMultiplier = 1;
@@ -512,27 +558,7 @@ public class Robot {
 
         slide.setPower(pid2);
     }
-    public class PidAction implements Action {
-        int flipTarget, slideTarget;
-        double timeout;
-        ElapsedTime timer;
 
-
-        public PidAction(int flipTarget, int slideTarget, double timeout) {
-            this.flipTarget = flipTarget;
-            this.slideTarget = slideTarget;
-
-            this.timeout = timeout;
-            timer = new ElapsedTime();
-        }
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            timer.reset();
-            setPidValues(flipTarget, slideTarget);
-
-            return (((Math.abs(flipPos - flipTarget) < 50) && (Math.abs(slidePos - slideTarget) < 50)) || timer.seconds() <= timeout);
-        }
-    }
     public void extraD1Features(Gamepad gamepad) {
         if (gamepad.dpad_up) {
             slideTarget += 28;
@@ -735,6 +761,10 @@ public class Robot {
 
             slide.setPower(pid2);
 
+            if (Math.abs(flipPos - armTarget) <= 10) {
+                flip.setPower(0);
+            }
+
             return (Math.abs(flipPos - armTarget) > 10);
         }
     }
@@ -872,5 +902,76 @@ public class Robot {
         private static final double ticks_in_degree = 1850 / 90.0;
     }
     //4000, 2000
+
+
+    //TODO: AUTO ACTIONS BELOW
+
+    public Action pid(ArmPosition target) {
+        return new PidAction(target);
+    }
+    public class PidAction implements Action {
+        int flipTarget, slideTarget;
+        double grippy, flippy, twisty, touchy;
+
+
+        public PidAction(ArmPosition target) {
+            this.flipTarget = target.pivot;
+            this.slideTarget = target.slides;
+
+            this.grippy = target.grippy;
+            this.flippy = target.flippy;
+            this.twisty = target.twisty;
+            this.touchy = target.touchy;
+
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            Robot.this.grippy.setPosition(grippy);
+            Robot.this.flippy.setPosition(flippy);
+            Robot.this.twisty.setPosition(twisty);
+            Robot.this.touchy.setPosition(touchy);
+
+            setPidValues(flipTarget, slideTarget);
+
+            return (((Math.abs(flipPos - flipTarget) < 20) && (Math.abs(slidePos - slideTarget) < 50)));
+        }
+    }
+
+    public class ArmPosition {
+        int pivot, slides;
+        double grippy, flippy, twisty, touchy;
+        public ArmPosition(int pivot, int slides, double grippy, double flippy, double twisty, double touchy) {
+            this.pivot = pivot;
+            this.slides = slides;
+
+            this.grippy = grippy;
+            this.flippy = flippy;
+            this.twisty = twisty;
+            this.touchy = touchy;
+        }
+        public ArmPosition() {
+            pivot = -1;
+            slides = -1;
+        }
+    }
+    public Action autoAction(Action driveAction, ArmPosition target) {
+        return new AutoAction(driveAction, target);
+    }
+
+    public class AutoAction implements Action {
+        Action driveAction;
+        ArmPosition target;
+
+        public AutoAction(Action driveAction, ArmPosition target) {
+            this.driveAction = driveAction;
+            this.target = target;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            Actions.runBlocking(new ParallelAction(driveAction, pid(target)));
+            return false;
+        }
+    }
 }
 

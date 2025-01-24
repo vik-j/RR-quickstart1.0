@@ -117,6 +117,10 @@ public final class MecanumDrive {
     public final VoltageSensor voltageSensor;
 
     public final LazyImu lazyImu;
+    public boolean headingCorrection = true;
+    public boolean translationalCorrection = true;
+    public double translationalTolerance = 1.0;
+    public static Pose2d lastPose = new Pose2d(0,0,0);
 
     public List<DcMotorEx> motors = new ArrayList<>();
 
@@ -256,6 +260,24 @@ public final class MecanumDrive {
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }
 
+    public void disableHeadingCorrection() {
+        headingCorrection = false;
+    }
+    public void enableHeadingCorrection() {
+        headingCorrection = true;
+    }
+    public void noCorrection() {
+        headingCorrection = false;
+        translationalCorrection = false;
+    }
+    public void disableTranslationalCorrection() {
+        translationalCorrection = false;
+    }
+    public void enableTranslationalCorrection(double translationalTolerance) {
+        this.translationalTolerance = translationalTolerance;
+        translationalCorrection = true;
+    }
+
     public void setDrivePowers(PoseVelocity2d powers) {
         MecanumKinematics.WheelVelocities<Time> wheelVels = new MecanumKinematics(1).inverse(
                 PoseVelocity2dDual.constant(powers, 1));
@@ -309,13 +331,53 @@ public final class MecanumDrive {
 
             Pose2d error = txWorldTarget.value().minusExp(pose);
 
-            if (t >= timeTrajectory.duration && error.heading.toDouble() < 0.024) {
-                leftFront.setPower(0);
-                leftBack.setPower(0);
-                rightBack.setPower(0);
-                rightFront.setPower(0);
+            if (headingCorrection && !translationalCorrection) {
+                if (t >= timeTrajectory.duration && error.heading.toDouble() < 0.024) {
+                    leftFront.setPower(0);
+                    leftBack.setPower(0);
+                    rightBack.setPower(0);
+                    rightFront.setPower(0);
 
-                return false;
+                    lastPose = pose;
+
+                    return false;
+                }
+            }
+            else if (!headingCorrection && translationalCorrection) {
+                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance) {
+                    leftFront.setPower(0);
+                    leftBack.setPower(0);
+                    rightBack.setPower(0);
+                    rightFront.setPower(0);
+
+                    lastPose = pose;
+
+                    return false;
+                }
+            }
+            if (headingCorrection && translationalCorrection) {
+                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance && error.heading.toDouble() < 0.024) {
+                    leftFront.setPower(0);
+                    leftBack.setPower(0);
+                    rightBack.setPower(0);
+                    rightFront.setPower(0);
+
+                    lastPose = pose;
+
+                    return false;
+                }
+            }
+            else {
+                if (t >= timeTrajectory.duration) {
+                    leftFront.setPower(0);
+                    leftBack.setPower(0);
+                    rightBack.setPower(0);
+                    rightFront.setPower(0);
+
+                    lastPose = pose;
+
+                    return false;
+                }
             }
 
 
@@ -325,7 +387,7 @@ public final class MecanumDrive {
             )
                     .compute(txWorldTarget, pose, robotVelRobot);
             driveCommandWriter.write(new DriveCommandMessage(command));
- 
+
             MecanumKinematics.WheelVelocities<Time> wheelVels = kinematics.inverse(command);
             double voltage = voltageSensor.getVoltage();
 
@@ -401,6 +463,8 @@ public final class MecanumDrive {
                 leftBack.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
+
+                lastPose = pose;
 
                 return false;
             }

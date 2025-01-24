@@ -23,7 +23,8 @@ public class BasketSideAuto extends LinearOpMode {
         Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
-        bot.resetArm();
+        bot.resetEncoders();
+        drive.enableHeadingCorrection();
 
         bot.grippyClose();
         bot.flippy.setPosition(1);
