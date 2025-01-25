@@ -63,33 +63,115 @@ public class BasketSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(4.25, telemetryPacket -> {
+                    bot.twisty.setPosition(0.33);
                     bot.sampleUp();
                     return false;
                 })
                 .afterTime(5, telemetryPacket -> {
-                    bot.setPidValues(700, 2300);
+                    bot.setPidValues(425, 2300);
                     return false;
                 })
-                .afterTime(6, telemetryPacket -> {
+                .afterTime(6.5, telemetryPacket -> {
+                    bot.setPivotMultiplier(0.001);
                     bot.setPidValues(0, 2300);
                     return false;
                 })
-                .afterTime(7, telemetryPacket -> {
+                .afterTime(7.5, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(7.5, telemetryPacket -> {
+                .afterTime(8.5, telemetryPacket -> {
+                    bot.setPivotMultiplier(1);
                     bot.sampleDeposit();
                     return false;
                 })
-                .afterTime(9, telemetryPacket -> {
+                .afterTime(10, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(9.5, telemetryPacket -> {
+                .afterTime(10.5, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
+                .afterTime(10.75, telemetryPacket -> {
+                    bot.flippy.setPosition(0.4);
+                    return false;
+                })
+                .afterTime(11.5, telemetryPacket -> {
+                    bot.sampleUp();
+                    return false;
+                })
+                .afterTime(12.5, telemetryPacket -> {
+                    bot.setPidValues(425, 2300);
+                    return false;
+                })
+                .afterTime(14, telemetryPacket -> {
+                    bot.setPivotMultiplier(0.001);
+                    bot.setPidValues(0, 2300);
+                    return false;
+                })
+                .afterTime(15, telemetryPacket -> {
+                    bot.grippyClose();
+                    return false;
+                })
+                .afterTime(16, telemetryPacket -> {
+                    bot.setPivotMultiplier(1);
+                    bot.sampleDeposit();
+                    return false;
+                })
+                .afterTime(17.5, telemetryPacket -> {
+                    bot.flippy.setPosition(0.9);
+                    return false;
+                })
+                .afterTime(18, telemetryPacket -> {
+                    bot.grippyOpen();
+                    return false;
+                })
+                .afterTime(18.25, telemetryPacket -> {
+                    bot.flippy.setPosition(0.4);
+                    return false;
+                })
+                .afterTime(19, telemetryPacket -> {
+                    bot.twisty.setPosition(0.86);
+                    bot.sampleUp();
+                    return false;
+                })
+                .afterTime(20, telemetryPacket -> {
+                    bot.setPidValues(425, 2300);
+                    return false;
+                })
+                .afterTime(21.5, telemetryPacket -> {
+                    bot.setPivotMultiplier(0.001);
+                    bot.setPidValues(0, 2300);
+                    return false;
+                })
+                .afterTime(22.5, telemetryPacket -> {
+                    bot.grippyClose();
+                    return false;
+                })
+                .afterTime(23.5, telemetryPacket -> {
+                    bot.setPivotMultiplier(1);
+                    bot.sampleDeposit();
+                    return false;
+                })
+                .afterTime(25, telemetryPacket -> {
+                    bot.flippy.setPosition(0.9);
+                    return false;
+                })
+                .afterTime(25.5, telemetryPacket -> {
+                    bot.grippyOpen();
+                    return false;
+                })
+                .afterTime(25.75, telemetryPacket -> {
+                    bot.flippy.setPosition(0.4);
+                    return false;
+                })
+                .afterTime(26.5, telemetryPacket -> {
+                    bot.flippy.setPosition(1);
+                    bot.setPidValues(1100, 2000);
+                    return false;
+                })
+
 //                .afterTime(2.5, telemetryPacket -> {
 //                    bot.sampleScore3();
 //                    bot.flippy.setPosition(0.87);
@@ -262,10 +344,20 @@ public class BasketSideAuto extends LinearOpMode {
                 .waitSeconds(0.5)
                 .strafeToConstantHeading(new Vector2d(52.5, 55.5), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(1)
-                .splineToLinearHeading(new Pose2d(53.134, 51, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
-                .waitSeconds(3)
+                .splineToLinearHeading(new Pose2d(54.634, 51, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
+                .waitSeconds(3.5)
                 .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
-
+                .waitSeconds(2)
+                .splineToLinearHeading(new Pose2d(58.35, 51.285, Math.toRadians(-87)), Math.toRadians(270), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(3.5)
+                .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(2)
+                .splineToLinearHeading(new Pose2d(58.185, 48.67, Math.toRadians(-60.88)), Math.toRadians(270), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(3.5)
+                .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(2)
+                .splineToLinearHeading(new Pose2d(36, 20, Math.toRadians(180)), Math.toRadians((180)))
+                .splineToLinearHeading(new Pose2d(22, 20, Math.toRadians(180)), Math.toRadians((180)))
 //                .strafeToLinearHeading(new Vector2d(52, 55), Math.toRadians(225))
 //                .waitSeconds(4)
 //                .strafeToLinearHeading(new Vector2d(49.5, 48.25), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))

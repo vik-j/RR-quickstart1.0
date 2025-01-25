@@ -64,6 +64,8 @@ public class Robot {
     public static double leftHangPosUp = 0.9, leftHangPosDown = 0.4, rightHangPosUp = 0.9, rightHangPosDown = 0.4;
     Thread currentThread = null;
 
+    public double pivotMultiplier = 1;
+
     public final double noTimeout = -1.0;
 
     public static Pose2d lastPose = new Pose2d(0,0,0);
@@ -246,7 +248,6 @@ public class Robot {
         Actions.runBlocking(setPidVals(945, 1634));
     }
     public void sampleUp() {
-        twisty.setPosition(0.33);
         Actions.runBlocking(setPidVals(1900, 2300));
     }
     public ArmPosition speciDeposit() {
@@ -302,6 +303,7 @@ public class Robot {
     }
     public void sampleDeposit() {
         flippy.setPosition(0.828);
+        twisty.setPosition(0);
         Actions.runBlocking(setPidVals(1900, 4700));
     }
     public void sampleScore3() {
@@ -860,7 +862,7 @@ public class Robot {
 
                 double power = pid + ff;
 
-                flip.setPower(power);
+                flip.setPower(power * pivotMultiplier);
 
                 double pid2 = slideController.calculate(slidePos, scaleSlides(slideTargetAuto));
 
@@ -900,6 +902,9 @@ public class Robot {
     public void setPidValues(int arm, int slide) {
         armTargetAuto = arm;
         slideTargetAuto = slide;
+    }
+    public void setPivotMultiplier(double multiplier) {
+        pivotMultiplier = multiplier;
     }
 
     public static class armPIDValues {
