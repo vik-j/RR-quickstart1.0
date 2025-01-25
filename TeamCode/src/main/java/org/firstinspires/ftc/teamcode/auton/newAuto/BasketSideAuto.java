@@ -71,7 +71,7 @@ public class BasketSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(6, telemetryPacket -> {
-                    bot.setPidValues(200, 2300);
+                    bot.setPidValues(0, 2300);
                     return false;
                 })
                 .afterTime(7, telemetryPacket -> {
@@ -264,7 +264,7 @@ public class BasketSideAuto extends LinearOpMode {
                 .waitSeconds(1)
                 .splineToLinearHeading(new Pose2d(53.134, 51, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
                 .waitSeconds(3)
-                .strafeToConstantHeading(new Vector2d(52.5, 55.5), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
 
 //                .strafeToLinearHeading(new Vector2d(52, 55), Math.toRadians(225))
 //                .waitSeconds(4)
