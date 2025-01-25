@@ -118,7 +118,7 @@ public final class MecanumDrive {
 
     public final LazyImu lazyImu;
     public boolean headingCorrection = true;
-    public boolean translationalCorrection = true;
+    public boolean translationalCorrection = false;
     public double translationalTolerance = 1.0;
     public static Pose2d lastPose = new Pose2d(0,0,0);
 
@@ -332,7 +332,7 @@ public final class MecanumDrive {
             Pose2d error = txWorldTarget.value().minusExp(pose);
 
             if (headingCorrection && !translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.heading.toDouble() < 0.024) {
+                if (t >= timeTrajectory.duration && error.heading.toDouble() < Math.toRadians(1)) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);
@@ -356,7 +356,7 @@ public final class MecanumDrive {
                 }
             }
             if (headingCorrection && translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance && error.heading.toDouble() < 0.024) {
+                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance && error.heading.toDouble() < Math.toRadians(1)) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);

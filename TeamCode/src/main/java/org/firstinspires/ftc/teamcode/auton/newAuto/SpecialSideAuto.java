@@ -18,6 +18,8 @@ import org.ejml.equation.Operation;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
+import java.util.List;
+
 @Config
 @Autonomous(name = "SpecialSideAuto", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class SpecialSideAuto extends LinearOpMode {
@@ -49,7 +51,7 @@ public class SpecialSideAuto extends LinearOpMode {
 
         //TODO: fix actionBuilder poses not updating
 
-        Action pushBlocks = drive.actionBuilder(MecanumDrive.lastPose)
+        Action pushBlocks = drive.actionBuilder(new Pose2d(-8.5, 36.5, Math.toRadians(270)))
                 .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(270)), Math.toRadians(180))
                 .waitSeconds(0.2)
                 .splineToConstantHeading(new Vector2d(-46, 13), Math.toRadians(180))
@@ -71,7 +73,7 @@ public class SpecialSideAuto extends LinearOpMode {
 
         Action grabSecondSpeci = new SequentialAction(new InstantAction(bot::badClose), new SleepAction(0.4));
 
-        Action scoreSecondSpeci = drive.actionBuilder(MecanumDrive.lastPose)
+        Action scoreSecondSpeci = drive.actionBuilder(new Pose2d(-63, 53.25, Math.toRadians(270)))
                 .stopAndAdd(new InstantAction(() -> bot.setPidValues(2300, 500)))
                 .strafeTo(new Vector2d(0, 49))
                 .stopAndAdd(new InstantAction(bot::newSpeciPivot))
