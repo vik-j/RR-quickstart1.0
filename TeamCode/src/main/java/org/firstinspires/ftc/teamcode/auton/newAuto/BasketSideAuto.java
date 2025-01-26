@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class BasketSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
+        Pose2d beginPose = new Pose2d(9, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
         bot.resetEncoders();
@@ -38,23 +38,15 @@ public class BasketSideAuto extends LinearOpMode {
         Robot.stopPid = false;
 
         Action armAction = drive.actionBuilder(beginPose)
-//                .afterTime(0.5, telemetryPacket -> {
-//                    bot.sampleScore();
-//                    return false;
-//                })
-//                .afterTime(1.2, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.6);
-//                    return false;
-//                })
                 .afterTime(0.01, telemetryPacket -> {
-                    bot.sampleDeposit();
+                    bot.newSpeci();
                     return false;
                 })
-                .afterTime(2.5, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                .afterTime(1.4, telemetryPacket -> {
+                    bot.newSpeci2();
                     return false;
                 })
-                .afterTime(3, telemetryPacket -> {
+                .afterTime(1.8, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
@@ -171,177 +163,13 @@ public class BasketSideAuto extends LinearOpMode {
                     bot.setPidValues(1100, 2000);
                     return false;
                 })
-
-//                .afterTime(2.5, telemetryPacket -> {
-//                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
-//                    return false;
-//                })
-//                .afterTime(3.1, telemetryPacket -> {
-//                    bot.grippyOpen();
-//                    return false;
-//                })
-//                .afterTime(3.5, telemetryPacket -> {
-//                    bot.reset();
-//                    return false;
-//                })
-//
-//
-//
-//                .afterTime(6, telemetryPacket -> {
-//                    bot.samplePickup();
-//                    return false;
-//                })
-//                .afterTime(7, telemetryPacket -> {
-//                    bot.setPidValues(0, 1730);
-//                    return false;
-//                })
-//                .afterTime(7.25, telemetryPacket -> {
-//                    bot.grippyClose();
-//                    return false;
-//                })
-//                .afterTime(8.9 - optimizationOffset, telemetryPacket -> {
-//                    bot.setPidValues(0,0);
-//                    return false;
-//                })
-//                .afterTime(9.1 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(1);
-//                    return false;
-//                })
-//                .afterTime(10.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore();
-//                    bot.flippy.setPosition(0.6);
-//                    return false;
-//                })
-//                .afterTime(11.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore2();
-//                    return false;
-//                })
-//                .afterTime(12.35 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
-//                    return false;
-//                })
-//                .afterTime(12.75 - optimizationOffset, telemetryPacket -> {
-//                    bot.grippyOpen();
-//                    return false;
-//                })
-//                .afterTime(12.85 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.4);
-//                    return false;
-//                })
-//                .afterTime(13.15 - optimizationOffset, telemetryPacket -> {
-//                    bot.reset();
-//                    return false;
-//                })
-//
-//
-//                .afterTime(14.5 - optimizationOffset, telemetryPacket -> {
-//                    bot.samplePickup();
-//                    return false;
-//                })
-//                .afterTime(15 - optimizationOffset, telemetryPacket -> {
-//                    bot.setPidValues(0, 1730);
-//                    return false;
-//                })
-//                .afterTime(15.2 - optimizationOffset, telemetryPacket -> {
-//                    bot.grippyClose();
-//                    return false;
-//                })
-//                .afterTime(15.5 - optimizationOffset, telemetryPacket -> {
-//                    bot.setPidValues(0,0);
-//                    return false;
-//                })
-//                .afterTime(15.75 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(1);
-//                    return false;
-//                })
-//                .afterTime(16.5 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore();
-//                    bot.flippy.setPosition(0.6);
-//                    return false;
-//                })
-//                .afterTime(17.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore2();
-//                    return false;
-//                })
-//                .afterTime(18.5 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
-//                    return false;
-//                })
-//                .afterTime(18.9 - optimizationOffset, telemetryPacket -> {
-//                    bot.grippyOpen();
-//                    return false;
-//                })
-//                .afterTime(19.1 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.4);
-//                    return false;
-//                })
-//                .afterTime(19.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.reset();
-//                    return false;
-//                })
-//
-//
-//                .afterTime(21 - optimizationOffset, telemetryPacket -> {
-//                    bot.samplePickup();
-//                    return false;
-//                })
-//                .afterTime(22 - optimizationOffset, telemetryPacket -> {
-//                    bot.setPidValues(0, 1730);
-//                    return false;
-//                })
-//                .afterTime(22.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.grippyClose();
-//                    return false;
-//                })
-//                .afterTime(22.5 - optimizationOffset, telemetryPacket -> {
-//                    bot.setPidValues(0,0);
-//                    return false;
-//                })
-//                .afterTime(22.75 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(1);
-//                    return false;
-//                })
-//                .afterTime(24.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore();
-//                    bot.flippy.setPosition(0.6);
-//                    return false;
-//                })
-//                .afterTime(25.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore2();
-//                    return false;
-//                })
-//                .afterTime(26.5 - optimizationOffset, telemetryPacket -> {
-//                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
-//                    return false;
-//                })
-//                .afterTime(26.9 - optimizationOffset, telemetryPacket -> {
-//                    bot.grippyOpen();
-//                    return false;
-//                })
-//                .afterTime(27 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.4);
-//                    return false;
-//                })
-//                .afterTime(27.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.reset();
-//                    return false;
-//                })
-//                .afterTime(28.25 - optimizationOffset, telemetryPacket -> {
-//                    bot.setPidValues(1100, 2000);
-//                    bot.flippy.setPosition(0.5);
-//                    return false;
-//                })
                 .build();
 
         //TODO: 13.38 V
 
         Action driveAction = drive.actionBuilder(beginPose)
-                .strafeToLinearHeading(new Vector2d(48,48), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
-                .waitSeconds(0.5)
+                .splineToSplineHeading(new Pose2d(-6,44.2, Math.toRadians(270)), Math.toRadians(180))
+                .waitSeconds(0.2)
                 .strafeToConstantHeading(new Vector2d(52.5, 55.5), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(1)
                 .splineToLinearHeading(new Pose2d(54.634, 51, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
@@ -358,22 +186,7 @@ public class BasketSideAuto extends LinearOpMode {
                 .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(36, 20, Math.toRadians(180)), Math.toRadians((180)))
                 .splineToLinearHeading(new Pose2d(22, 20, Math.toRadians(180)), Math.toRadians((180)))
-//                .strafeToLinearHeading(new Vector2d(52, 55), Math.toRadians(225))
-//                .waitSeconds(4)
-//                .strafeToLinearHeading(new Vector2d(49.5, 48.25), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
-//                .waitSeconds(5 - optimizationOffset)
-//                .strafeToLinearHeading(new Vector2d(53.5,52), Math.toRadians(225), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60,60))
-//                .waitSeconds(2)
-//                .strafeToLinearHeading(new Vector2d(60, 48.25), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-50, 50))
-//                .waitSeconds(3)
-//                .strafeToLinearHeading(new Vector2d(52,55), Math.toRadians(225), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60,60))
-//                .waitSeconds(2.4)
-//                .strafeToLinearHeading(new Vector2d(61, 48), Math.toRadians(292.5), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60,60))
-//                .waitSeconds(2)
-//                .strafeToLinearHeading(new Vector2d(53.5,53), Math.toRadians(225), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60,60))
-//                .waitSeconds(3.5)
-//                .splineToLinearHeading(new Pose2d(36, 10, Math.toRadians(180)), Math.toRadians((180)))
-//                .splineToLinearHeading(new Pose2d(22, 10, Math.toRadians(180)), Math.toRadians((180)))
+
                 .build();
 
         Actions.runBlocking(
