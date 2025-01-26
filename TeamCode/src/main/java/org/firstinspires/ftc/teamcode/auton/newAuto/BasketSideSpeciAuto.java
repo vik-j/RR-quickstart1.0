@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class BasketSideSpeciAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
+        Pose2d beginPose = new Pose2d(9, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
         bot.resetEncoders();
@@ -39,11 +39,15 @@ public class BasketSideSpeciAuto extends LinearOpMode {
 
         Action armAction = drive.actionBuilder(beginPose)
                 .afterTime(0.01, telemetryPacket -> {
-                    bot.sampleDeposit();
+                    bot.newSpeci();
                     return false;
                 })
-                .afterTime(2.5, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                .afterTime(1.4, telemetryPacket -> {
+                    bot.newSpeci2();
+                    return false;
+                })
+                .afterTime(1.8, telemetryPacket -> {
+                    bot.grippyOpen();
                     return false;
                 })
                 .afterTime(3, telemetryPacket -> {
