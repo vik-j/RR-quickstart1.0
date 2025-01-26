@@ -40,47 +40,6 @@ public class SpecialSideAuto extends LinearOpMode {
 
         Robot.stopPid = false;
 
-        Action firstSpeci = bot.autoAction(drive.actionBuilder(beginPose)
-                .strafeToConstantHeading(new Vector2d(-8.5, 36.5))
-                .waitSeconds(0.5)
-                .build(), bot.speciDeposit());
-
-        Action firstSpeciHook = bot.pid(bot.speciDeposit2());
-
-        Action retract = bot.pid(bot.retract());
-
-        //TODO: fix actionBuilder poses not updating
-
-        Action pushBlocks = drive.actionBuilder(new Pose2d(-8.5, 36.5, Math.toRadians(270)))
-                .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(270)), Math.toRadians(180))
-                .waitSeconds(0.2)
-                .splineToConstantHeading(new Vector2d(-46, 13), Math.toRadians(180))
-                .waitSeconds(0.001)
-                .strafeToConstantHeading(new Vector2d(-46, 49.5), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
-                .waitSeconds(0.001)
-                .splineToConstantHeading(new Vector2d(-56, 13), Math.toRadians(180))
-                .waitSeconds(0.001)
-                .strafeToConstantHeading(new Vector2d(-56, 45), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
-                .waitSeconds(0.001)
-                .splineToConstantHeading(new Vector2d(-63, 13), Math.toRadians(180))
-                .waitSeconds(0.001)
-                .stopAndAdd(new SequentialAction(new InstantAction(drive::enableHeadingCorrection)
-                        ,new InstantAction(() -> drive.enableTranslationalCorrection(2.0))
-                ,bot.setPidVals(2300, 0), new InstantAction(() -> bot.flippy.setPosition(0.97))))
-                .strafeToConstantHeading(new Vector2d(-63, 53.25), new TranslationalVelConstraint(70), new ProfileAccelConstraint(-70, 70))
-                .waitSeconds(0.3)
-                .build();
-
-        Action grabSecondSpeci = new SequentialAction(new InstantAction(bot::badClose), new SleepAction(0.4));
-
-        Action scoreSecondSpeci = drive.actionBuilder(new Pose2d(-63, 53.25, Math.toRadians(270)))
-                .stopAndAdd(new InstantAction(() -> bot.setPidValues(2300, 500)))
-                .strafeTo(new Vector2d(0, 49))
-                .stopAndAdd(new InstantAction(bot::newSpeciPivot))
-                .waitSeconds(0.5)
-                .strafeTo(new Vector2d(0, 36.5), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80, 80))
-                .waitSeconds(1.5)
-                .build();
 
 
         Action armAction = drive.actionBuilder(beginPose)
@@ -163,19 +122,19 @@ public class SpecialSideAuto extends LinearOpMode {
         //TODO: 13.38 V
 
         Action driveAction = drive.actionBuilder(beginPose)
-                .strafeToConstantHeading(new Vector2d(-8.5, 36.5))
+                .strafeToConstantHeading(new Vector2d(-8.5, 35.5))
                 .waitSeconds(0.5)
-                .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(270)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-35,44.2, Math.toRadians(270)), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80, 80))
                 .waitSeconds(0.2)
-                .splineToConstantHeading(new Vector2d(-46, 13), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-46, 13), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80, 80))
                 .waitSeconds(0.001)
                 .strafeToConstantHeading(new Vector2d(-46, 49.5), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.001)
-                .splineToConstantHeading(new Vector2d(-56, 13), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-56, 13), Math.toRadians(180), new TranslationalVelConstraint(90), new ProfileAccelConstraint(-90, 90))
                 .waitSeconds(0.001)
                 .strafeToConstantHeading(new Vector2d(-56, 45), new TranslationalVelConstraint(100), new ProfileAccelConstraint(-100, 100))
                 .waitSeconds(0.001)
-                .splineToConstantHeading(new Vector2d(-63, 13), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-63, 13), Math.toRadians(180), new TranslationalVelConstraint(90), new ProfileAccelConstraint(-90, 90))
                 .waitSeconds(0.001)
                 .stopAndAdd(new SequentialAction(new InstantAction(drive::enableHeadingCorrection)
                         ,new InstantAction(() -> drive.enableTranslationalCorrection(2.0))))
