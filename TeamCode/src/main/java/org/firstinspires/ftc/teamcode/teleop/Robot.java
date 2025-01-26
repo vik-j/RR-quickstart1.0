@@ -387,7 +387,7 @@ public class Robot {
 //            armTarget = 0;
 //            slideTarget = 0;
             flippy.setPosition(1);
-            armTarget = 2300;
+            armTarget = 2550;
             slideTarget = 0;
             twisty.setPosition(0);
         }
@@ -404,7 +404,7 @@ public class Robot {
             flippy.setPosition(0.828);
 
             armTarget = 945;
-            slideTarget = 1634;
+            slideTarget = 1606;
         }
         else if (gamepad2.left_stick_button) {
             touchyRetract();
@@ -533,7 +533,7 @@ public class Robot {
 //        slideExtensionLimit = targetLength;
 
         if (armTarget < 0) armTarget = 0;
-        else if (armTarget > 2300) armTarget = 2300;
+        else if (armTarget > 2550) armTarget = 2550;
 
         if (slideTarget < 0) slideTarget = 0;
 //        else if (slideTarget > targetLength && flipPos < 1850) slideTarget = targetLength;
