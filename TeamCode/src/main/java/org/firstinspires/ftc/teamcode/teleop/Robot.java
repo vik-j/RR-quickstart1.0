@@ -245,7 +245,7 @@ public class Robot {
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
-        Actions.runBlocking(setPidVals(945, 1634));
+        Actions.runBlocking(setPidVals(945, 1606));
     }
     public void sampleUp() {
         Actions.runBlocking(setPidVals(1900, 2300));
@@ -272,7 +272,7 @@ public class Robot {
 
     public void newSpeci2() {
         touchyRetract();
-        Actions.runBlocking(setPidVals(1360, 1634));
+        Actions.runBlocking(setPidVals(1360, 1606));
     }
 
     public ArmPosition speciDeposit2() {

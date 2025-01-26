@@ -2,27 +2,19 @@ package org.firstinspires.ftc.teamcode.auton.newAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ProfileAccelConstraint;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.ejml.equation.Operation;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
-import java.util.List;
-
 @Config
-@Autonomous(name = "SpeciSideAuto", group = "Autonomous", preselectTeleOp = "TeleopV2")
-public class SpeciSideAuto extends LinearOpMode {
+@Autonomous(name = "SpeciSideAutoTEST", group = "Autonomous", preselectTeleOp = "TeleopV2")
+public class SpeciSideAutoTEST extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
@@ -45,13 +37,21 @@ public class SpeciSideAuto extends LinearOpMode {
         //TODO: 13.38 V
 
         Action driveAction = drive.actionBuilder(beginPose)
-                .strafeToConstantHeading(new Vector2d(-8.5, 36.5))
                 .afterTime(0.01, telemetryPacket -> {
                     bot.newSpeci();
                     return false;
                 })
-//                .waitSeconds(0.5)
-//                .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(270)), Math.toRadians(180))
+                .strafeToConstantHeading(new Vector2d(-8.5, 36.5))
+                .afterTime(0, telemetryPacket -> {
+                    bot.newSpeci2();
+                    return false;
+                })
+                .waitSeconds(0.5)
+                .afterTime(0, telemetryPacket -> {
+                    bot.reset();
+                    return false;
+                })
+                .splineToSplineHeading(new Pose2d(-32.5515,44.2, Math.toRadians(270)), Math.toRadians(180))
 //                .waitSeconds(0.2)
 //                .splineToConstantHeading(new Vector2d(-46, 13), Math.toRadians(180))
 //                .waitSeconds(0.001)
