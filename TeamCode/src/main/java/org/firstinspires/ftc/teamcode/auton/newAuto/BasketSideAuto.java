@@ -185,7 +185,7 @@ public class BasketSideAuto extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(36, 20, Math.toRadians(180)), Math.toRadians((180)))
-                .splineToLinearHeading(new Pose2d(22, 20, Math.toRadians(180)), Math.toRadians((180)))
+                .splineToLinearHeading(new Pose2d(23, 20, Math.toRadians(180)), Math.toRadians((180)))
 
                 .build();
 
