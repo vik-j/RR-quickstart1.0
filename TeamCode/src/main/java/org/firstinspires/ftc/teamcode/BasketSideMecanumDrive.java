@@ -163,8 +163,6 @@ public final class BasketSideMecanumDrive {
 
             YawPitchRollAngles angles = imu.getRobotYawPitchRollAngles();
 
-            FlightRecorder.write("MECANUM_LOCALIZER_INPUTS", new MecanumLocalizerInputsMessage(
-                    leftFrontPosVel, leftBackPosVel, rightBackPosVel, rightFrontPosVel, angles));
 
             Rotation2d heading = Rotation2d.exp(angles.getYaw(AngleUnit.RADIANS));
 
@@ -257,7 +255,6 @@ public final class BasketSideMecanumDrive {
 
         localizer = new TwoDeadWheelLocalizer(hardwareMap, lazyImu.get(), PARAMS.inPerTick);
 
-        FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }
 
     public void disableHeadingCorrection() {

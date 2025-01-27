@@ -19,7 +19,6 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.pathgen.PathChain;
-import com.qualcomm.hardware.lynx.LynxController;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -32,8 +31,6 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-
-import java.util.Objects;
 
 @Config
 //TODO: change claw opened and closed values
@@ -207,6 +204,12 @@ public class Robot {
         slide.setPower(-gamepad.left_stick_y * 0.3);
     }
 
+    public void autoSamplePickup() {
+        twisty.setPosition(0.5);
+        flippy.setPosition(0.5);
+
+        Actions.runBlocking(setPidVals(0, 2300));
+    }
 
     public void touchyTouch() {
         touchy.setPosition(0);
@@ -240,12 +243,12 @@ public class Robot {
         grippy.setPosition(0.95);
     }
     public void newSpeci() {
-        touchyTouch();
+//        touchyTouch();
         flippy.setPosition(0.828);
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
-        Actions.runBlocking(setPidVals(945, 1606));
+        Actions.runBlocking(setPidVals(945, 1700));
     }
     public void sampleUp() {
         Actions.runBlocking(setPidVals(1900, 2300));
@@ -264,7 +267,7 @@ public class Robot {
     public void newSpeciSlides() {
         touchyTouch();
         flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(945, 1634));
+        Actions.runBlocking(setPidVals(945, 1700));
     }
     public ArmPosition speciDepositSlides() {
         return speciDeposit();
@@ -272,21 +275,21 @@ public class Robot {
 
     public void newSpeci2() {
         touchyRetract();
-        Actions.runBlocking(setPidVals(1360, 1606));
+        Actions.runBlocking(setPidVals(1360, 1700));
     }
 
     public ArmPosition speciDeposit2() {
-        return new ArmPosition(1360, 1634, grippy.getPosition(), flippy.getPosition(), twisty.getPosition(), touchy.getPosition());
+        return new ArmPosition(1360, 1700, grippy.getPosition(), flippy.getPosition(), twisty.getPosition(), touchy.getPosition());
     }
     public void speciMacroPlus(int change) {
         flippy.setPosition(0.718);
         twisty.setPosition(1);
         Actions.runBlocking(setPidVals(2120, 1050 + change));
     }
-    public void specPickup() {
+    public void specimenPickup() {
         touchyRetract();
-        flippy.setPosition(0.97);
-        Actions.runBlocking(setPidVals(2300,0));
+        flippy.setPosition(1);
+        Actions.runBlocking(setPidVals(2550,0));
         twisty.setPosition(0);
         grippyOpen();
     }

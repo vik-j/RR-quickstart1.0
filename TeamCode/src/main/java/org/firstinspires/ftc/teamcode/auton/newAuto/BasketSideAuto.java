@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class BasketSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
+        //old x used to be 40
         Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
         BasketSideMecanumDrive drive = new BasketSideMecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
@@ -358,7 +359,7 @@ public class BasketSideAuto extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(36, 20, Math.toRadians(180)), Math.toRadians((180)))
-                .splineToLinearHeading(new Pose2d(18, 20, Math.toRadians(180)), Math.toRadians((180)))
+                .splineToLinearHeading(new Pose2d(15, 20, Math.toRadians(180)), Math.toRadians((180)))
 //                .strafeToLinearHeading(new Vector2d(52, 55), Math.toRadians(225))
 //                .waitSeconds(4)
 //                .strafeToLinearHeading(new Vector2d(49.5, 48.25), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))

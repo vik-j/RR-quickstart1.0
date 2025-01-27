@@ -7,18 +7,14 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.ejml.equation.Operation;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
-
-import java.util.List;
 
 @Config
 @Autonomous(name = "SpecialSideAuto", group = "Autonomous", preselectTeleOp = "TeleopV2")
@@ -69,7 +65,7 @@ public class SpecialSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(10, telemetryPacket -> {
-                    bot.specPickup();
+                    bot.specimenPickup();
                     return false;
                 })
                 .afterTime(12, telemetryPacket -> {
@@ -97,7 +93,7 @@ public class SpecialSideAuto extends LinearOpMode {
                     return false;
                 })
                 .afterTime(17, telemetryPacket -> {
-                    bot.specPickup();
+                    bot.specimenPickup();
                     return false;
                 })
                 .afterTime(19.45, telemetryPacket -> {
