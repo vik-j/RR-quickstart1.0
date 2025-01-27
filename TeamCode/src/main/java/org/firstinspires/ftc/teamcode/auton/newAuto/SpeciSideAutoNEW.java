@@ -74,7 +74,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .waitSeconds(0.8)
-                .turnTo(Math.toRadians(145), new TurnConstraints(60, -60, 60))
+                .splineToLinearHeading(new Pose2d(-28, 39.9, Math.toRadians(145)), Math.toRadians(90), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80, 80))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
@@ -93,7 +93,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .waitSeconds(0.8)
-                .turnTo(Math.toRadians(121.95), new TurnConstraints(80, -80, 80))
+                .splineToLinearHeading(new Pose2d(-39, 40.5, Math.toRadians(121.95)), Math.toRadians(90), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80, 80))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
