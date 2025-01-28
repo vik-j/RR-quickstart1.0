@@ -22,6 +22,7 @@ import com.pedropathing.pathgen.PathChain;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
@@ -85,6 +86,7 @@ public class Robot {
 
         leftHang = hardwareMap.servo.get("leftHang");
         rightHang = hardwareMap.servo.get("rightHang");
+
 
 //        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
@@ -240,7 +242,7 @@ public class Robot {
         Actions.runBlocking(setPidVals(1360, 1130));
     }
     public void badClose() {
-        grippy.setPosition(0.95);
+        grippy.setPosition(0.92);
     }
     public void newSpeci() {
 //        touchyTouch();
@@ -248,7 +250,7 @@ public class Robot {
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
-        Actions.runBlocking(setPidVals(945, 1700));
+        Actions.runBlocking(setPidVals(935, 1700));
     }
     public void sampleUp() {
         Actions.runBlocking(setPidVals(1900, 2300));
@@ -289,9 +291,17 @@ public class Robot {
     public void specimenPickup() {
         touchyRetract();
         flippy.setPosition(1);
-        Actions.runBlocking(setPidVals(2550,0));
+        Actions.runBlocking(setPidVals(2490,0));
         twisty.setPosition(0);
         grippyOpen();
+    }
+    public void specimenDeposit() {
+        flippy.setPosition(0.828);
+
+        Actions.runBlocking(setPidVals(945, 1606));
+    }
+    public void specimenDeposit2() {
+        Actions.runBlocking(setPidVals(1360, 1606));
     }
 
     public ArmPosition speciPickup() {
@@ -322,7 +332,6 @@ public class Robot {
         Actions.runBlocking(setPidVals(0,0));
         flippy.setPosition(0.4);
         twisty.setPosition(0);
-        grippy.setPosition(0);
     }
     public ArmPosition retract() {
         return new ArmPosition(0,0,0,0.97,0,1);
@@ -390,7 +399,7 @@ public class Robot {
 //            armTarget = 0;
 //            slideTarget = 0;
             flippy.setPosition(1);
-            armTarget = 2550;
+            armTarget = 2490;
             slideTarget = 0;
             twisty.setPosition(0);
         }

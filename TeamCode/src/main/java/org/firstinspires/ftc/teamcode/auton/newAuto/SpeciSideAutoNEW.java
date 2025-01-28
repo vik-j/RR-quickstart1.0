@@ -45,13 +45,17 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.newSpeci();
                     return false;
                 })
-                .strafeToConstantHeading(new Vector2d(-8.5, 34.5))
+                .strafeToConstantHeading(new Vector2d(-8.5, 34.75))
                 .afterTime(0, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;
                 })
                 .waitSeconds(0.5)
                 .afterTime(0, telemetryPacket -> {
+                    bot.grippyOpen();
+                    return false;
+                })
+                .afterTime(0.1, telemetryPacket -> {
                     bot.reset();
                     bot.flippy.setPosition(1);
                     return false;
@@ -70,11 +74,11 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .afterTime(0.9, telemetryPacket -> {
-                    bot.flippy.setPosition(0.5);
+                    bot.flippy.setPosition(0.6);
                     return false;
                 })
                 .waitSeconds(0.8)
-                .splineToLinearHeading(new Pose2d(-28, 39.9, Math.toRadians(145)), Math.toRadians(90), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80, 80))
+                .turnTo(Math.toRadians(130), new TurnConstraints(20, -20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
@@ -89,40 +93,168 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .afterTime(0.9, telemetryPacket -> {
-                    bot.flippy.setPosition(0.5);
+                    bot.flippy.setPosition(0.6);
                     return false;
                 })
                 .waitSeconds(0.8)
-                .splineToLinearHeading(new Pose2d(-39, 40.5, Math.toRadians(121.95)), Math.toRadians(90), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80, 80))
+                .turnTo(Math.toRadians(121.95), new TurnConstraints(20, -20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-47.47, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.6, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(0.9, telemetryPacket -> {
-                    bot.flippy.setPosition(0.5);
-                    bot.twisty.setPosition(0);
+                .afterTime(1.25, telemetryPacket -> {
+                    bot.twisty.setPosition(0.5);
+                    bot.flippy.setPosition(0.6);
+                    return false;
+                })
+                .afterTime(1.3, telemetryPacket -> {
+                    bot.reset();
+                    bot.flippy.setPosition(0.6);
                     return false;
                 })
                 .waitSeconds(0.8)
-                .splineToSplineHeading(new Pose2d(-43.2, 47.193, Math.toRadians(145.3)), Math.toRadians(90), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-80,80))
+                .afterTime(0.6, telemetryPacket -> {
+                    bot.setPidValues(0, 800);
+                    return false;
+                })
+                .splineToSplineHeading(new Pose2d(-39.2, 47.193, Math.toRadians(135.3)), Math.toRadians(90))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(0.5, telemetryPacket -> {
+
+
+                .afterTime(0.75, telemetryPacket -> {
                     bot.specimenPickup();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-35.52, 52.64, Math.toRadians(-90.5)), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-35.52, 48), Math.toRadians(-87.5))
+                .waitSeconds(0.3)
+                .strafeToLinearHeading(new Vector2d(-35.52, 51.5), Math.toRadians(-90))
+                .afterTime(0, telemetryPacket -> {
+                    bot.grippyClose();
+                    return false;
+                })
+                .afterTime(0.4, telemetryPacket -> {
+                    bot.flippy.setPosition(0.6);
+                    return false;
+                })
+                .waitSeconds(0.5)
+                .afterTime(0.15, telemetryPacket -> {
+                    bot.flippy.setPosition(0.8);
+                    return false;
+                })
+                .afterTime(0.3, telemetryPacket -> {
+                    bot.reset();
+                    return false;
+                })
+                .afterTime(1, telemetryPacket -> {
+                    bot.specimenDeposit();
+                    return false;
+                })
+                .strafeToConstantHeading(new Vector2d(-4, 35.25))
+
+                .afterTime(0.5, telemetryPacket -> {
+                    bot.specimenDeposit2();
+                    return false;
+                })
+                .afterTime(0.75, telemetryPacket -> {
+                    bot.grippyOpen();
+                    return false;
+                })
+                .waitSeconds(0.2)
+
+
+                .afterTime(0.75, telemetryPacket -> {
+                    bot.specimenPickup();
+                    return false;
+                })
+                .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
+                .waitSeconds(0.3)
+                .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
+                .afterTime(0, telemetryPacket -> {
+                    bot.grippyClose();
+                    return false;
+                })
+                .afterTime(0.4, telemetryPacket -> {
+                    bot.flippy.setPosition(0.6);
+                    return false;
+                })
+                .waitSeconds(0.5)
+                .afterTime(0.15, telemetryPacket -> {
+                    bot.flippy.setPosition(0.8);
+                    return false;
+                })
+                .afterTime(0.3, telemetryPacket -> {
+                    bot.reset();
+                    return false;
+                })
+                .afterTime(1, telemetryPacket -> {
+                    bot.specimenDeposit();
+                    return false;
+                })
+                .strafeToConstantHeading(new Vector2d(0, 34.75))
+
+                .afterTime(0.5, telemetryPacket -> {
+                    bot.specimenDeposit2();
+                    return false;
+                })
+                .afterTime(0.75, telemetryPacket -> {
+                    bot.grippyOpen();
+                    return false;
+                })
+                .waitSeconds(0.2)
+
+
+                .afterTime(0.75, telemetryPacket -> {
+                    bot.specimenPickup();
+                    return false;
+                })
+                .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
+                .waitSeconds(0.3)
+                .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
+                .afterTime(0, telemetryPacket -> {
+                    bot.grippyClose();
+                    return false;
+                })
+                .afterTime(0.4, telemetryPacket -> {
+                    bot.flippy.setPosition(0.6);
+                    return false;
+                })
+                .waitSeconds(0.5)
+                .afterTime(0.15, telemetryPacket -> {
+                    bot.flippy.setPosition(0.8);
+                    return false;
+                })
+                .afterTime(0.3, telemetryPacket -> {
+                    bot.reset();
+                    return false;
+                })
+                .afterTime(1, telemetryPacket -> {
+                    bot.specimenDeposit();
+                    return false;
+                })
+                .strafeToConstantHeading(new Vector2d(4, 35.25))
+
+                .afterTime(0.5, telemetryPacket -> {
+                    bot.specimenDeposit2();
+                    return false;
+                })
+                .afterTime(0.75, telemetryPacket -> {
+                    bot.grippyOpen();
+                    return false;
+                })
+                .waitSeconds(0.3)
+                .strafeToConstantHeading(new Vector2d(-60, 60))
 
 //                .waitSeconds(0.3)
 //                .strafeTo(new Vector2d(0, 49))
