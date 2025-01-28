@@ -88,7 +88,7 @@ public class Robot {
 
         leftHang = hardwareMap.servo.get("leftHang");
         rightHang = hardwareMap.servo.get("rightHang");
-        
+
 
         lookyL = hardwareMap.get(DistanceSensor.class, "left_vision");
         lookyR = hardwareMap.get(DistanceSensor.class, "right_vision");
