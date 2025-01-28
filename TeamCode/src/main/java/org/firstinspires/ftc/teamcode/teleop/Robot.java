@@ -22,6 +22,7 @@ import com.pedropathing.pathgen.PathChain;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
@@ -40,6 +41,7 @@ public class Robot {
     public Servo wrist, leftHang, rightHang;
     public CRServo intakeLeft, intakeRight;
     public Servo grippy, twisty, flippy, touchy;
+    public DistanceSensor leftvision, rightvision;
     public MecanumDrive drive;
     public PIDController armController, slideController;
     public double epsilon = 0.1;
@@ -85,6 +87,9 @@ public class Robot {
 
         leftHang = hardwareMap.servo.get("leftHang");
         rightHang = hardwareMap.servo.get("rightHang");
+
+        DistanceSensor left_vision = hardwareMap.get(DistanceSensor.class, "left_vision");
+        DistanceSensor right_vision = hardwareMap.get(DistanceSensor.class, "right_vision");
 
 //        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
@@ -132,7 +137,7 @@ public class Robot {
     public void arcadeDrive(Gamepad gamepad1) {
         double y = gamepad1.left_stick_y;
         double x = -gamepad1.left_stick_x;
-        double rx = -0.75*gamepad1.right_stick_x;
+        double     rx = -0.75*gamepad1.right_stick_x;
 
 //        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
 //        double leftFrontPower = (y + x + rx) / denominator;
