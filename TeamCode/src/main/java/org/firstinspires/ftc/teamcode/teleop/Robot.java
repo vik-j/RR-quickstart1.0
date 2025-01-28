@@ -68,6 +68,8 @@ public class Robot {
 
     public static Pose2d lastPose = new Pose2d(0,0,0);
 
+    DistanceSensor lookyL, lookyR;
+
     public Robot(HardwareMap hardwareMap) {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
 
@@ -86,8 +88,10 @@ public class Robot {
 
         leftHang = hardwareMap.servo.get("leftHang");
         rightHang = hardwareMap.servo.get("rightHang");
+        
 
-
+        lookyL = hardwareMap.get(DistanceSensor.class, "left_vision");
+        lookyR = hardwareMap.get(DistanceSensor.class, "right_vision");
 //        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
 //        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
