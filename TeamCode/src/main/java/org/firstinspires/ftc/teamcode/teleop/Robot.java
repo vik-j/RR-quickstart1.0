@@ -90,8 +90,8 @@ public class Robot {
         rightHang = hardwareMap.servo.get("rightHang");
 
 
-        lookyL = hardwareMap.get(DistanceSensor.class, "left_vision");
-        lookyR = hardwareMap.get(DistanceSensor.class, "right_vision");
+//        lookyL = hardwareMap.get(DistanceSensor.class, "left_vision");
+//        lookyR = hardwareMap.get(DistanceSensor.class, "right_vision");
 //        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
 //        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

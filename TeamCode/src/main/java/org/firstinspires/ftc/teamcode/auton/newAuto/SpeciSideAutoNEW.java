@@ -64,7 +64,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.autoSamplePickup();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-27.5,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -102,7 +102,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-45.97, 40.497, Math.toRadians(-151.7)), Math.toRadians(270))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -140,7 +140,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-35.52, 48), Math.toRadians(-87.5))
                 .waitSeconds(0.3)
                 .strafeToLinearHeading(new Vector2d(-35.52, 51.5), Math.toRadians(-90))
-                .afterTime(0, telemetryPacket -> {
+                .afterTime(0.3, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
@@ -190,7 +190,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .waitSeconds(0.5)
-                .afterTime(0.15, telemetryPacket -> {
+                .afterTime(0.2, telemetryPacket -> {
                     bot.flippy.setPosition(0.8);
                     return false;
                 })
