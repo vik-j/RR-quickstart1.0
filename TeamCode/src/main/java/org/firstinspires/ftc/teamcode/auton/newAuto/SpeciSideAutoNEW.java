@@ -66,13 +66,10 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.autoSamplePickup();
                     return false;
                 })
-<<<<<<< Updated upstream
                 .splineToSplineHeading(new Pose2d(-27.5,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
-=======
 
                 //TODO: pickup 1st sample
                 .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
->>>>>>> Stashed changes
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -93,13 +90,10 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-<<<<<<< Updated upstream
                 .splineToSplineHeading(new Pose2d(-38.6, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
-=======
 
                 //TODO: pick up 2nd sample
                 .splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
->>>>>>> Stashed changes
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -120,13 +114,10 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-<<<<<<< Updated upstream
                 .splineToSplineHeading(new Pose2d(-45.97, 40.497, Math.toRadians(-151.7)), Math.toRadians(270))
-=======
 
                 //TODO: pick up 3rd sample
                 .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
->>>>>>> Stashed changes
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
