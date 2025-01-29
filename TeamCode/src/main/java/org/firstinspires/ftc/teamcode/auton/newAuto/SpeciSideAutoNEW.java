@@ -83,7 +83,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-38.6, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
