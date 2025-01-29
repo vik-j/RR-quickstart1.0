@@ -41,6 +41,8 @@ public class SpeciSideAutoNEW extends LinearOpMode {
         //TODO: 13.38 V
 
         Action driveAction = drive.actionBuilder(beginPose)
+                //TODO: 1st speci
+
                 .afterTime(0.01, telemetryPacket -> {
                     bot.newSpeci();
                     return false;
@@ -64,7 +66,13 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.autoSamplePickup();
                     return false;
                 })
+<<<<<<< Updated upstream
                 .splineToSplineHeading(new Pose2d(-27.5,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+=======
+
+                //TODO: pickup 1st sample
+                .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+>>>>>>> Stashed changes
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -78,12 +86,20 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .waitSeconds(0.8)
+
+                //TODO: drop off first sample
                 .turnTo(Math.toRadians(130), new TurnConstraints(20, -20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
+<<<<<<< Updated upstream
                 .splineToSplineHeading(new Pose2d(-38.6, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
+=======
+
+                //TODO: pick up 2nd sample
+                .splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
+>>>>>>> Stashed changes
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -96,13 +112,21 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.flippy.setPosition(0.6);
                     return false;
                 })
+
+                //TODO: drop off 2nd sample
                 .waitSeconds(0.8)
                 .turnTo(Math.toRadians(121.95), new TurnConstraints(20, -20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
+<<<<<<< Updated upstream
                 .splineToSplineHeading(new Pose2d(-45.97, 40.497, Math.toRadians(-151.7)), Math.toRadians(270))
+=======
+
+                //TODO: pick up 3rd sample
+                .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
+>>>>>>> Stashed changes
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -126,6 +150,8 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.setPidValues(0, 800);
                     return false;
                 })
+
+                //TODO: drop off 3rd sample
                 .splineToSplineHeading(new Pose2d(-39.2, 47.193, Math.toRadians(135.3)), Math.toRadians(90))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
@@ -137,6 +163,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.specimenPickup();
                     return false;
                 })
+                //TODO: pickup 2nd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 48), Math.toRadians(-87.5))
                 .waitSeconds(0.3)
                 .strafeToLinearHeading(new Vector2d(-35.52, 51.5), Math.toRadians(-90))
@@ -161,6 +188,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.specimenDeposit();
                     return false;
                 })
+                //TODO: score 2nd speci
                 .strafeToConstantHeading(new Vector2d(-4, 35.25))
 
                 .afterTime(0.5, telemetryPacket -> {
@@ -178,6 +206,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.specimenPickup();
                     return false;
                 })
+                //TODO: pickup 3rd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
                 .waitSeconds(0.3)
                 .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
@@ -202,6 +231,8 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.specimenDeposit();
                     return false;
                 })
+
+                //TODO: score 3rd speci
                 .strafeToConstantHeading(new Vector2d(0, 34.75))
 
                 .afterTime(0.5, telemetryPacket -> {
@@ -219,6 +250,8 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.specimenPickup();
                     return false;
                 })
+
+                //TODO: pick up 4th speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
                 .waitSeconds(0.3)
                 .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
@@ -243,6 +276,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.specimenDeposit();
                     return false;
                 })
+                //TODO: drop off 4th speci
                 .strafeToConstantHeading(new Vector2d(4, 35.25))
 
                 .afterTime(0.5, telemetryPacket -> {
@@ -254,6 +288,8 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .waitSeconds(0.3)
+
+                //TODO: park
                 .strafeToConstantHeading(new Vector2d(-60, 60))
 
 //                .waitSeconds(0.3)
