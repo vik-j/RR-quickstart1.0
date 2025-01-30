@@ -303,7 +303,7 @@ public class Robot {
     public void specimenDeposit() {
         flippy.setPosition(0.828);
 
-        Actions.runBlocking(setPidVals(945, 1606));
+        Actions.runBlocking(setPidVals(945, 1560));
     }
     public void specimenDeposit2() {
         Actions.runBlocking(setPidVals(1360, 1606));
@@ -421,7 +421,7 @@ public class Robot {
             flippy.setPosition(0.828);
 
             armTarget = 945;
-            slideTarget = 1606;
+            slideTarget = 1560;
         }
         else if (gamepad2.left_stick_button) {
             touchyRetract();
