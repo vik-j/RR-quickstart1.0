@@ -154,25 +154,27 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.specimenPickup();
                     return false;
                 })
-                //TODO: pickup 2nd speci
-                .strafeToLinearHeading(new Vector2d(-35.52, 47), Math.toRadians(-87.5))
                 .waitSeconds(0.3)
-                .strafeToLinearHeading(new Vector2d(-35.52, 51.9), Math.toRadians(-90))
+                //TODO: pickup 2nd speci
+                .strafeToLinearHeading(new Vector2d(-35.52, 47), Math.toRadians(-90))
+                .waitSeconds(0.5)
+                .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
                 .afterTime(0.35, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(0.45, telemetryPacket -> {
-                    bot.flippy.setPosition(0.7);
-                    return false;
-                })
-                .waitSeconds(0.5)
-                .afterTime(0.12, telemetryPacket -> {
+                .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.8);
                     return false;
                 })
+                .waitSeconds(0.5)
+                .afterTime(0, telemetryPacket -> {
+                    bot.flippy.setPosition(0.9);
+                    return false;
+                })
                 .afterTime(0.3, telemetryPacket -> {
-                    bot.reset();
+                    bot.speciScoreReset();
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
                 .afterTime(1, telemetryPacket -> {
@@ -180,7 +182,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 //TODO: score 2nd speci
-                .strafeToConstantHeading(new Vector2d(-4, 35.25))
+                .strafeToConstantHeading(new Vector2d(-4, 35.75))
 
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -206,16 +208,17 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .afterTime(0.4, telemetryPacket -> {
-                    bot.flippy.setPosition(0.7);
+                    bot.flippy.setPosition(0.8);
                     return false;
                 })
                 .waitSeconds(0.5)
-                .afterTime(0.12, telemetryPacket -> {
+                .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(0.3, telemetryPacket -> {
-                    bot.reset();
+                .afterTime(0.35, telemetryPacket -> {
+                    bot.speciScoreReset();
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
                 .afterTime(1, telemetryPacket -> {
@@ -224,7 +227,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                 })
 
                 //TODO: score 3rd speci
-                .strafeToConstantHeading(new Vector2d(0, 34.75))
+                .strafeToConstantHeading(new Vector2d(0, 35.25))
 
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -255,12 +258,13 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .waitSeconds(0.5)
-                .afterTime(0.15, telemetryPacket -> {
-                    bot.flippy.setPosition(0.8);
+                .afterTime(0, telemetryPacket -> {
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(0.3, telemetryPacket -> {
+                .afterTime(0.4, telemetryPacket -> {
                     bot.reset();
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
                 .afterTime(1, telemetryPacket -> {
@@ -268,7 +272,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(4, 35))
+                .strafeToConstantHeading(new Vector2d(6, 35.5))
 
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
