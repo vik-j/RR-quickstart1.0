@@ -43,6 +43,7 @@ public class Robot {
     public Servo grippy, twisty, flippy, touchy;
     public MecanumDrive drive;
     public PIDController armController, slideController;
+    public DistanceSensor lookyLeft, lookyRight;
     public double epsilon = 0.1;
 
     public PIDCoefficients x = new PIDCoefficients(0,0,0);
@@ -68,7 +69,7 @@ public class Robot {
 
     public static Pose2d lastPose = new Pose2d(0,0,0);
 
-    DistanceSensor lookyL, lookyR;
+
 
     public Robot(HardwareMap hardwareMap) {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
@@ -90,8 +91,8 @@ public class Robot {
         rightHang = hardwareMap.servo.get("rightHang");
 
 
-//        lookyL = hardwareMap.get(DistanceSensor.class, "left_vision");
-//        lookyR = hardwareMap.get(DistanceSensor.class, "right_vision");
+        lookyLeft = hardwareMap.get(DistanceSensor.class, "lookyLeft");
+        lookyRight = hardwareMap.get(DistanceSensor.class, "lookyRight");
 //        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
 //        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

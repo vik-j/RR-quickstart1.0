@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 @TeleOp
 public class TeleopV2 extends LinearOpMode {
     @Override
@@ -39,6 +41,8 @@ public class TeleopV2 extends LinearOpMode {
 //            telemetry.addData("intakeRight", bot.intakeRight.getPower());
             telemetry.addData("degrees", bot.flip.getCurrentPosition() / (2048/90.0));
             telemetry.addData("limit", bot.slideExtensionLimit);
+            telemetry.addData("Left Distance", bot.lookyLeft.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Right Distance", bot.lookyRight.getDistance(DistanceUnit.INCH));
             telemetry.update();
         }
     }
