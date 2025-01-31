@@ -47,7 +47,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.newSpeci();
                     return false;
                 })
-                .strafeToConstantHeading(new Vector2d(-8.5, 34.75))
+                .strafeToConstantHeading(new Vector2d(-8.5, 34.7))
                 .afterTime(0, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;
@@ -272,7 +272,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 35.5))
+                .strafeToConstantHeading(new Vector2d(7, 34.75))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;

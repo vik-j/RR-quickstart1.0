@@ -47,7 +47,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.newSpeci();
                     return false;
                 })
-                .strafeToConstantHeading(new Vector2d(-8.5, 34.75))
+                .strafeToConstantHeading(new Vector2d(-8.5, 34.7))
                 .afterTime(0, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;
@@ -69,7 +69,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(-27.5,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
 
                 //TODO: pickup 1st sample
-               // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+                // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -117,7 +117,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(-45.97, 41, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
-               // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
+                // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -272,7 +272,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 35.5))
+                .strafeToConstantHeading(new Vector2d(7, 34.75))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
