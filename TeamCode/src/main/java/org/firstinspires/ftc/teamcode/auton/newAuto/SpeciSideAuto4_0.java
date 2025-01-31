@@ -4,8 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ProfileAccelConstraint;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.TurnConstraints;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -16,8 +14,8 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "SpeciSideAutoNEW", group = "Autonomous", preselectTeleOp = "TeleopV2")
-public class SpeciSideAutoNEW extends LinearOpMode {
+@Autonomous(name = "SpeciSideAuto4_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+public class SpeciSideAuto4_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
@@ -66,7 +64,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.autoSamplePickup();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-27.5,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-28,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
 
                 //TODO: pickup 1st sample
                 // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
@@ -114,7 +112,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-45.97, 41, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.25, 41, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -158,7 +156,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                 //TODO: pickup 2nd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 47), Math.toRadians(-90))
                 .waitSeconds(0.5)
-                .strafeToLinearHeading(new Vector2d(-35.52, 54), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-35.52, 53.5), Math.toRadians(-90))
                 .afterTime(0.35, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
@@ -263,21 +261,21 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                     return false;
                 })
                 .afterTime(0.4, telemetryPacket -> {
-                    bot.reset();
+                    bot.speciScoreReset();
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.15, telemetryPacket -> {
+                .afterTime(1.22, telemetryPacket -> {
                     bot.specimenDeposit();
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 33.9))
+                .strafeToConstantHeading(new Vector2d(7, 34.1))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.85, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })

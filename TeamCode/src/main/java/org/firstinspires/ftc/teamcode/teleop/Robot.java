@@ -255,7 +255,7 @@ public class Robot {
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
-        Actions.runBlocking(setPidVals(900, 1740));
+        Actions.runBlocking(setPidVals(885, 1550));
     }
     public void sampleUp() {
         Actions.runBlocking(setPidVals(1900, 2300));

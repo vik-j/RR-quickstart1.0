@@ -47,7 +47,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.newSpeci();
                     return false;
                 })
-                .strafeToConstantHeading(new Vector2d(-8.5, 34.5))
+                .strafeToConstantHeading(new Vector2d(-8.5, 34.4))
                 .afterTime(0, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;
@@ -66,7 +66,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.autoSamplePickup();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-27.5,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-28,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
 
                 //TODO: pickup 1st sample
                 // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
@@ -114,7 +114,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-45.97, 41, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.25, 41, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -221,7 +221,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1, telemetryPacket -> {
+                .afterTime(1.1, telemetryPacket -> {
                     bot.specimenDeposit();
                     return false;
                 })
@@ -263,25 +263,26 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     return false;
                 })
                 .afterTime(0.4, telemetryPacket -> {
-                    bot.reset();
+                    bot.speciScoreReset();
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.15, telemetryPacket -> {
+                .afterTime(1.22, telemetryPacket -> {
                     bot.specimenDeposit();
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 34.4))
+                .strafeToConstantHeading(new Vector2d(7, 34.1))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.85, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
                 .waitSeconds(0.2)
+
                 .afterTime(0.75, telemetryPacket -> {
                     bot.specimenPickup();
                     return false;
@@ -305,21 +306,21 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     return false;
                 })
                 .afterTime(0.4, telemetryPacket -> {
-                    bot.reset();
+                    bot.speciScoreReset();
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.15, telemetryPacket -> {
+                .afterTime(1.22, telemetryPacket -> {
                     bot.specimenDeposit();
                     return false;
                 })
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(7, 35.5))
+                .strafeToConstantHeading(new Vector2d(9, 34.1))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(1, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
