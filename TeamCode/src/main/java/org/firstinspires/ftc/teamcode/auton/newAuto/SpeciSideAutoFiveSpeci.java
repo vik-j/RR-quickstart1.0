@@ -283,9 +283,52 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     return false;
                 })
                 .waitSeconds(0.3)
+                .afterTime(0.75, telemetryPacket -> {
+                    bot.specimenPickup();
+                    return false;
+                })
+
+                //TODO: pick up 5th speci
+                .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
+                .waitSeconds(0.3)
+                .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
+                .afterTime(0, telemetryPacket -> {
+                    bot.grippyClose();
+                    return false;
+                })
+                .afterTime(0.4, telemetryPacket -> {
+                    bot.flippy.setPosition(0.7);
+                    return false;
+                })
+                .waitSeconds(0.5)
+                .afterTime(0, telemetryPacket -> {
+                    bot.flippy.setPosition(0.9);
+                    return false;
+                })
+                .afterTime(0.4, telemetryPacket -> {
+                    bot.reset();
+                    bot.flippy.setPosition(0.9);
+                    return false;
+                })
+                .afterTime(1, telemetryPacket -> {
+                    bot.specimenDeposit();
+                    return false;
+                })
+                //TODO: drop off 5th speci
+                .strafeToConstantHeading(new Vector2d(7.5, 35.5))
+
+                .afterTime(0.5, telemetryPacket -> {
+                    bot.specimenDeposit2();
+                    return false;
+                })
+                .afterTime(0.75, telemetryPacket -> {
+                    bot.grippyOpen();
+                    return false;
+                })
+                .waitSeconds(0.3)
 
                 //TODO: park
-                .strafeToConstantHeading(new Vector2d(-60, 60))
+//                .strafeToConstantHeading(new Vector2d(-60, 60))
 
 //                .waitSeconds(0.3)
 //                .strafeTo(new Vector2d(0, 49))
