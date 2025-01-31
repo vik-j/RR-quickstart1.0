@@ -284,7 +284,7 @@ public class SpeciSideAutoNEW extends LinearOpMode {
                 .waitSeconds(0.3)
 
 //                //TODO: park
-//                .strafeToConstantHeading(new Vector2d(-60, 60))
+                .strafeToConstantHeading(new Vector2d(-60, 60))
 
 //                .waitSeconds(0.3)
 //                .strafeTo(new Vector2d(0, 49))
