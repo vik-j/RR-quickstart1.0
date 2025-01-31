@@ -396,7 +396,7 @@ public class Robot {
                 arcadeDrive(gamepad1);
                 extendIntoSub(gamepad1, gamepad2);
             }
-            slideTarget = 4600;
+            slideTarget = 4400;
         }
         if (gamepad2.left_bumper) flippy.setPosition(0.97);
         if (gamepad2.right_bumper) flippy.setPosition(0.4);
@@ -416,7 +416,7 @@ public class Robot {
         }
         if (gamepad1.x) {
             touchyTouch();
-            badClose();
+            grippyClose();
 
 //            flippy.setPosition(0.718);
 //            twisty.setPosition(1);
@@ -426,8 +426,8 @@ public class Robot {
             Actions.runBlocking(new SleepAction(0.3));
             flippy.setPosition(0.828);
 
-            armTarget = 945;
-            slideTarget = 1560;
+            armTarget = 885;
+            slideTarget = 1550;
         }
         else if (gamepad2.left_stick_button) {
             touchyRetract();
