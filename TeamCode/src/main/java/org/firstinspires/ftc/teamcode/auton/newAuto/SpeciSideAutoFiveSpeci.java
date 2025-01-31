@@ -184,15 +184,15 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                 //TODO: score 2nd speci
                 .strafeToConstantHeading(new Vector2d(-4, 35.75))
 
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.3, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .waitSeconds(0.2)
+                .waitSeconds(0.01)
 
 
                 .afterTime(0.75, telemetryPacket -> {
@@ -229,15 +229,15 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                 //TODO: score 3rd speci
                 .strafeToConstantHeading(new Vector2d(0, 35.25))
 
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.3, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .waitSeconds(0.2)
+                .waitSeconds(0.01)
 
 
                 .afterTime(0.75, telemetryPacket -> {
@@ -316,11 +316,11 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                 })
                 //TODO: drop off 5th speci
                 .strafeToConstantHeading(new Vector2d(9, 34.1))
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(1, telemetryPacket -> {
+                .afterTime(0.5, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
