@@ -255,7 +255,7 @@ public class Robot {
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
-        Actions.runBlocking(setPidVals(935, 1720));
+        Actions.runBlocking(setPidVals(900, 1740));
     }
     public void sampleUp() {
         Actions.runBlocking(setPidVals(1900, 2300));
@@ -274,7 +274,7 @@ public class Robot {
     public void newSpeciSlides() {
         touchyTouch();
         flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(945, 1720));
+        Actions.runBlocking(setPidVals(915, 1720));
     }
     public ArmPosition speciDepositSlides() {
         return speciDeposit();
@@ -282,7 +282,7 @@ public class Robot {
 
     public void newSpeci2() {
         touchyRetract();
-        Actions.runBlocking(setPidVals(1360, 1720));
+        Actions.runBlocking(setPidVals(1360, 1740));
     }
 
     public ArmPosition speciDeposit2() {
@@ -295,8 +295,8 @@ public class Robot {
     }
     public void specimenPickup() {
         touchyRetract();
-        flippy.setPosition(1);
-        Actions.runBlocking(setPidVals(2470,0));
+        flippy.setPosition(0.97);
+        Actions.runBlocking(setPidVals(2490,0));
         twisty.setPosition(0);
         grippyOpen();
     }
