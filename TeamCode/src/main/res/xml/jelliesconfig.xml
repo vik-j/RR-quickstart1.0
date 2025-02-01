@@ -17,7 +17,6 @@
 
             <!-- I2C -->
             <LynxEmbeddedIMU name="imu" bus="0" port="0" />
-            <goBILDAPinpointRR name="odo" bus="0" port="1" />
             <REV_VL53L0X_RANGE_SENSOR name="distanceSensor" bus="1" port="0" />
         </LynxModule>
         <LynxModule name="Expansion Hub 2" port="2">
