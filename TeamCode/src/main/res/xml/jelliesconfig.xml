@@ -12,8 +12,6 @@
             <Servo name="claw" port="1" />
             <Servo name="twist" port="2" />
             <Servo name="touchy" port="3" />
-
-
             <!-- I2C -->
             <LynxEmbeddedIMU name="imu" bus="0" port="0" />
         </LynxModule>
