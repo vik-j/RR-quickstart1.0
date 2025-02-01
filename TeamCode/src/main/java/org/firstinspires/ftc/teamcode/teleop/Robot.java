@@ -256,7 +256,7 @@ public class Robot {
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
-        Actions.runBlocking(setPidVals(935, 1700));
+        Actions.runBlocking(setPidVals(885, 1550));
     }
     public void sampleUp() {
         Actions.runBlocking(setPidVals(1900, 2300));
@@ -275,7 +275,7 @@ public class Robot {
     public void newSpeciSlides() {
         touchyTouch();
         flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(945, 1700));
+        Actions.runBlocking(setPidVals(915, 1720));
     }
     public ArmPosition speciDepositSlides() {
         return speciDeposit();
@@ -283,7 +283,7 @@ public class Robot {
 
     public void newSpeci2() {
         touchyRetract();
-        Actions.runBlocking(setPidVals(1360, 1700));
+        Actions.runBlocking(setPidVals(1360, 1740));
     }
 
     public ArmPosition speciDeposit2() {
@@ -296,7 +296,7 @@ public class Robot {
     }
     public void specimenPickup() {
         touchyRetract();
-        flippy.setPosition(1);
+        flippy.setPosition(0.97);
         Actions.runBlocking(setPidVals(2490,0));
         twisty.setPosition(0);
         grippyOpen();
@@ -304,10 +304,10 @@ public class Robot {
     public void specimenDeposit() {
         flippy.setPosition(0.828);
 
-        Actions.runBlocking(setPidVals(945, 1606));
+        Actions.runBlocking(setPidVals(945, 1560));
     }
     public void specimenDeposit2() {
-        Actions.runBlocking(setPidVals(1360, 1606));
+        Actions.runBlocking(setPidVals(1360, 1560));
     }
 
     public ArmPosition speciPickup() {
@@ -322,7 +322,7 @@ public class Robot {
     }
     public void sampleDeposit() {
         flippy.setPosition(0.828);
-        twisty.setPosition(0);
+        twisty.setPosition(1);
         Actions.runBlocking(setPidVals(1900, 4700));
     }
     public void sampleScore3() {
@@ -336,6 +336,12 @@ public class Robot {
     public void reset() {
         intakeMultiplier = 1;
         Actions.runBlocking(setPidVals(0,0));
+        flippy.setPosition(0.4);
+        twisty.setPosition(0);
+    }
+    public void speciScoreReset() {
+        intakeMultiplier = 1;
+        Actions.runBlocking(setPidVals(1200,0));
         flippy.setPosition(0.4);
         twisty.setPosition(0);
     }
@@ -430,7 +436,7 @@ public class Robot {
                 arcadeDrive(gamepad1);
                 extendIntoSub(gamepad1, gamepad2);
             }
-            slideTarget = 4600;
+            slideTarget = 4400;
         }
         if (gamepad2.left_bumper) flippy.setPosition(0.97);
         if (gamepad2.right_bumper) flippy.setPosition(0.4);
@@ -450,18 +456,18 @@ public class Robot {
         }
         if (gamepad1.x) {
             touchyTouch();
-            badClose();
+            grippyClose();
 
 //            flippy.setPosition(0.718);
 //            twisty.setPosition(1);
 //            Actions.runBlocking(new SleepAction(0.1));
 //            armTarget = 2120;
 //            slideTarget = 1256;
-            Actions.runBlocking(new SleepAction(0.1));
+            Actions.runBlocking(new SleepAction(0.3));
             flippy.setPosition(0.828);
 
-            armTarget = 945;
-            slideTarget = 1606;
+            armTarget = 885;
+            slideTarget = 1550;
         }
         else if (gamepad2.left_stick_button) {
             touchyRetract();

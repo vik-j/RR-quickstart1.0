@@ -346,7 +346,7 @@ public class BasketSideAuto extends LinearOpMode {
                 .waitSeconds(0.5)
                 .strafeToConstantHeading(new Vector2d(52.5, 55.5), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(1)
-                .splineToLinearHeading(new Pose2d(54.634, 51, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
+                .splineToLinearHeading(new Pose2d(54.634, 51.5, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
                 .waitSeconds(3.5)
                 .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(2)
