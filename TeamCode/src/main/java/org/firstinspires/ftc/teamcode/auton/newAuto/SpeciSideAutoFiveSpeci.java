@@ -310,12 +310,12 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.22, telemetryPacket -> {
+                .afterTime(1.32, telemetryPacket -> {
                     bot.specimenDeposit();
                     return false;
                 })
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(9, 34.6))
+                .strafeToConstantHeading(new Vector2d(10, 34.6))
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
