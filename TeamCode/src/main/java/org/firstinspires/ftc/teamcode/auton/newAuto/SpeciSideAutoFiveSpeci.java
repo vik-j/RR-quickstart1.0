@@ -114,7 +114,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-46.25, 41, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.25, 41.5, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -158,7 +158,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                 //TODO: pickup 2nd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 47), Math.toRadians(-90))
                 .waitSeconds(0.5)
-                .strafeToLinearHeading(new Vector2d(-35.52, 53.5), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-35.52, 54), Math.toRadians(-90))
                 .afterTime(0.35, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
@@ -182,7 +182,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     return false;
                 })
                 //TODO: score 2nd speci
-                .strafeToConstantHeading(new Vector2d(-4, 35.75))
+                .strafeToConstantHeading(new Vector2d(-4, 36.25))
 
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -202,7 +202,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                 //TODO: pickup 3rd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
                 .waitSeconds(0.3)
-                .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-35.52, 53.5), Math.toRadians(-90))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
@@ -227,7 +227,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                 })
 
                 //TODO: score 3rd speci
-                .strafeToConstantHeading(new Vector2d(0, 35.25))
+                .strafeToConstantHeading(new Vector2d(0, 35.75))
 
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -272,7 +272,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 34.1))
+                .strafeToConstantHeading(new Vector2d(7, 34.6))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
@@ -315,7 +315,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(9, 34.1))
+                .strafeToConstantHeading(new Vector2d(9, 34.6))
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
