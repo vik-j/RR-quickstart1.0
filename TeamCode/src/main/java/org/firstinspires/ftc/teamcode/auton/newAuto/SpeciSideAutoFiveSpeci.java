@@ -188,7 +188,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.3, telemetryPacket -> {
+                .afterTime(0.45, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
@@ -233,7 +233,7 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.3, telemetryPacket -> {
+                .afterTime(0.45, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
