@@ -400,12 +400,12 @@ public class Robot {
         return (sameDistance()) && (withenDistanceLeft(goal)) && (withenDistanceRight(goal));
     }
 
-    public double findAngle(){
-        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
-        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+    //public double findAngle(){
+      //  double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        //double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
 
-        double offset = distance-
-    }
+        //double offset = distance-
+    //}
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.x) {
             touchyRetract();
