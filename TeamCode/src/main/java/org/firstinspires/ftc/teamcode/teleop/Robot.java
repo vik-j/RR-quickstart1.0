@@ -321,7 +321,7 @@ public class Robot {
     }
     public void sampleDeposit() {
         flippy.setPosition(0.828);
-        twisty.setPosition(0);
+        twisty.setPosition(1);
         Actions.runBlocking(setPidVals(1900, 4700));
     }
     public void sampleScore3() {
