@@ -31,6 +31,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
@@ -359,6 +360,45 @@ public class Robot {
 
         twisty.setPosition(0);
         Actions.runBlocking(setPidVals(0,0));
+    }
+
+    public boolean withenDistanceLeft(double target){
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double tolerance = 0.1;
+
+        return (target < leftDistance - tolerance) && (target > leftDistance + tolerance);
+
+    }
+
+    public boolean withenDistanceRight(double target){
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+        double tolerance = 0.1;
+
+        return (target < rightDistance - tolerance) && (target > rightDistance + tolerance);
+
+    }
+
+    public boolean sameDistance(){
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+        double tolerance = 0.1;
+
+        return (rightDistance < leftDistance - tolerance) && (rightDistance > leftDistance + tolerance);
+
+    }
+
+    public boolean checkDistance(double goal){
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+
+        return (sameDistance()) && (withenDistanceLeft(goal)) && (withenDistanceRight(goal));
+    }
+
+    public double findAngle(){
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+
+        double offset = distance-
     }
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.x) {
