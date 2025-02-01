@@ -112,7 +112,7 @@ public class SpeciSideAuto4_0 extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-46.25, 41, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.25, 40.5, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -270,7 +270,7 @@ public class SpeciSideAuto4_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 34.25))
+                .strafeToConstantHeading(new Vector2d(7, 34.5))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;

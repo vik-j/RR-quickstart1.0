@@ -4,8 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ProfileAccelConstraint;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.TurnConstraints;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -16,8 +14,8 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "SpeciSideAutoFiveSpeci", group = "Autonomous", preselectTeleOp = "TeleopV2")
-public class SpeciSideAutoFiveSpeci extends LinearOpMode {
+@Autonomous(name = "SpeciSideAuto5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+public class SpeciSideAuto5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
@@ -324,9 +322,10 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
+                .waitSeconds(0.2)
 
                 //TODO: park
-//                .strafeToConstantHeading(new Vector2d(-60, 60))
+                .strafeToConstantHeading(new Vector2d(-60, 60))
 
 //                .waitSeconds(0.3)
 //                .strafeTo(new Vector2d(0, 49))
@@ -346,6 +345,3 @@ public class SpeciSideAutoFiveSpeci extends LinearOpMode {
         );
     }
 }
-
-
-
