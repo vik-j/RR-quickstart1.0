@@ -156,7 +156,7 @@ public class SpeciSideAuto4_0 extends LinearOpMode {
                 //TODO: pickup 2nd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 47), Math.toRadians(-90))
                 .waitSeconds(0.5)
-                .strafeToLinearHeading(new Vector2d(-35.52, 53.5), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-35.52, 53.75), Math.toRadians(-90))
                 .afterTime(0.35, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
@@ -270,7 +270,7 @@ public class SpeciSideAuto4_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 34.1))
+                .strafeToConstantHeading(new Vector2d(7, 34.25))
                 .afterTime(0.5, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
