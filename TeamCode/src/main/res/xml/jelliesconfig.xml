@@ -6,7 +6,7 @@
             <goBILDA5202SeriesMotor name="leftBack" port="0" />
             <goBILDA5202SeriesMotor name="rightBack" port="1" />
             <goBILDA5202SeriesMotor name="leftFront" port="2" />
-            <goBILDA5202SeriesMotor name="rightFront " port="3" />
+            <goBILDA5202SeriesMotor name="rightFront" port="3" />
             <!-- Servos -->
             <Servo name="flippy" port="0" />
             <Servo name="claw" port="1" />
