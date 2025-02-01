@@ -88,8 +88,6 @@ public class Robot {
         flippy = hardwareMap.servo.get("flippy");
         touchy = hardwareMap.servo.get("touchy");
 
-        leftHang = hardwareMap.servo.get("leftHang");
-        rightHang = hardwareMap.servo.get("rightHang");
 
 
         lookyLeft = hardwareMap.get(DistanceSensor.class, "lookyLeft");
@@ -114,9 +112,6 @@ public class Robot {
 
 //        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 //        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
-//
-        rightHang.setDirection(Servo.Direction.REVERSE);
-        leftHang.setDirection(Servo.Direction.FORWARD);
 
 
 //        for (DcMotor motor: motors) {
