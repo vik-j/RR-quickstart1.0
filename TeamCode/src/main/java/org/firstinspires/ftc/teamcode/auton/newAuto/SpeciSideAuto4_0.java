@@ -83,7 +83,7 @@ public class SpeciSideAuto4_0 extends LinearOpMode {
                 .waitSeconds(0.8)
 
                 //TODO: drop off first sample
-                .turnTo(Math.toRadians(130), new TurnConstraints(20, -20, 20))
+                .turnTo(Math.toRadians(125), new TurnConstraints(20, -20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
@@ -92,15 +92,15 @@ public class SpeciSideAuto4_0 extends LinearOpMode {
 
                 //TODO: pick up 2nd sample
                 //.splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.6, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.8, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(0.9, telemetryPacket -> {
+                .afterTime(1, telemetryPacket -> {
                     bot.flippy.setPosition(0.6);
                     return false;
                 })
@@ -112,7 +112,7 @@ public class SpeciSideAuto4_0 extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-46.25, 40.5, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.25, 40.5, Math.toRadians(-146.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))

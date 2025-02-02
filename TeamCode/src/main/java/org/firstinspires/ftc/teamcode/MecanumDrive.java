@@ -332,7 +332,7 @@ public final class MecanumDrive {
             Pose2d error = txWorldTarget.value().minusExp(pose);
 
             if (headingCorrection && !translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.heading.toDouble() < Math.toRadians(1)) {
+                if (t >= timeTrajectory.duration && error.heading.toDouble() < Math.toRadians(1) || t >= timeTrajectory.duration + 1) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);
@@ -344,7 +344,7 @@ public final class MecanumDrive {
                 }
             }
             else if (!headingCorrection && translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance) {
+                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance || t >= timeTrajectory.duration + 1) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);
@@ -356,7 +356,7 @@ public final class MecanumDrive {
                 }
             }
             if (headingCorrection && translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance && error.heading.toDouble() < Math.toRadians(1)) {
+                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance && error.heading.toDouble() < Math.toRadians(1) || t >= timeTrajectory.duration + 1) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);

@@ -4,6 +4,8 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.TurnConstraints;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -68,11 +70,11 @@ public class SpeciSideAuto5_0 extends LinearOpMode {
 
                 //TODO: pickup 1st sample
                 // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.4, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.55, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
@@ -92,15 +94,15 @@ public class SpeciSideAuto5_0 extends LinearOpMode {
 
                 //TODO: pick up 2nd sample
                 //.splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.6, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(0.75, telemetryPacket -> {
+                .afterTime(0.8, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(0.9, telemetryPacket -> {
+                .afterTime(1, telemetryPacket -> {
                     bot.flippy.setPosition(0.6);
                     return false;
                 })
@@ -116,11 +118,11 @@ public class SpeciSideAuto5_0 extends LinearOpMode {
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.4, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(0.6, telemetryPacket -> {
+                .afterTime(0.5, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
@@ -141,7 +143,7 @@ public class SpeciSideAuto5_0 extends LinearOpMode {
                 })
 
                 //TODO: drop off 3rd sample
-                .strafeToSplineHeading(new Vector2d(-39.2, 47.193), Math.toRadians(120.3))
+                .strafeToSplineHeading(new Vector2d(-39.2, 48.193), Math.toRadians(120.3))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
@@ -271,20 +273,23 @@ public class SpeciSideAuto5_0 extends LinearOpMode {
                 })
                 //TODO: drop off 4th speci
                 .strafeToConstantHeading(new Vector2d(7, 34.6))
-                .afterTime(0.5, telemetryPacket -> {
+                .afterTime(0.3, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.85, telemetryPacket -> {
+                .afterTime(0.65, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
                 .waitSeconds(0.05)
 
+                // TODO: COMMENT EVERYTHING OUT FROM UNDER HERE AND UNCOMMENT PARK FOR 4+0
+
                 .afterTime(0.75, telemetryPacket -> {
                     bot.specimenPickup();
                     return false;
                 })
+
 
                 //TODO: pick up 5th speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
@@ -313,19 +318,19 @@ public class SpeciSideAuto5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(8, 34.6))
-                .afterTime(0.2, telemetryPacket -> {
+                .strafeToConstantHeading(new Vector2d(8, 35.4))
+                .afterTime(0.15, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
                 })
-                .afterTime(0.55, telemetryPacket -> {
+                .afterTime(0.4, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
                 .waitSeconds(0.2)
 
                 //TODO: park
-                .strafeToConstantHeading(new Vector2d(-60, 60))
+                .strafeToConstantHeading(new Vector2d(-60, 60), new TranslationalVelConstraint(120), new ProfileAccelConstraint(-120, 120))
 
 //                .waitSeconds(0.3)
 //                .strafeTo(new Vector2d(0, 49))
