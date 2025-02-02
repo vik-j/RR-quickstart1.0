@@ -17,8 +17,8 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.pathgen.PathChain;
+//import com.pedropathing.follower.Follower;
+//import com.pedropathing.pathgen.PathChain;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -395,12 +395,36 @@ public class Robot {
         return (sameDistance()) && (withenDistanceLeft(goal)) && (withenDistanceRight(goal));
     }
 
-    //public double findAngle(){
-      //  double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
-        //double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+    public double findAngle(){
+        double sensorDifference = 6;
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
 
-        //double offset = distance-
-    //}
+        double realOffset = leftDistance-rightDistance;
+        double offset = Math.abs(leftDistance-rightDistance);
+
+        double hypotenuse = Math.sqrt(Math.pow(offset,2) +Math.pow(sensorDifference,2));
+        double robotAngle = 90*(Math.round(Math.toDegrees(drive.pose.heading.toDouble())/90));
+
+        double trueAngle;
+
+        if(realOffset < 0){
+            double offsetAngle = -Math.asin(offset/hypotenuse);
+
+            trueAngle = robotAngle + offsetAngle;
+
+            return trueAngle;
+        } else if (realOffset >= 0) {
+            double offsetAngle = Math.asin(offset/hypotenuse);
+
+            trueAngle = robotAngle + offsetAngle;
+
+            return trueAngle;
+        } else{
+            return 0;
+        }
+    }
+
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.x) {
             touchyRetract();
@@ -540,6 +564,7 @@ public class Robot {
         }
         gamepad1Ex.readButtons();
     }
+    /*
     public Action followPathInstant(Follower follower, PathChain path) {
         return new InstantAction(() -> follower.followPath(path, true));
     }
@@ -563,6 +588,8 @@ public class Robot {
             return follower.isBusy();
         }
     }
+    */
+     
     public void clawControl(Gamepad gamepad) {
         if (gamepad.dpad_left) grippy.setPosition(0);
 
