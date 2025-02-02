@@ -612,8 +612,8 @@ public class Robot {
         }
     }
     public void TeleopPID(Gamepad gamepad) {
-        armTarget += (int) ((int) -gamepad.right_stick_y * 30);
-        slideTarget += (int) -gamepad.left_stick_y * 28;
+        armTarget += (int) ((int) -gamepad.right_stick_y * 90);
+        slideTarget += (int) -gamepad.left_stick_y * 86;
 //        int targetLength = (int) (1750*(1/Math.cos(Math.toRadians(flipPos/armPIDValues.ticks_in_degree))));
 //        slideExtensionLimit = targetLength;
 
