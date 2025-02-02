@@ -11,14 +11,12 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.ejml.equation.Operation;
 import org.firstinspires.ftc.teamcode.BasketSideMecanumDrive;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "BasketSideAuto", group = "Autonomous", preselectTeleOp = "TeleopV2")
-public class BasketSideAuto extends LinearOpMode {
+@Autonomous(name = "Sample0_4", group = "Autonomous", preselectTeleOp = "TeleopV2")
+public class Sample0_4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //old x used to be 40

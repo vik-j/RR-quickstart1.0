@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 
+@Disabled
 @Config
 @TeleOp
 public class PidfTuner extends OpMode {
