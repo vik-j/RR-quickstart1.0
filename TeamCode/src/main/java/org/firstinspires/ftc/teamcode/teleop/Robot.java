@@ -431,7 +431,7 @@ public class Robot {
                 arcadeDrive(gamepad1);
                 extendIntoSub(gamepad1, gamepad2);
             }
-            slideTarget = 4400;
+            slideTarget = 4600;
         }
         if (gamepad2.left_bumper) flippy.setPosition(0.97);
         if (gamepad2.right_bumper) flippy.setPosition(0.4);
@@ -747,8 +747,7 @@ public class Robot {
     public void startPID() {
         if (currentThread == null || !currentThread.isAlive()) {
             stopPid = false;
-            Thread thread = new Thread(new pidfLoopAuton());
-            currentThread = thread;
+            currentThread = new Thread(new pidfLoopAuton());
             currentThread.start();
         }
     }
