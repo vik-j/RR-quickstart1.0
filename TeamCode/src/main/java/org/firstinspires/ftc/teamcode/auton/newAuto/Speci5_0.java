@@ -74,7 +74,7 @@ public class Speci5_0 extends LinearOpMode {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(0.55, telemetryPacket -> {
+                .afterTime(0.65, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
@@ -82,7 +82,7 @@ public class Speci5_0 extends LinearOpMode {
                     bot.flippy.setPosition(0.6);
                     return false;
                 })
-                .waitSeconds(0.4)
+                .waitSeconds(0.7)
 
                 //TODO: drop off first sample
                 .turnTo(Math.toRadians(130), new TurnConstraints(20, -20, 20))
@@ -114,7 +114,7 @@ public class Speci5_0 extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .splineToSplineHeading(new Pose2d(-46.25, 41.5, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.25, 39.5, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -182,7 +182,7 @@ public class Speci5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: score 2nd speci
-                .strafeToConstantHeading(new Vector2d(-4, 35.75))
+                .strafeToConstantHeading(new Vector2d(-4, 34.79))
 
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -227,7 +227,7 @@ public class Speci5_0 extends LinearOpMode {
                 })
 
                 //TODO: score 3rd speci
-                .strafeToConstantHeading(new Vector2d(0, 35.5))
+                .strafeToConstantHeading(new Vector2d(0, 34.54))
 
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -237,7 +237,7 @@ public class Speci5_0 extends LinearOpMode {
                     bot.grippyOpen();
                     return false;
                 })
-                .waitSeconds(0.01)
+                .waitSeconds(0.15)
 
 
                 .afterTime(0.75, telemetryPacket -> {
@@ -272,7 +272,7 @@ public class Speci5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 34.6))
+                .strafeToConstantHeading(new Vector2d(7, 34.1))
                 .afterTime(0.3, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
@@ -318,7 +318,7 @@ public class Speci5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(8, 35.4))
+                .strafeToConstantHeading(new Vector2d(8, 34.44))
                 .afterTime(0.15, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
