@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@TeleOp
+
+@TeleOp(name = "🐷")
 public class TeleopV2 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

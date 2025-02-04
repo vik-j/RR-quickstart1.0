@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "Speci5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+@Autonomous(name = "🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Speci5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
