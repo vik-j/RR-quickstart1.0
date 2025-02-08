@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
-public class Speci5_0 extends LinearOpMode {
+@Autonomous(name = "NoSweepySpeci5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+public class NoSweepySpeci5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
@@ -26,7 +26,7 @@ public class Speci5_0 extends LinearOpMode {
 
         drive.enableHeadingCorrection();
         drive.enableTranslationalCorrection(1.0);
-        
+
         bot.grippyClose();
         bot.flippy.setPosition(1);
         bot.twisty.setPosition(0);
