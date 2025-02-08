@@ -363,7 +363,7 @@ public class Robot {
         Actions.runBlocking(setPidVals(0,0));
     }
 
-    public boolean withenDistanceLeft(double target){
+    public boolean withinDistanceLeft(double target) {
         double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
         double tolerance = 0.1;
 
@@ -371,7 +371,7 @@ public class Robot {
 
     }
 
-    public boolean withenDistanceRight(double target){
+    public boolean withinDistanceRight(double target) {
         double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
         double tolerance = 0.1;
 
@@ -379,7 +379,7 @@ public class Robot {
 
     }
 
-    public boolean sameDistance(){
+    public boolean sameDistance() {
         double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
         double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
         double tolerance = 0.1;
@@ -388,14 +388,14 @@ public class Robot {
 
     }
 
-    public boolean checkDistance(double goal){
+    public boolean checkDistance(double goal) {
         double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
         double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
 
-        return (sameDistance()) && (withenDistanceLeft(goal)) && (withenDistanceRight(goal));
+        return (sameDistance()) && (withinDistanceLeft(goal)) && (withinDistanceRight(goal));
     }
 
-    public double findAngle(){
+    public double findAngle() {
         double sensorDifference = 6;
         double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
         double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);

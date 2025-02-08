@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "NoSweepySpeci5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
-public class NoSweepySpeci5_0 extends LinearOpMode {
+@Autonomous(name = "DistSensor5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+public class DistSensor5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
