@@ -425,6 +425,14 @@ public class Robot {
         }
     }
 
+    public double averageVisionDistance(){
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+
+        double averageDistance = (leftDistance+rightDistance)/2;
+        return averageDistance;
+    }
+
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.x) {
             touchyRetract();
