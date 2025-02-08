@@ -27,6 +27,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
 
         drive.enableHeadingCorrection();
         drive.enableTranslationalCorrection(1.0);
+        drive.setCorrectionTimeout(1.0);
 
         bot.grippyClose();
         bot.flippy.setPosition(1);

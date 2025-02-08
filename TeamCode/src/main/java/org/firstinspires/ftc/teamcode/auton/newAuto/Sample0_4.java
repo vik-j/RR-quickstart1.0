@@ -9,11 +9,13 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.BasketSideMecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
+@Disabled
 @Config
 @Autonomous(name = "Sample0_4", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Sample0_4 extends LinearOpMode {

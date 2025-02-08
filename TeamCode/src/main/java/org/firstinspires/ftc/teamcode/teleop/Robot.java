@@ -316,9 +316,9 @@ public class Robot {
         Actions.runBlocking(setPidVals(1800, 4700));
     }
     public void sampleDeposit() {
-        flippy.setPosition(0.828);
+        flippy.setPosition(0.7);
         twisty.setPosition(1);
-        Actions.runBlocking(setPidVals(1900, 4700));
+        Actions.runBlocking(setPidVals(1875, 4700));
     }
     public void sampleScore3() {
         Actions.runBlocking(setPidVals(2000, 4700));
@@ -326,6 +326,10 @@ public class Robot {
     public void speciPickup2() {
         grippyOpen();
         flippy.setPosition(0.778);
+        twisty.setPosition(0);
+    }
+    public void fullRetract() {
+        Actions.runBlocking(setPidVals(0,0));
         twisty.setPosition(0);
     }
     public void reset() {

@@ -120,6 +120,8 @@ public final class MecanumDrive {
     public boolean headingCorrection = true;
     public boolean translationalCorrection = false;
     public double translationalTolerance = 1.0;
+
+    public double correctionTimeout = 1.0;
     public static Pose2d lastPose = new Pose2d(0,0,0);
 
     public List<DcMotorEx> motors = new ArrayList<>();
@@ -277,6 +279,9 @@ public final class MecanumDrive {
         this.translationalTolerance = translationalTolerance;
         translationalCorrection = true;
     }
+    public void setCorrectionTimeout(double correctionTimeout) {
+        this.correctionTimeout = correctionTimeout;
+    }
 
     public void setDrivePowers(PoseVelocity2d powers) {
         MecanumKinematics.WheelVelocities<Time> wheelVels = new MecanumKinematics(1).inverse(
@@ -332,7 +337,7 @@ public final class MecanumDrive {
             Pose2d error = txWorldTarget.value().minusExp(pose);
 
             if (headingCorrection && !translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.heading.toDouble() < Math.toRadians(1) || t >= timeTrajectory.duration + 1) {
+                if (t >= timeTrajectory.duration && error.heading.toDouble() < Math.toRadians(1) || t >= timeTrajectory.duration + correctionTimeout) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);
@@ -344,7 +349,7 @@ public final class MecanumDrive {
                 }
             }
             else if (!headingCorrection && translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance || t >= timeTrajectory.duration + 1) {
+                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance || t >= timeTrajectory.duration + correctionTimeout) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);
@@ -356,7 +361,7 @@ public final class MecanumDrive {
                 }
             }
             if (headingCorrection && translationalCorrection) {
-                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance && error.heading.toDouble() < Math.toRadians(1) || t >= timeTrajectory.duration + 1) {
+                if (t >= timeTrajectory.duration && error.position.norm() < translationalTolerance && error.heading.toDouble() < Math.toRadians(1) || t >= timeTrajectory.duration + correctionTimeout) {
                     leftFront.setPower(0);
                     leftBack.setPower(0);
                     rightBack.setPower(0);

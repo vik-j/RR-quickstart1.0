@@ -47,7 +47,7 @@ public class PidfTuner extends OpMode {
 //    private Servo wrist;
     MecanumDrive drive;
     Robot bot;
-    Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
+    Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
 
     @Override
     public void init() {
