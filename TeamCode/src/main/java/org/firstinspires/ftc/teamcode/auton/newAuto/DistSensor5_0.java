@@ -33,6 +33,10 @@ public class DistSensor5_0 extends LinearOpMode {
         bot.twisty.setPosition(0);
         bot.resetEncoders();
 
+        double idealDistance = 24;
+        double correctionDistance = bot.averageVisionDistance()-idealDistance;
+
+
         waitForStart();
 
         Robot.stopPid = false;
@@ -48,7 +52,7 @@ public class DistSensor5_0 extends LinearOpMode {
                     bot.newSpeci();
                     return false;
                 })
-                .strafeToConstantHeading(new Vector2d(-8.5, 34.4))
+                .strafeToConstantHeading(new Vector2d(-8.5, 34.4-correctionDistance))
                 .afterTime(0, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;
@@ -183,7 +187,7 @@ public class DistSensor5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: score 2nd speci
-                .strafeToConstantHeading(new Vector2d(-4, 34.79))
+                .strafeToConstantHeading(new Vector2d(-4, 34.79-correctionDistance))
 
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -228,7 +232,7 @@ public class DistSensor5_0 extends LinearOpMode {
                 })
 
                 //TODO: score 3rd speci
-                .strafeToConstantHeading(new Vector2d(0, 34.54))
+                .strafeToConstantHeading(new Vector2d(0, 34.54-correctionDistance))
 
                 .afterTime(0.2, telemetryPacket -> {
                     bot.specimenDeposit2();
@@ -273,7 +277,7 @@ public class DistSensor5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 34.1))
+                .strafeToConstantHeading(new Vector2d(7, 34.1-correctionDistance))
                 .afterTime(0.3, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
@@ -319,7 +323,7 @@ public class DistSensor5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(8, 34.44))
+                .strafeToConstantHeading(new Vector2d(8, 34.44-correctionDistance))
                 .afterTime(0.15, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
