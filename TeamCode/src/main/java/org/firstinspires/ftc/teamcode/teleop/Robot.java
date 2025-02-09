@@ -19,6 +19,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 //import com.pedropathing.follower.Follower;
 //import com.pedropathing.pathgen.PathChain;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -45,6 +47,7 @@ public class Robot {
     public MecanumDrive drive;
     public PIDController armController, slideController;
     public DistanceSensor lookyLeft, lookyRight;
+    public Limelight3A limelight;
     public double epsilon = 0.1;
 
     public PIDCoefficients x = new PIDCoefficients(0,0,0);
@@ -109,6 +112,8 @@ public class Robot {
         flip.setDirection(DcMotorSimple.Direction.FORWARD);
 
         slide.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
 //        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 //        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -1010,6 +1015,35 @@ public class Robot {
     }
     //4000, 2000
 
+    //TODO: Limelight Actions Below
+    public static class searchForSample implements Action {
+        int color = 0;
+        double timeout;
+        public boolean finished = false;
+        Robot bot;
+
+        public searchForSample(Robot bot, SampleColor color, double timeout) {
+            if (color == SampleColor.YELLOW) this.color = 1;
+            else if (color == SampleColor.RED) this.color = 2;
+            else if (color == SampleColor.BLUE) this.color = 3;
+
+            this.bot = bot;
+
+            this.timeout = timeout;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            bot.limelight.pipelineSwitch(color);
+            bot.limelight.start();
+
+            LLResult result = bot.limelight.getLatestResult();
+
+            //TODO: add rest of code later
+
+            return !finished;
+        }
+    }
 
     //TODO: AUTO ACTIONS BELOW
 
