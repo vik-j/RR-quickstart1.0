@@ -305,19 +305,17 @@ public class Robot {
         Actions.runBlocking(setPidVals(1360, 1560));
     }
 
-    public ArmPosition speciPickup() {
-        return new ArmPosition(2300, 0, 0, 0.97, 0, 1);
-    }
-    public void sampleScore() {
-        flippy.setPosition(0.828);
-        Actions.runBlocking(setPidVals(1800, 0));
-    }
-    public void sampleScore2() {
-        Actions.runBlocking(setPidVals(1800, 4700));
-    }
     public void sampleDeposit() {
         flippy.setPosition(0.7);
         twisty.setPosition(1);
+        Actions.runBlocking(setPidVals(1875, 4700));
+    }
+    public void samplePivot() {
+        flippy.setPosition(0.7);
+        twisty.setPosition(1);
+        Actions.runBlocking(setPidVals(1875, 0));
+    }
+    public void sampleSlides() {
         Actions.runBlocking(setPidVals(1875, 4700));
     }
     public void sampleScore3() {
