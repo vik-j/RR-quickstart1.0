@@ -36,6 +36,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+import java.util.Map;
+
 @Config
 //TODO: change claw opened and closed values
 public class Robot {
@@ -1021,6 +1023,7 @@ public class Robot {
         double timeout;
         public boolean finished = false;
         Robot bot;
+        
 
         public searchForSample(Robot bot, SampleColor color, double timeout) {
             if (color == SampleColor.YELLOW) this.color = 1;
