@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class DistSensor5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
+        Pose2d beginPose = new Pose2d(-9, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
 
@@ -35,10 +35,10 @@ public class DistSensor5_0 extends LinearOpMode {
         bot.resetEncoders();
 
         double idealDistance = 24;
-        double correctionDistance = bot.averageVisionDistance()-idealDistance;
-
 
         waitForStart();
+
+        double correctionDistance = bot.lookyLeft.getDistance(DistanceUnit.INCH) - idealDistance;
 
         Robot.stopPid = false;
 
@@ -53,7 +53,7 @@ public class DistSensor5_0 extends LinearOpMode {
                     bot.newSpeci();
                     return false;
                 })
-                .strafeToConstantHeading(new Vector2d(-8.5, 34.4-correctionDistance))
+                .strafeToConstantHeading(new Vector2d(-8.5, 34.4))
                 .afterTime(0, telemetryPacket -> {
                     bot.newSpeci2();
                     return false;

@@ -27,6 +27,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -115,7 +116,7 @@ public class Robot {
 
         slide.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+//        limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
 //        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 //        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -438,8 +439,7 @@ public class Robot {
         double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
         double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
 
-        double averageDistance = (leftDistance+rightDistance)/2;
-        return averageDistance;
+        return (leftDistance+rightDistance)/2;
     }
 
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
@@ -1023,7 +1023,7 @@ public class Robot {
         double timeout;
         public boolean finished = false;
         Robot bot;
-        
+
 
         public searchForSample(Robot bot, SampleColor color, double timeout) {
             if (color == SampleColor.YELLOW) this.color = 1;
