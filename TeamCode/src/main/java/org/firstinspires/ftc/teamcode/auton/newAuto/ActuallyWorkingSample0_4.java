@@ -47,10 +47,10 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.setPidValues(1875, 4700);
                     return false;
                 })
-                //TODO: score up first sample
+                //TODO: score first sample
                 .strafeToSplineHeading(new Vector2d(51.2, 52.16), Math.toRadians(-134.88))
                 .afterTime(1.1, telemetryPacket -> {
-                    bot.flippy.setPosition(0.828);
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
                 .afterTime(1.25, telemetryPacket -> {
@@ -65,15 +65,15 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(0.2)
                 .strafeToSplineHeading(new Vector2d(53.6, 54.56), Math.toRadians(-134.88))
                 .waitSeconds(0.4)
                 //TODO: pickup second sample
                 .afterTime(0, telemetryPacket -> {
-                    bot.setPidValues(0, 400);
+                    bot.setPidValues(0, 600);
                     return false;
                 })
-                .strafeToSplineHeading(new Vector2d(48.97, 39.85), Math.toRadians(-90), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
+                .strafeToSplineHeading(new Vector2d(49.4, 40.75), Math.toRadians(-90), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
                 .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -82,7 +82,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.grippyClose();
                     return false;
                 })
-                .waitSeconds(0.6)
+                .waitSeconds(0.4)
                 .afterTime(0, telemetryPacket -> {
                     bot.samplePivot();
                     return false;
@@ -92,32 +92,32 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     return false;
                 })
                 //TODO: score second sample
-                .strafeToSplineHeading(new Vector2d(50.2, 51.16), Math.toRadians(-134.88))
-                .afterTime(1.1, telemetryPacket -> {
-                    bot.flippy.setPosition(0.828);
+                .strafeToSplineHeading(new Vector2d(50.7, 51.86), Math.toRadians(-134.88))
+                .afterTime(0.9, telemetryPacket -> {
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.25, telemetryPacket -> {
+                .afterTime(1.05, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(1.45, telemetryPacket -> {
+                .afterTime(1.55, telemetryPacket -> {
                     bot.flippy.setPosition(0.7);
                     return false;
                 })
-                .afterTime(1.5, telemetryPacket -> {
+                .afterTime(1.7, telemetryPacket -> {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.5)
-                .strafeToSplineHeading(new Vector2d(53.6, 54.56), Math.toRadians(-134.88))
+                .waitSeconds(0.2)
+                .strafeToSplineHeading(new Vector2d(54.1, 55.06), Math.toRadians(-134.88))
                 .waitSeconds(0.4)
                 //TODO: pick up third sample
                 .afterTime(0, telemetryPacket -> {
-                    bot.setPidValues(0, 400);
+                    bot.setPidValues(0, 1000);
                     return false;
                 })
-                .strafeToSplineHeading(new Vector2d(59.36, 39.56), Math.toRadians(-89.75), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
+                .strafeToSplineHeading(new Vector2d(59.66, 40), Math.toRadians(-89.75), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -126,7 +126,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.grippyClose();
                     return false;
                 })
-                .waitSeconds(0.6)
+                .waitSeconds(0.5)
                 .afterTime(0, telemetryPacket -> {
                     bot.samplePivot();
                     return false;
@@ -136,33 +136,33 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     return false;
                 })
                 //TODO: score third sample
-                .strafeToSplineHeading(new Vector2d(51.2, 52.16), Math.toRadians(-134.88))
-                .afterTime(1.1, telemetryPacket -> {
-                    bot.flippy.setPosition(0.828);
+                .strafeToSplineHeading(new Vector2d(51.7, 52.66), Math.toRadians(-134.88))
+                .afterTime(0.9, telemetryPacket -> {
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.25, telemetryPacket -> {
+                .afterTime(1.05, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(1.45, telemetryPacket -> {
+                .afterTime(1.55, telemetryPacket -> {
                     bot.flippy.setPosition(0.7);
                     return false;
                 })
-                .afterTime(1.5, telemetryPacket -> {
+                .afterTime(1.7, telemetryPacket -> {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.5)
-                .strafeToSplineHeading(new Vector2d(53.6, 54.56), Math.toRadians(-134.88))
+                .waitSeconds(0.2)
+                .strafeToSplineHeading(new Vector2d(54.1, 55.06), Math.toRadians(-134.88))
                 .waitSeconds(0.4)
                 //TODO: pickup fourth sample
-                .afterTime(0, telemetryPacket -> {
-                    bot.setPidValues(0, 400);
-                    bot.twisty.setPosition(0.76);
+                .afterTime(0.5, telemetryPacket -> {
+                    bot.setPidValues(0, 800);
+//                    bot.twisty.setPosition(0.8);
                     return false;
                 })
-                .strafeToSplineHeading(new Vector2d(61.4, 37.2), Math.toRadians(-48.4), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
+                .strafeToSplineHeading(new Vector2d(61.7, 38.48), Math.toRadians(-52.5), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -184,23 +184,23 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 //TODO: score fourth sample
                 .strafeToSplineHeading(new Vector2d(50.2, 51.16), Math.toRadians(-134.88))
                 .afterTime(1.1, telemetryPacket -> {
-                    bot.flippy.setPosition(0.828);
+                    bot.flippy.setPosition(0.9);
                     return false;
                 })
                 .afterTime(1.25, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(1.45, telemetryPacket -> {
+                .afterTime(1.65, telemetryPacket -> {
                     bot.flippy.setPosition(0.7);
                     return false;
                 })
-                .afterTime(1.5, telemetryPacket -> {
+                .afterTime(1.75, telemetryPacket -> {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.5)
-                .strafeToSplineHeading(new Vector2d(53.6, 54.56), Math.toRadians(-134.88))
+                .waitSeconds(0.2)
+                .strafeToSplineHeading(new Vector2d(54.1, 55.06), Math.toRadians(-134.88))
                 .waitSeconds(0.4)
 
 
