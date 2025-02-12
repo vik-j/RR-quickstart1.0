@@ -4,28 +4,22 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.LLResultTypes.DetectorResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import java.util.List;
-import java.util.Objects;
 
-@Disabled
 @Autonomous
 @Config
-public class LimelightAngleCorrection extends LinearOpMode {
+public class LimelightCorrection extends LinearOpMode {
     Limelight3A limelight;
 
-    public static String targetColor = "blocksBlue";
+    public static String targetColor = "blocksYellow";
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -49,7 +43,7 @@ public class LimelightAngleCorrection extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             LLResult result = limelight.getLatestResult();
-            assert result != null;
+
             double tx = result.getTx();
             double ty = result.getTy();
 
@@ -58,29 +52,15 @@ public class LimelightAngleCorrection extends LinearOpMode {
             telemetry.update();
 
             List<DetectorResult> results = result.getDetectorResults();
-            assert !results.isEmpty();
 
-            if (Objects.equals(results.get(0).getClassName(), targetColor)) {
-                double power = 0.2 * (tx / 10);
-
-                telemetry.addData("power", power);
-
-                if (tx > 0.5) {
-                    drive.setPowers(power, -power, power, -power);
-                    telemetry.addLine("Turning Right");
-
-                } else if (tx < -0.5) {
-                    drive.setPowers(power, -power, power, -power);
-                    telemetry.addLine("Turning Left");
-                } else {
-                    drive.setPowers(0, 0, 0, 0);
-                    telemetry.addLine("Doing Nothing");
-                }
-                if (!results.isEmpty()) {
-                    telemetry.addData("Result name", results.get(0).getClassName());
-                    telemetry.addData("Result Confidence", results.get(0).getConfidence());
-                }
+            for (DetectorResult sense: results) {
+                telemetry.addData("xPixels", sense.getTargetXPixels());
+                telemetry.addData("yPixels", sense.getTargetYPixels());
+                telemetry.update();
             }
+
+
+
             telemetry.addData("TempC", (limelight.getStatus().getTemp()));
             telemetry.addData("TempF", ((limelight.getStatus().getTemp()* 1.8)) + 32);
             telemetry.update();

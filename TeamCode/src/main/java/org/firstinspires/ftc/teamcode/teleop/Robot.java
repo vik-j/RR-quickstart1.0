@@ -300,7 +300,7 @@ public class Robot {
     public void specimenPickup() {
         touchyRetract();
         flippy.setPosition(0.97);
-        Actions.runBlocking(setPidVals(2490,0));
+        Actions.runBlocking(setPidVals(2510,0));
         twisty.setPosition(0);
         grippyOpen();
     }
@@ -310,7 +310,7 @@ public class Robot {
         Actions.runBlocking(setPidVals(945, 1560));
     }
     public void specimenDeposit2() {
-        Actions.runBlocking(setPidVals(1360, 1560));
+        Actions.runBlocking(setPidVals(1420, 1560));
     }
 
     public void sampleDeposit() {
@@ -639,8 +639,8 @@ public class Robot {
 
         if (slideTarget < 0) slideTarget = 0;
 //        else if (slideTarget > targetLength && flipPos < 1850) slideTarget = targetLength;
-        else if (slideTarget > 4600 && armTarget > 1000) slideTarget = 4600;
-        else if (slideTarget > 1830 && armTarget < 1000) slideTarget = 1830;
+        else if (slideTarget > 4600*2 && armTarget > 1000) slideTarget = 4600*2;
+        else if (slideTarget > 1830*2 && armTarget < 1000) slideTarget = 1830*2;
 
         flipPos = flip.getCurrentPosition();
         slidePos = slide.getCurrentPosition();
@@ -717,7 +717,7 @@ public class Robot {
 //        }
     }
     public int scaleSlides(double unscaled) {
-        return (int) (unscaled * 0.7137546468*0.7135416667);
+        return (int) (unscaled * 0.7137546468*0.7135416667 * 1.9635036496);
     }
     public Action pidToPoint(Pose2d targetPose) {
         return new p2p(this, targetPose);
@@ -1011,7 +1011,7 @@ public class Robot {
     public static class armPIDValues {
         public static double fP = 0.0035, fI = 0, fD = 0;  //fD = 0.00001, fP = 0.002
         public static double fF = 0.008; //fF = 0.0022
-        public static double sP = 0.005, sI, sD;
+        public static double sP = 0.003, sI, sD;
 
         private static final double ticks_in_degree = 1850 / 90.0;
     }

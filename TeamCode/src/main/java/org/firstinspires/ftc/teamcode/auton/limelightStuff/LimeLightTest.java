@@ -27,6 +27,7 @@ public class LimeLightTest extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             LLResult result = cam.getLatestResult();
+
             if (result != null && result.isValid()) {
                 Pose3D botpose = result.getBotpose();
                 Pose2d pose = new Pose2d(botpose.getPosition().x, botpose.getPosition().y, botpose.getOrientation().getYaw(AngleUnit.RADIANS));
