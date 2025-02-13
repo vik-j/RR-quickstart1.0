@@ -28,6 +28,7 @@ public class TeleopWITH_RESET extends LinearOpMode {
             bot.clawControl(gamepad2);
             bot.twistyControl(gamepad2);
             bot.hangControl(gamepad2);
+            bot.setAutoTargetToTELE();
 //            bot.slidesPID(gamepad2);
 //            bot.wristControl(gamepad2);
 //            bot.intakeControl(gamepad2);

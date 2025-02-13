@@ -69,7 +69,7 @@ public class Robot {
     public static double yC = -4.7123889803151;
     public static double yD = -12.727001788823;
 
-
+    public HardwareMap hardwareMap;
 
     public final double gripClawOpen = 0, gripClawClosed = 0.1;
     public double flipPos, slidePos;
@@ -92,6 +92,7 @@ public class Robot {
 
     public Robot(HardwareMap hardwareMap) {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
+        this.hardwareMap = hardwareMap;
 
 //        leftFront = hardwareMap.dcMotor.get("leftFront");
 //        leftBack = hardwareMap.dcMotor.get("leftBack");
@@ -452,6 +453,48 @@ public class Robot {
         double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
 
         return (leftDistance+rightDistance)/2;
+    }
+
+    public void speciScoreAutomated() {
+        drive = new MecanumDrive(hardwareMap, new Pose2d(0,0, Math.toRadians(270)));
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(0,0,Math.toRadians(270)))
+                .afterTime(0.25, telemetryPacket -> {
+                    grippyClose();
+                    return false;
+                })
+                .afterTime(0.7, telemetryPacket -> {
+                    flippy.setPosition(0.8);
+                    return false;
+                })
+                .waitSeconds(0.15)
+                .afterTime(0, telemetryPacket -> {
+                    flippy.setPosition(0.9);
+                    return false;
+                })
+                .afterTime(0.3, telemetryPacket -> {
+                    speciScoreReset();
+                    flippy.setPosition(0.9);
+                    return false;
+                })
+                .afterTime(1, telemetryPacket -> {
+                    specimenDeposit();
+                    return false;
+                })
+                //TODO: score 2nd speci
+                .strafeToConstantHeading(new Vector2d(-4 - 35.52, 34.79 - 54))
+                .build());
+    }
+    public void speciPickupAutomated() {
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(-4 - 35.52, 34.79 - 54, Math.toRadians(270)))
+                .afterTime(0.75, telemetryPacket -> {
+                    specimenPickup();
+                    return false;
+                })
+                //TODO: pickup 3rd speci
+                .strafeToLinearHeading(new Vector2d(0, -4), Math.toRadians(-90))
+                .waitSeconds(0)
+                .strafeToLinearHeading(new Vector2d(0, 0), Math.toRadians(-90))
+                .build());
     }
 
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
@@ -835,6 +878,10 @@ public class Robot {
             setIntakePower(intakePower);
             return false;
         }
+    }
+    public void setAutoTargetToTELE() {
+        armTarget = armTargetAuto;
+        slideTarget = slideTargetAuto;
     }
     public Action setPidVals(int arm, int slide) {
         return new ValAction(arm, slide);
