@@ -59,15 +59,15 @@ public class Robot {
     public double lateralMultiplier = 1;
     public int rightBumperCounter = 0;
 
-    public static double xA = 0.029632411;
-    public static double xB = -4.7808767E-8;
-    public static double xC = 7.8537474;
-    public static double xD = -109.0512;
+    public static double xA = 5.13249E-10;
+    public static double xB = -7.7473E-16;
+    public static double xC = 7.85398;
+    public static double xD = -113.08746;
 
-    public static double yA = -0.00044684771;
-    public static double yB = 9.1924079E-8;
-    public static double yC = -4.7124086;
-    public static double yD = -12.728113;
+    public static double yA = 1.5855494506576E-9;
+    public static double yB = -3.2619923618498E-13;
+    public static double yC = -4.7123889803151;
+    public static double yD = -12.727001788823;
 
 
 
