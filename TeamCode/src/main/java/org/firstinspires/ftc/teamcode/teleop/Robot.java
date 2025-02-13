@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
@@ -1142,6 +1143,37 @@ public class Robot {
             Actions.runBlocking(new ParallelAction(driveAction, pid(target)));
             return false;
         }
+    }
+    public static class HeadingPIDController {
+        PIDCoefficients coeffs;
+        double lastError = 0;
+        double integralSum = 0;
+
+        public HeadingPIDController(PIDCoefficients coeffs) {
+            this.coeffs = coeffs;
+        }
+
+        public void setPID(PIDCoefficients coeffs) {
+            this.coeffs = coeffs;
+        }
+
+        public double calculate(double current, double target) {
+            double currentTimeStamp = (double) System.nanoTime() / 1E9;
+
+            double error = AngleUnit.normalizeRadians(target - current);
+
+            double derivative = (error - lastError) / currentTimeStamp;
+
+            // sum of all error over time
+            integralSum = integralSum + (error * currentTimeStamp);
+
+            double out = (coeffs.p * error) + (coeffs.i * integralSum) + (coeffs.d * derivative);
+
+            lastError = error;
+
+            return out;
+        }
+
     }
 }
 
