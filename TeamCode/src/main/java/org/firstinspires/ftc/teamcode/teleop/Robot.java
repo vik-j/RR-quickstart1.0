@@ -58,6 +58,17 @@ public class Robot {
     public double lateralMultiplier = 1;
     public int rightBumperCounter = 0;
 
+    public static double xA = 0.029632411;
+    public static double xB = -4.7808767E-8;
+    public static double xC = 7.8537474;
+    public static double xD = -109.0512;
+
+    public static double yA = -0.00044684771;
+    public static double yB = 9.1924079E-8;
+    public static double yC = -4.7124086;
+    public static double yD = -12.728113;
+
+
 
     public final double gripClawOpen = 0, gripClawClosed = 0.1;
     public double flipPos, slidePos;
@@ -1046,6 +1057,21 @@ public class Robot {
 
             return !finished;
         }
+    }
+
+    public static double convertXPixelsToSubInches(double pixels) {
+        return xA * (1/Math.cos(xB * pixels + xC)) + xD;
+    }
+    public static double convertYpixelsToSubInches(double pixels) {
+        return yA * (1/Math.cos(yB * pixels + yC)) + yD;
+    }
+
+    public static Vector2d convertSubCoordsToFieldCoords(Vector2d pos) {
+        return new Vector2d((27.5/2) - pos.x,(45.625/2) - pos.y);
+    }
+
+    public static Vector2d convertPixelsToInches(double xPixels, double yPixels) {
+        return convertSubCoordsToFieldCoords(new Vector2d(convertXPixelsToSubInches(xPixels), convertYpixelsToSubInches(yPixels)));
     }
 
     //TODO: AUTO ACTIONS BELOW

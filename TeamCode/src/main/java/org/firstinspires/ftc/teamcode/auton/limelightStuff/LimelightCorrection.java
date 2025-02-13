@@ -19,45 +19,39 @@ import java.util.List;
 public class LimelightCorrection extends LinearOpMode {
     Limelight3A limelight;
 
-    public static String targetColor = "blocksYellow";
 
     @Override
     public void runOpMode() throws InterruptedException {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
-
         telemetry.setMsTransmissionInterval(11);
         telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry(), telemetry);
 
-        limelight.pipelineSwitch(0);
+        limelight.pipelineSwitch(1);
 
-        String targetLabel1 = "blocksYellow";
-        String targetLabel2 = "blocksBlue";
-        String targetLabel3 = "blocksRed";
-
-        String detectorResults;
 
         waitForStart();
+
         limelight.start();
 
         while (opModeIsActive() && !isStopRequested()) {
-            LLResult result = limelight.getLatestResult();
-
-            double tx = result.getTx();
-            double ty = result.getTy();
-
-            telemetry.addData("tx", tx);
-            telemetry.addData("ty", ty);
-            telemetry.update();
-
-            List<DetectorResult> results = result.getDetectorResults();
-
-            for (DetectorResult sense: results) {
-                telemetry.addData("xPixels", sense.getTargetXPixels());
-                telemetry.addData("yPixels", sense.getTargetYPixels());
-                telemetry.update();
-            }
+//            LLResult result = limelight.getLatestResult();
+//            assert result != null;
+//
+//            double tx = result.getTx();
+//            double ty = result.getTy();
+//
+//            telemetry.addData("tx", tx);
+//            telemetry.addData("ty", ty);
+//            telemetry.update();
+//
+//            List<DetectorResult> results = result.getDetectorResults();
+//            assert !results.isEmpty();
+//            for (DetectorResult sense: results) {
+//                telemetry.addData("xPixels", sense.getTargetXPixels());
+//                telemetry.addData("yPixels", sense.getTargetYPixels());
+//                telemetry.update();
+//            }
 
 
 
