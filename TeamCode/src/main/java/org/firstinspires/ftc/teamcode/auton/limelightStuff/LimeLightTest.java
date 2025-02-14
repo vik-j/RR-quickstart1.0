@@ -60,7 +60,7 @@ public class LimeLightTest extends LinearOpMode {
 
                 telemetry.addData("id", result.getDetectorResults().get(0).getClassName());
 
-                Vector2d samplePos = Robot.convertPixelsToInches(xPixels, yPixels);
+                Vector2d samplePos = Robot.getDistFromCamera(xPixels, yPixels);
 
                 telemetry.addData("sampleX", samplePos.x);
                 telemetry.addData("sampleY", samplePos.y);

@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -13,10 +15,11 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 @Config
 @Autonomous
 public class PidtoPointTest extends LinearOpMode {
-    public static Pose2d targetPose = new Pose2d(0,0,0);
-    public static PIDCoefficients x = new PIDCoefficients(0,0,0);
+    public static double targetX = 0, targetY = 0, targetH = 0;
+    public Pose2d targetPose = new Pose2d(targetX,targetY,targetH);
+    public static PIDCoefficients x = new PIDCoefficients(0.08,0,0);
     public static PIDCoefficients y = new PIDCoefficients(0,0,0);
-    public static PIDCoefficients h = new PIDCoefficients(0,0,0);
+    public static PIDCoefficients h = new PIDCoefficients(0.01,0,0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,14 +27,18 @@ public class PidtoPointTest extends LinearOpMode {
         Robot bot = new Robot(hardwareMap);
         PIDController xPID = new PIDController(x.p, x.i, x.d);
         PIDController yPID = new PIDController(y.p, y.i, y.d);
-        Robot.HeadingPIDController hPID = new Robot.HeadingPIDController(h);
+        PIDController hPID = new PIDController(h.p, h.i, h.d);
+
+        telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry(), telemetry);
 
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
+            targetPose = new Pose2d(targetX,targetY,targetH);
+
             xPID.setPID(x.p, x.i, x.d);
             yPID.setPID(y.p, y.i, y.d);
-            hPID.setPID(h);
+            hPID.setPID(h.p, h.i, h.d);
 
             double heading = drive.pose.heading.toDouble();
 
@@ -39,10 +46,35 @@ public class PidtoPointTest extends LinearOpMode {
             double y = yPID.calculate(drive.pose.position.y, targetPose.position.y);
             double h = hPID.calculate(heading, targetPose.heading.toDouble());
 
-            double xRot = x*Math.cos(heading) - y*Math.sin(heading);
-            double yRot = x*Math.sin(heading) + y*Math.cos(heading);
+            telemetry.addData("x", x);
+            telemetry.addData("y", y);
+            telemetry.addData("h", h);
 
-            drive.setPowers(xRot + yRot + h, xRot - yRot + h, xRot - yRot - h, xRot + yRot - h);
+            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(h), 1);
+            double leftFrontPower = (y + x + h) / denominator;
+            double leftBackPower = (y - x + h) / denominator;
+            double rightFrontPower = (y - x - h) / denominator;
+            double rightBackPower = (y + x - h) / denominator;
+
+            drive.leftFront.setPower(leftFrontPower);
+            drive.leftBack.setPower(leftBackPower);
+            drive.rightFront.setPower(rightFrontPower);
+            drive.rightBack.setPower(rightBackPower);
+
+//            double xRot = x*Math.cos(heading) - y*Math.sin(heading);
+//            double yRot = x*Math.sin(heading) + y*Math.cos(heading);
+//
+//            telemetry.addData("xRot", xRot);
+//            telemetry.addData("yRot", yRot);
+
+//            drive.setPowers(xRot + yRot + h, xRot - yRot + h, xRot - yRot - h, xRot + yRot - h);
+            telemetry.update();
+
+            drive.updatePoseEstimate();
+
+            telemetry.addData("driveX", drive.pose.position.x);
+            telemetry.addData("driveY", drive.pose.position.y);
+            telemetry.addData("driveH", drive.pose.heading.toDouble());
         }
     }
 }

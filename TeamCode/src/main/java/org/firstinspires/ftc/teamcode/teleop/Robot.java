@@ -59,15 +59,15 @@ public class Robot {
     public double lateralMultiplier = 1;
     public int rightBumperCounter = 0;
 
-    public static double xA = 5.13249E-10;
-    public static double xB = -7.7473E-16;
-    public static double xC = 7.85398;
-    public static double xD = -113.08746;
+    public static double xA = -0.04556333;
+    public static double xB = -7.3511622E-8;
+    public static double xC = 7.8536214;
+    public static double xD = 118.42621;
 
-    public static double yA = 1.5855494506576E-9;
-    public static double yB = -3.2619923618498E-13;
-    public static double yC = -4.7123889803151;
-    public static double yD = -12.727001788823;
+    public static double yA = 0.001160505;
+    public static double yB = -2.387352E-7;
+    public static double yC = -4.712338;
+    public static double yD = -9.22812;
 
     public HardwareMap hardwareMap;
 
@@ -81,6 +81,10 @@ public class Robot {
     public double intakeMultiplier = 1;
     public static double leftHangPosUp = 0.9, leftHangPosDown = 0.4, rightHangPosUp = 0.9, rightHangPosDown = 0.4;
     Thread currentThread = null;
+    public static final double slidesTTS = 3260 / 20.0;
+
+    //TODO: claw extends 2.25 inches away from drivetrain
+    //TODO: slides tts is 3260 tick per 20 inch
 
     public double pivotMultiplier = 1;
 
@@ -317,10 +321,23 @@ public class Robot {
         twisty.setPosition(0);
         grippyOpen();
     }
+    public void specimenPickupTELE() {
+        touchyRetract();
+        flippy.setPosition(0.97);
+        armTarget = 2510;
+        slideTarget = 0;
+        twisty.setPosition(0);
+        grippyOpen();
+    }
     public void specimenDeposit() {
         flippy.setPosition(0.828);
 
         Actions.runBlocking(setPidVals(945, 1560));
+    }
+    public void specimenDepositTELE() {
+        flippy.setPosition(0.828);
+        armTarget = 945;
+        slideTarget = 1560;
     }
     public void specimenDeposit2() {
         Actions.runBlocking(setPidVals(1420, 1560));
@@ -360,6 +377,11 @@ public class Robot {
     public void speciScoreReset() {
         intakeMultiplier = 1;
         Actions.runBlocking(setPidVals(1200,0));
+        flippy.setPosition(0.4);
+        twisty.setPosition(0);
+    }
+    public void speciScoreResetTELE() {
+        armTarget = 1200;
         flippy.setPosition(0.4);
         twisty.setPosition(0);
     }
@@ -458,36 +480,35 @@ public class Robot {
     public void speciScoreAutomated() {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0, Math.toRadians(270)));
         Actions.runBlocking(drive.actionBuilder(new Pose2d(0,0,Math.toRadians(270)))
-                .afterTime(0.25, telemetryPacket -> {
+                .afterTime(0, telemetryPacket -> {
                     grippyClose();
                     return false;
                 })
-                .afterTime(0.7, telemetryPacket -> {
+                .afterTime(0.25, telemetryPacket -> {
                     flippy.setPosition(0.8);
                     return false;
                 })
-                .waitSeconds(0.15)
                 .afterTime(0, telemetryPacket -> {
                     flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(0.3, telemetryPacket -> {
-                    speciScoreReset();
+                .afterTime(0, telemetryPacket -> {
+                    speciScoreResetTELE();
                     flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1, telemetryPacket -> {
-                    specimenDeposit();
+                .afterTime(0, telemetryPacket -> {
+                    specimenDepositTELE();
                     return false;
                 })
                 //TODO: score 2nd speci
-                .strafeToConstantHeading(new Vector2d(-4 - 35.52, 34.79 - 54))
+                .strafeToConstantHeading(new Vector2d(-4 + 35.52, 34.79 - 54))
                 .build());
     }
     public void speciPickupAutomated() {
         Actions.runBlocking(drive.actionBuilder(new Pose2d(-4 - 35.52, 34.79 - 54, Math.toRadians(270)))
-                .afterTime(0.75, telemetryPacket -> {
-                    specimenPickup();
+                .afterTime(0, telemetryPacket -> {
+                    specimenPickupTELE();
                     return false;
                 })
                 //TODO: pickup 3rd speci
@@ -516,6 +537,13 @@ public class Robot {
     }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
+        if (gamepad1.left_bumper) {
+
+            speciScoreAutomated();
+        }
+        else if (gamepad1.right_bumper) {
+            speciPickupAutomated();
+        }
         if (gamepad2.y) {
             touchyRetract();
             rightBumperCounter = 0;
@@ -1107,19 +1135,14 @@ public class Robot {
         }
     }
 
-    public static double convertXPixelsToSubInches(double pixels) {
+    public static double convertXPixelsToCamInches(double pixels) {
         return xA * (1/Math.cos(xB * pixels + xC)) + xD;
     }
-    public static double convertYpixelsToSubInches(double pixels) {
+    public static double convertYpixelsToCamInches(double pixels) {
         return yA * (1/Math.cos(yB * pixels + yC)) + yD;
     }
-
-    public static Vector2d convertSubCoordsToFieldCoords(Vector2d pos) {
-        return new Vector2d((27.5/2) - pos.x,(45.625/2) - pos.y);
-    }
-
-    public static Vector2d convertPixelsToInches(double xPixels, double yPixels) {
-        return convertSubCoordsToFieldCoords(new Vector2d(convertXPixelsToSubInches(xPixels), convertYpixelsToSubInches(yPixels)));
+    public static Vector2d getDistFromCamera(double pixelsX, double pixelsY) {
+        return new Vector2d(convertXPixelsToCamInches(pixelsX), convertYpixelsToCamInches(pixelsY));
     }
 
     //TODO: AUTO ACTIONS BELOW

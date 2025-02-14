@@ -27,7 +27,6 @@ public class TeleopV3 extends LinearOpMode {
 //            bot.wristControl(gamepad2);
 //            bot.intakeControl(gamepad2);
             bot.scoringMacro(gamepad1, gamepad2);
-            bot.setAutoTargetToTELE();
 //            bot.extraD1Features(gamepad1);
 
 //            bot.updateAxonPositions();
