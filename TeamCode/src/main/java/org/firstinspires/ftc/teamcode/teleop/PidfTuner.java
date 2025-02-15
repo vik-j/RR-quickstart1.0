@@ -34,6 +34,8 @@ public class PidfTuner extends OpMode {
     public static double grippyPos = 0;
     public static double twistyPos = 0;
     public static double flippyPos = 0.4;
+    public static double leftHang = 0;
+    public static double rightHang = 0;
 
     public static int armTarget = 0;
     public static int slideTarget = 0;
@@ -105,6 +107,8 @@ public class PidfTuner extends OpMode {
             bot.flippy.setPosition(flippyPos);
             bot.twisty.setPosition(twistyPos);
             bot.grippy.setPosition(grippyPos);
+            bot.leftHang.setPosition(leftHang);
+            bot.rightHang.setPosition(rightHang);
 
             drive.updatePoseEstimate();
 

@@ -27,7 +27,7 @@ public class TeleopWITH_RESET extends LinearOpMode {
             bot.TeleopPID(gamepad2);
             bot.clawControl(gamepad2);
             bot.twistyControl(gamepad2);
-            bot.hangControl(gamepad2);
+            bot.hangCheatCode(gamepad2);
 //            bot.slidesPID(gamepad2);
 //            bot.wristControl(gamepad2);
 //            bot.intakeControl(gamepad2);
@@ -50,6 +50,7 @@ public class TeleopWITH_RESET extends LinearOpMode {
             telemetry.addData("Left Distance", bot.lookyLeft.getDistance(DistanceUnit.INCH));
             telemetry.addData("Right Distance", bot.lookyRight.getDistance(DistanceUnit.INCH));
             telemetry.addData("Robot Angle", bot.findAngle());
+            telemetry.addData("Hang Cheat Code", "A B X Y UP DOWN");
             telemetry.update();
         }
     }
