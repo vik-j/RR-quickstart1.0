@@ -1136,23 +1136,18 @@ public class Robot {
         public static double fF = 0.008; //fF = 0.0022
         public static double sP = 0.003, sI, sD;
 
-        private static final double ticks_in_degree = 1850 / 90.0;
+        public static double ticks_in_degree = 1850 / 90.0;
     }
     //4000, 2000
 
     //TODO: Limelight Actions Below
     public static class searchForSample implements Action {
-        int color = 0;
         double timeout;
         public boolean finished = false;
         Robot bot;
 
 
-        public searchForSample(Robot bot, SampleColor color, double timeout) {
-            if (color == SampleColor.YELLOW) this.color = 1;
-            else if (color == SampleColor.RED) this.color = 2;
-            else if (color == SampleColor.BLUE) this.color = 3;
-
+        public searchForSample(Robot bot, double timeout) {
             this.bot = bot;
 
             this.timeout = timeout;
@@ -1160,10 +1155,12 @@ public class Robot {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            bot.limelight.pipelineSwitch(color);
+            bot.limelight.pipelineSwitch(0);
             bot.limelight.start();
 
             LLResult result = bot.limelight.getLatestResult();
+
+
 
             //TODO: add rest of code later
 

@@ -4,9 +4,11 @@ package org.firstinspires.ftc.teamcode.auton.limelightStuff;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -14,20 +16,22 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
 @TeleOp
 public class LimeLightTest extends LinearOpMode {
     public Limelight3A cam;
-    public static double strafeP = 0, strafeI = 0, strafeD = 0;
-    public PIDController strafeController;
-    public static double multiplier = 0;
     MecanumDrive drive;
+    Robot bot;
+    public double armTarget = 0, slideTarget = 0;
+//    public static double wristPos = 1;
 
     //TODO: optimal distance is 3.5 inches away
     //TODO: limelight is 6.5 inches offset horizontally
@@ -35,10 +39,10 @@ public class LimeLightTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
+        bot = new Robot(hardwareMap);
 
         waitForStart();
 
-        strafeController = new PIDController(strafeP, strafeI, strafeD);
 
         cam = hardwareMap.get(Limelight3A.class, "limelight");
         telemetry.setMsTransmissionInterval(11);
@@ -65,16 +69,48 @@ public class LimeLightTest extends LinearOpMode {
                 telemetry.addData("sampleX", samplePos.x);
                 telemetry.addData("sampleY", samplePos.y);
 
-//                strafeController.setPID(strafeP, strafeI, strafeD);
-//
-//                double pid = strafeController.calculate(xPixels, 0);
-//
-//                drive.setDrivePowers(new PoseVelocity2d(new Vector2d(0, multiplier*pid), 0));
+                if (gamepad1.b) {
+                    drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
+                    Actions.runBlocking(
+                            new ParallelAction(
+                            drive.actionBuilder(new Pose2d(0,0,0))
+                                    .afterTime(0, telemetryPacket -> {
+                                        slideTarget = Range.clip(Robot.slidesTTS*(samplePos.y), 0, 1830);
+                                        bot.slideTargetAuto = (int) slideTarget;
+                                        return false;
+                                    })
+                                    .strafeToConstantHeading(new Vector2d(0, -samplePos.x - 6.5))
+                                    .afterTime(0.5, telemetryPacket -> {
+                                        bot.flippy.setPosition(0.4);
+                                        return false;
+                                    })
+                                    .afterTime(1.5, telemetryPacket -> {
+                                        bot.grippyClose();
+                                        return false;
+                                    })
+                                    .build(),
+                            bot.getPIDAction()));
+                }
             }
             else {
                 telemetry.addLine("Nothing is There");
             }
+            double flipPos = bot.flip.getCurrentPosition();
+            double slidePos = bot.slide.getCurrentPosition();
+
+            double pid = bot.armController.calculate(flipPos, armTarget);
+            double ff = Math.cos(Math.toRadians(armTarget / Robot.armPIDValues.ticks_in_degree)) * Robot.armPIDValues.fF;
+
+            double power = pid + ff;
+
+            bot.flip.setPower(power);
+
+            double pid2 = bot.slideController.calculate(slidePos, bot.scaleSlides(slideTarget));
+
+            bot.slide.setPower(pid2);
             telemetry.update();
+
+//            bot.wrist.setPosition(wristPos);
 
         }
     }

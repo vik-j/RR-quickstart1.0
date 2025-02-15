@@ -4,12 +4,15 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
@@ -18,7 +21,7 @@ public class PidtoPointTest extends LinearOpMode {
     public static double targetX = 0, targetY = 0, targetH = 0;
     public Pose2d targetPose = new Pose2d(targetX,targetY,targetH);
     public static PIDCoefficients x = new PIDCoefficients(0.08,0,0);
-    public static PIDCoefficients y = new PIDCoefficients(0,0,0);
+    public static PIDCoefficients y = new PIDCoefficients(0.08,0,0);
     public static PIDCoefficients h = new PIDCoefficients(0.01,0,0);
 
     @Override
@@ -44,22 +47,24 @@ public class PidtoPointTest extends LinearOpMode {
 
             double x = xPID.calculate(drive.pose.position.x, targetPose.position.x);
             double y = yPID.calculate(drive.pose.position.y, targetPose.position.y);
-            double h = hPID.calculate(heading, targetPose.heading.toDouble());
+            double h = hPID.calculate(AngleUnit.normalizeRadians(heading), AngleUnit.normalizeRadians(targetPose.heading.toDouble()));
 
             telemetry.addData("x", x);
             telemetry.addData("y", y);
             telemetry.addData("h", h);
 
-            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(h), 1);
-            double leftFrontPower = (y + x + h) / denominator;
-            double leftBackPower = (y - x + h) / denominator;
-            double rightFrontPower = (y - x - h) / denominator;
-            double rightBackPower = (y + x - h) / denominator;
+            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(x,y), h));
 
-            drive.leftFront.setPower(leftFrontPower);
-            drive.leftBack.setPower(leftBackPower);
-            drive.rightFront.setPower(rightFrontPower);
-            drive.rightBack.setPower(rightBackPower);
+//            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(h), 1);
+//            double leftFrontPower = (x + y + h) / denominator;
+//            double leftBackPower = (x - y + h) / denominator;
+//            double rightFrontPower = (x - y - h) / denominator;
+//            double rightBackPower = (x + y - h) / denominator;
+//
+//            drive.leftFront.setPower(leftFrontPower);
+//            drive.leftBack.setPower(leftBackPower);
+//            drive.rightFront.setPower(rightFrontPower);
+//            drive.rightBack.setPower(rightBackPower);
 
 //            double xRot = x*Math.cos(heading) - y*Math.sin(heading);
 //            double yRot = x*Math.sin(heading) + y*Math.cos(heading);
