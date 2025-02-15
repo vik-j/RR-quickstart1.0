@@ -451,20 +451,20 @@ public class Robot {
         double offset = Math.abs(leftDistance-rightDistance);
 
         double hypotenuse = Math.sqrt(Math.pow(offset,2) +Math.pow(sensorDifference,2));
-        double robotAngle = 90*(Math.round(Math.toDegrees(drive.pose.heading.toDouble())/90));
+        double robotGeneralAngle = 90*(Math.round(Math.toDegrees(drive.pose.heading.toDouble())/90));
 
         double trueAngle;
 
         if(realOffset < 0){
             double offsetAngle = -Math.asin(offset/hypotenuse);
 
-            trueAngle = robotAngle + offsetAngle;
+            trueAngle = robotGeneralAngle + offsetAngle;
 
             return trueAngle;
         } else if (realOffset >= 0) {
             double offsetAngle = Math.asin(offset/hypotenuse);
 
-            trueAngle = robotAngle + offsetAngle;
+            trueAngle = robotGeneralAngle + offsetAngle;
 
             return trueAngle;
         } else{
@@ -477,6 +477,42 @@ public class Robot {
         double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
 
         return (leftDistance+rightDistance)/2;
+    }
+
+    public double startingXValue(){
+        double sensorDifference = 6;
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+
+        double offset = Math.abs(leftDistance-rightDistance);
+
+        double hypotenuse = Math.sqrt(Math.pow(offset,2) +Math.pow(sensorDifference,2));
+        double angle = Math.asin(offset/hypotenuse);
+
+        double distanceFromCenter = ((2*leftDistance/3)+8);
+
+        double XValue = Math.cos(angle)*distanceFromCenter;
+
+        return XValue;
+
+    }
+
+    public double startingYValue(){
+        double sensorDifference = 6;
+        double leftDistance = lookyLeft.getDistance(DistanceUnit.INCH);
+        double rightDistance = lookyRight.getDistance(DistanceUnit.INCH);
+
+        double offset = Math.abs(leftDistance-rightDistance);
+
+        double hypotenuse = Math.sqrt(Math.pow(offset,2) +Math.pow(sensorDifference,2));
+        double angle = Math.asin(offset/hypotenuse);
+
+        double distanceFromCenter = ((2*leftDistance/3)+8);
+
+        double YValue = Math.sin(angle)*distanceFromCenter;
+
+        return YValue;
+
     }
 
     public void speciScoreAutomated() {

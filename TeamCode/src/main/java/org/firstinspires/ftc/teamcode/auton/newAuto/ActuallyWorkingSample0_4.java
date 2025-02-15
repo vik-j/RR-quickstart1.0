@@ -49,19 +49,19 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 })
                 //TODO: score first sample
                 .strafeToSplineHeading(new Vector2d(51.2, 52.16), Math.toRadians(-134.88))
-                .afterTime(1.1, telemetryPacket -> {
+                .afterTime(1.3, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.25, telemetryPacket -> {
+                .afterTime(1.45, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(1.45, telemetryPacket -> {
+                .afterTime(1.55, telemetryPacket -> {
                     bot.flippy.setPosition(0.7);
                     return false;
                 })
-                .afterTime(1.5, telemetryPacket -> {
+                .afterTime(1.6, telemetryPacket -> {
                     bot.fullRetract();
                     return false;
                 })
@@ -73,6 +73,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.setPidValues(0, 600);
                     return false;
                 })
+                .waitSeconds(0.2)
                 .strafeToSplineHeading(new Vector2d(49.4, 40.75), Math.toRadians(-90), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
                 .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
@@ -93,19 +94,19 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 })
                 //TODO: score second sample
                 .strafeToSplineHeading(new Vector2d(50.7, 51.86), Math.toRadians(-134.88))
-                .afterTime(0.9, telemetryPacket -> {
+                .afterTime(1.1, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.05, telemetryPacket -> {
+                .afterTime(1.25, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(1.55, telemetryPacket -> {
+                .afterTime(1.75, telemetryPacket -> {
                     bot.flippy.setPosition(0.7);
                     return false;
                 })
-                .afterTime(1.7, telemetryPacket -> {
+                .afterTime(1.9, telemetryPacket -> {
                     bot.fullRetract();
                     return false;
                 })
