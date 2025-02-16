@@ -247,7 +247,7 @@ public class Robot {
         flippy.setPosition(0.6);
         //TODO: Down is 0.45
 
-        Actions.runBlocking(setPidVals(200, 2300));
+        Actions.runBlocking(setPidVals(150, 2300));
     }
 
     public void sweepyUp() {
