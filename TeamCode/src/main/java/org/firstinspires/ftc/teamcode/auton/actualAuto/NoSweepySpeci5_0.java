@@ -56,7 +56,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 .waitSeconds(0.2)
                 .afterTime(0, q.grippyOpen())
                 .afterTime(0.1, q.combine(q.reset(), q.flippy(1)))
-                .afterTime(1.25, q.autoSampleSweeping())
+                .afterTime(1.25, q.autoSamplePickup())
                 .splineToSplineHeading(new Pose2d(-28.2,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
 
                 //TODO: pickup 1st sample
