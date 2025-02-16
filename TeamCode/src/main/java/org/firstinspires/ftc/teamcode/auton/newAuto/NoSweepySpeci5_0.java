@@ -33,6 +33,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
         bot.flippy.setPosition(1);
         bot.twisty.setPosition(0);
         bot.resetEncoders();
+        bot.sweepyUp();
 
 
         waitForStart();

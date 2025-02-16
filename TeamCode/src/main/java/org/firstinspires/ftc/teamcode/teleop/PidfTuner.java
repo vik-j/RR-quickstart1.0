@@ -34,8 +34,9 @@ public class PidfTuner extends OpMode {
     public static double grippyPos = 0;
     public static double twistyPos = 0;
     public static double flippyPos = 0.4;
-    public static double leftHang = 0;
+    public static double leftHang = 1;
     public static double rightHang = 0;
+    public static double sweepyPos = 0;
 
     public static int armTarget = 0;
     public static int slideTarget = 0;
@@ -49,7 +50,7 @@ public class PidfTuner extends OpMode {
 //    private Servo wrist;
     MecanumDrive drive;
     Robot bot;
-    Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
+    Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
 
     @Override
     public void init() {
@@ -109,6 +110,7 @@ public class PidfTuner extends OpMode {
             bot.grippy.setPosition(grippyPos);
             bot.leftHang.setPosition(leftHang);
             bot.rightHang.setPosition(rightHang);
+            bot.sweepy.setPosition(sweepyPos);
 
             drive.updatePoseEstimate();
 
