@@ -53,6 +53,7 @@ public class Robot {
     public DistanceSensor lookyLeft, lookyRight;
     public Limelight3A limelight;
     public double epsilon = 0.1;
+    public boolean endPID = false;
 
     public PIDCoefficients x = new PIDCoefficients(0,0,0);
     public PIDCoefficients h = new PIDCoefficients(0,0,0);
@@ -359,6 +360,10 @@ public class Robot {
     public void specimenDeposit2() {
         Actions.runBlocking(setPidVals(1420, 1560));
     }
+    public void specimenDeposit2TELE() {
+        armTarget = 1420;
+        slideTarget = 1560;
+    }
 
     public void sampleDeposit() {
         flippy.setPosition(0.7);
@@ -531,35 +536,45 @@ public class Robot {
     }
 
     public void speciScoreAutomated() {
+        endPID = false;
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0, Math.toRadians(270)));
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(0,0,Math.toRadians(270)))
-                .afterTime(0, telemetryPacket -> {
+        Actions.runBlocking(new ParallelAction(drive.actionBuilder(new Pose2d(0,0,Math.toRadians(270)))
+                .afterTime(0.1, telemetryPacket -> {
                     grippyClose();
                     return false;
                 })
-                .afterTime(0.25, telemetryPacket -> {
+                .afterTime(0.7, telemetryPacket -> {
                     flippy.setPosition(0.8);
                     return false;
                 })
+                .waitSeconds(0.15)
                 .afterTime(0, telemetryPacket -> {
                     flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(0, telemetryPacket -> {
+                .afterTime(0.3, telemetryPacket -> {
                     speciScoreResetTELE();
                     flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(0, telemetryPacket -> {
+                .afterTime(1, telemetryPacket -> {
                     specimenDepositTELE();
                     return false;
                 })
                 //TODO: score 2nd speci
                 .strafeToConstantHeading(new Vector2d(-4 + 35.52, 34.79 - 54))
-                .build());
+                .afterTime(0, telemetryPacket -> {endPID = true; return false;})
+                .build(), returnCancelableTelePID()));
     }
     public void speciPickupAutomated() {
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(-4 - 35.52, 34.79 - 54, Math.toRadians(270)))
+        endPID = false;
+        Actions.runBlocking(new ParallelAction(drive.actionBuilder(new Pose2d(-4 - 35.52, 34.79 - 54, Math.toRadians(270)))
+                .afterTime(0, telemetryPacket -> {
+                    specimenDeposit2TELE();
+                    return false;
+                })
+                .afterTime(0.4, telemetryPacket -> {grippyOpen(); return false;})
+                .waitSeconds(0.5)
                 .afterTime(0, telemetryPacket -> {
                     specimenPickupTELE();
                     return false;
@@ -568,7 +583,8 @@ public class Robot {
                 .strafeToLinearHeading(new Vector2d(0, -4), Math.toRadians(-90))
                 .waitSeconds(0)
                 .strafeToLinearHeading(new Vector2d(0, 0), Math.toRadians(-90))
-                .build());
+                .afterTime(0, telemetryPacket -> {endPID = true; return false;})
+                .build(), returnCancelableTelePID()));
     }
     public void hangUp() {
         leftHang.setPosition(1);
@@ -1123,6 +1139,9 @@ public class Robot {
     public Action returnTelePid(double timeout) {
         return new pidfLoopActionTeleTimeout(timeout);
     }
+    public Action returnCancelableTelePID() {
+        return new pidfLoopActionTeleCancelable();
+    }
     public class pidfLoopActionTeleTimeout implements Action {
         public double timeout;
         public ElapsedTime timer = new ElapsedTime();
@@ -1152,6 +1171,31 @@ public class Robot {
 //                Thread.currentThread().interrupt();
 //            }
             return timer.seconds() <= timeout;
+        }
+    }
+    public class pidfLoopActionTeleCancelable implements Action {
+        public ElapsedTime timer = new ElapsedTime();
+
+        public pidfLoopActionTeleCancelable() {
+            timer.reset();
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            flipPos = flip.getCurrentPosition();
+            slidePos = slide.getCurrentPosition();
+
+            double pid = armController.calculate(flipPos, armTarget);
+            double ff = Math.cos(Math.toRadians(armTargetAuto / armPIDValues.ticks_in_degree)) * armPIDValues.fF;
+
+            double power = pid + ff;
+
+            flip.setPower(power);
+
+            double pid2 = slideController.calculate(slidePos, scaleSlides(slideTarget));
+
+            slide.setPower(pid2);
+
+            return !endPID;
         }
     }
     public class ValAction implements Action {
