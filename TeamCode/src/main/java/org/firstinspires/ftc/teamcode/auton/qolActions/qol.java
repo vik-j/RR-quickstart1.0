@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 
@@ -23,122 +24,44 @@ public class qol {
     }
 
     public Action firstSpeci() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.newSpeci();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.newSpeci());
     }
     public Action firstSpeci2() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.newSpeci2();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.newSpeci2());
     }
     public Action reset() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.reset();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.reset());
     }
     public Action autoSamplePickup() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.autoSamplePickup();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.autoSamplePickup());
     }
     public Action autoSampleSweeping() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.autoSampleSweeping();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.autoSampleSweeping());
     }
     public Action specimenPickup() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.specimenPickup();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.specimenPickup());
     }
     public Action speciScoreReset() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.speciScoreReset();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.speciScoreReset());
     }
     public Action specimenDeposit() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.specimenDeposit();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.specimenDeposit());
     }
     public Action specimenDeposit2() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.specimenDeposit2();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.specimenDeposit2());
     }
 
     public Action grippyOpen() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.grippyOpen();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.grippyOpen());
     }
     public Action grippyClose() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.grippyClose();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.grippyClose());
     }
     public Action sweepyUp() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.sweepyUp();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.sweepyUp());
     }
     public Action sweepyDown() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                bot.sweepyDown();
-                return false;
-            }
-        };
+        return new InstantAction(() -> bot.sweepyDown());
     }
     public Action flippy(double pos) {
         return new flippy(bot, pos);
