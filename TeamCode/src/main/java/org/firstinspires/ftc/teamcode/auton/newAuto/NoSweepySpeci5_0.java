@@ -88,7 +88,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 .waitSeconds(0.7)
 
                 //TODO: drop off first sample
-                .turnTo(Math.toRadians(130), new TurnConstraints(20, -20, 20))
+                .turnTo(Math.toRadians(127.5), new TurnConstraints(20, -20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
@@ -105,16 +105,17 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(1.1, telemetryPacket -> {
+                .afterTime(1.15, telemetryPacket -> {
                     bot.flippy.setPosition(0.6);
                     return false;
                 })
 
                 //TODO: drop off 2nd sample
-                .waitSeconds(0.4)
+                .waitSeconds(0.6)
                 .turnTo(Math.toRadians(121.95), new TurnConstraints(20, -20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.grippyOpen();
+                    drive.setCorrectionTimeout(1.25);
                     return false;
                 })
                 .splineToSplineHeading(new Pose2d(-46.85, 39.5, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -126,11 +127,15 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(0.5, telemetryPacket -> {
+                    drive.setCorrectionTimeout(1);
+                    return false;
+                })
+                .afterTime(0.5, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
                 .afterTime(1.25, telemetryPacket -> {
-                    bot.twisty.setPosition(0.5);
+                    bot.twisty.setPosition(bot.scaleTwisty(0.5));
                     bot.flippy.setPosition(0.6);
                     return false;
                 })
@@ -275,7 +280,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(7, 34.1))
+                .strafeToConstantHeading(new Vector2d(7, 34.3))
                 .afterTime(0.3, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;
@@ -321,7 +326,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                     return false;
                 })
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(8, 34.14))
+                .strafeToConstantHeading(new Vector2d(8, 34.34))
                 .afterTime(0.15, telemetryPacket -> {
                     bot.specimenDeposit2();
                     return false;

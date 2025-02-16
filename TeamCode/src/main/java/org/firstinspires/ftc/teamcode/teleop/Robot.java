@@ -135,6 +135,8 @@ public class Robot {
 
         slide.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        twisty.setDirection(Servo.Direction.REVERSE);
+
 //        limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
 //        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -235,7 +237,7 @@ public class Robot {
     }
 
     public void autoSamplePickup() {
-        twisty.setPosition(0.5);
+        twisty.setPosition(scaleTwisty(0.5));
         flippy.setPosition(0.6);
 
         Actions.runBlocking(setPidVals(0, 2300));
@@ -313,14 +315,14 @@ public class Robot {
     }
     public void speciMacroPlus(int change) {
         flippy.setPosition(0.718);
-        twisty.setPosition(1);
+        twisty.setPosition(scaleTwisty(1));
         Actions.runBlocking(setPidVals(2120, 1050 + change));
     }
     public void specimenPickup() {
         touchyRetract();
         flippy.setPosition(0.97);
         Actions.runBlocking(setPidVals(2510,0));
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
         grippyOpen();
     }
     public void specimenPickupTELE() {
@@ -328,7 +330,7 @@ public class Robot {
         flippy.setPosition(0.97);
         armTarget = 2510;
         slideTarget = 0;
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
         grippyOpen();
     }
     public void specimenDeposit() {
@@ -347,12 +349,12 @@ public class Robot {
 
     public void sampleDeposit() {
         flippy.setPosition(0.7);
-        twisty.setPosition(1);
+        twisty.setPosition(scaleTwisty(1));
         Actions.runBlocking(setPidVals(1875, 4700));
     }
     public void samplePivot() {
         flippy.setPosition(0.7);
-        twisty.setPosition(1);
+        twisty.setPosition(scaleTwisty(1));
         Actions.runBlocking(setPidVals(1875, 0));
     }
     public void sampleSlides() {
@@ -364,28 +366,28 @@ public class Robot {
     public void speciPickup2() {
         grippyOpen();
         flippy.setPosition(0.778);
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
     }
     public void fullRetract() {
         Actions.runBlocking(setPidVals(0,0));
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
     }
     public void reset() {
         intakeMultiplier = 1;
         Actions.runBlocking(setPidVals(0,0));
         flippy.setPosition(0.4);
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
     }
     public void speciScoreReset() {
         intakeMultiplier = 1;
         Actions.runBlocking(setPidVals(1200,0));
         flippy.setPosition(0.4);
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
     }
     public void speciScoreResetTELE() {
         armTarget = 1200;
         flippy.setPosition(0.4);
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
     }
     public ArmPosition retract() {
         return new ArmPosition(0,0,0,0.97,0,1);
@@ -393,7 +395,7 @@ public class Robot {
     public void samplePickup() {
         flippy.setPosition((0.4));
         grippyOpen();
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
         Actions.runBlocking(setPidVals(175, 1730));
     }
     public void samplePickupPart2() {
@@ -406,7 +408,7 @@ public class Robot {
 
         flippy.setPosition(1);
 
-        twisty.setPosition(0);
+        twisty.setPosition(scaleTwisty(0));
         Actions.runBlocking(setPidVals(0,0));
     }
 
@@ -628,7 +630,7 @@ public class Robot {
                 arcadeDrive(gamepad1);
             }
 
-            twisty.setPosition(0);
+            twisty.setPosition(scaleTwisty(0));
             grippy.setPosition(0);
         }
     }
@@ -638,7 +640,7 @@ public class Robot {
             flippy.setPosition(1);
             armTarget = 2490;
             slideTarget = 0;
-            twisty.setPosition(0);
+            twisty.setPosition(scaleTwisty(0));
         }
         if (gamepad1.left_trigger > 0) {
             grippyOpen();
@@ -680,7 +682,7 @@ public class Robot {
             flippy.setPosition(1);
             armTarget = 2490;
             slideTarget = 0;
-            twisty.setPosition(0);
+            twisty.setPosition(scaleTwisty(0));
         }
         if (gamepad1.x) {
             touchyTouch();
@@ -695,7 +697,7 @@ public class Robot {
             flippy.setPosition(0.828);
 
             armTarget = 885;
-            slideTarget = 1550;
+            slideTarget = 1680;
         }
         else if (gamepad2.left_stick_button && !(gamepad2.right_trigger > 0)) {
             touchyRetract();
@@ -710,10 +712,10 @@ public class Robot {
             armTarget = 1300;
         }
         if (gamepad1Ex.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
-            twisty.setPosition(1);
+            twisty.setPosition(scaleTwisty(1));
         }
         else if (gamepad1Ex.wasJustReleased(GamepadKeys.Button.RIGHT_BUMPER)) {
-            twisty.setPosition(0.625);
+            twisty.setPosition(scaleTwisty(0.625));
         }
 
         if (gamepad2.a && !(gamepad2.right_trigger > 0)) {
@@ -729,7 +731,7 @@ public class Robot {
             }
 //            wrist.setPosition(0.35);
             armTarget = 0;
-            twisty.setPosition(0);
+            twisty.setPosition(scaleTwisty(0));
             grippy.setPosition(0);
         }
         if (gamepad2.x && !(gamepad2.right_trigger > 0)) {
@@ -741,7 +743,7 @@ public class Robot {
             flippy.setPosition(0.4);
             grippyOpen();
 
-            twisty.setPosition(0);
+            twisty.setPosition(scaleTwisty(0));
             grippy.setPosition(0);
         }
         else if (gamepad2.b && !(gamepad2.right_trigger > 0)) {
@@ -764,7 +766,7 @@ public class Robot {
 
             Actions.runBlocking(new SleepAction(0.25));
 
-            twisty.setPosition(0);
+            twisty.setPosition(scaleTwisty(0));
             slideTarget = 0;
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
                 TeleopPID(gamepad2);
@@ -805,8 +807,8 @@ public class Robot {
         else if (gamepad.dpad_right) grippy.setPosition(1);
     }
     public void twistyControl(Gamepad gamepad) {
-        if (gamepad.dpad_up) twisty.setPosition(1);
-        else if (gamepad.dpad_down) twisty.setPosition(0.625);
+        if (gamepad.dpad_up) twisty.setPosition(0);
+        else if (gamepad.dpad_down) twisty.setPosition(0.5);
     }
     public void hangControl(Gamepad gamepad) {
         if (gamepad.left_trigger > 0) {
@@ -907,6 +909,11 @@ public class Robot {
 //        else if (gamepad.right_bumper) {
 //            wrist.setPosition(0.5);
 //        }
+    }
+
+    public double scaleTwisty(double unscaled) {
+//        return 0.35733*(unscaled*unscaled) + 0.312667*unscaled;
+        return -0.533333*(unscaled*unscaled) - 0.466667*unscaled + 1;
     }
     public int scaleSlides(double unscaled) {
         return (int) (unscaled * 0.7137546468*0.7135416667 * 1.9635036496);
