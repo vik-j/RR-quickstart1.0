@@ -11,7 +11,9 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDController;
@@ -396,6 +398,10 @@ public class Robot {
         flippy.setPosition(0.4);
         twisty.setPosition(scaleTwisty(0));
     }
+    public void resetTELE() {
+        armTarget = 0;
+        slideTarget = 0;
+    }
     public void speciScoreReset() {
         intakeMultiplier = 1;
         Actions.runBlocking(setPidVals(1200,0));
@@ -576,13 +582,12 @@ public class Robot {
                 .afterTime(0.4, telemetryPacket -> {grippyOpen(); return false;})
                 .waitSeconds(0.5)
                 .afterTime(0, telemetryPacket -> {
-                    specimenPickupTELE();
+                    resetTELE();
                     return false;
                 })
                 //TODO: pickup 3rd speci
-                .strafeToLinearHeading(new Vector2d(0, -4), Math.toRadians(-90))
-                .waitSeconds(0)
-                .strafeToLinearHeading(new Vector2d(0, 0), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(0, -4), Math.toRadians(-90), new TranslationalVelConstraint(10), new ProfileAccelConstraint(-10, 10))
+                .afterTime(0, new InstantAction(this::specimenPickupTELE))
                 .afterTime(0, telemetryPacket -> {endPID = true; return false;})
                 .build(), returnCancelableTelePID()));
     }
@@ -677,11 +682,10 @@ public class Robot {
             armTarget = 0;
             slideTarget = 0;
         }
-        if (gamepad1.left_bumper) {
-
+        if (gamepad1.right_bumper) {
             speciScoreAutomated();
         }
-        else if (gamepad1.right_bumper) {
+        else if (gamepad1.left_bumper) {
             speciPickupAutomated();
         }
         if (gamepad2.y && !(gamepad2.right_trigger > 0)) {
