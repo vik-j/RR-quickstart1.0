@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auton.newAuto;
+package org.firstinspires.ftc.teamcode.auton.actualAuto;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
