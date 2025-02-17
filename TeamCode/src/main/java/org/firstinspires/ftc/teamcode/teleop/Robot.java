@@ -673,6 +673,9 @@ public class Robot {
     }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
+        if (gamepad2.left_trigger > 0) {
+            hangUp();
+        }
         if (gamepad1.right_trigger > 0) {
             flippy.setPosition(1);
             armTarget = 2490;

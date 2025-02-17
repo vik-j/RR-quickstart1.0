@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class ActuallyWorkingSample0_4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
+        Pose2d beginPose = new Pose2d(39, 62.9375, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
 
@@ -65,16 +65,16 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.2)
+                .waitSeconds(0.6)
                 .strafeToSplineHeading(new Vector2d(53.6, 54.56), Math.toRadians(-134.88))
-                .waitSeconds(0.4)
+                .waitSeconds(0.8)
                 //TODO: pickup second sample
                 .afterTime(0, telemetryPacket -> {
                     bot.setPidValues(0, 600);
                     return false;
                 })
-                .waitSeconds(0.2)
-                .strafeToSplineHeading(new Vector2d(49.4, 40.75), Math.toRadians(-90), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
+                .waitSeconds(0.4)
+                .strafeToSplineHeading(new Vector2d(48.9, 41.75), Math.toRadians(-90), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
                 .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -83,7 +83,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.grippyClose();
                     return false;
                 })
-                .waitSeconds(0.4)
+                .waitSeconds(0.8)
                 .afterTime(0, telemetryPacket -> {
                     bot.samplePivot();
                     return false;
@@ -96,6 +96,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 .strafeToSplineHeading(new Vector2d(50.7, 51.86), Math.toRadians(-134.88))
                 .afterTime(1.1, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
+                    bot.sweepyUp();
                     return false;
                 })
                 .afterTime(1.25, telemetryPacket -> {
@@ -110,15 +111,15 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.2)
+                .waitSeconds(0.75)
                 .strafeToSplineHeading(new Vector2d(54.1, 55.06), Math.toRadians(-134.88))
-                .waitSeconds(0.4)
+                .waitSeconds(0.8)
                 //TODO: pick up third sample
                 .afterTime(0, telemetryPacket -> {
-                    bot.setPidValues(0, 1000);
+                    bot.setPidValues(0, 200);
                     return false;
                 })
-                .strafeToSplineHeading(new Vector2d(59.66, 40), Math.toRadians(-89.75), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
+                .strafeToSplineHeading(new Vector2d(58.91, 40.5), Math.toRadians(-89.75), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -127,7 +128,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.grippyClose();
                     return false;
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(1)
                 .afterTime(0, telemetryPacket -> {
                     bot.samplePivot();
                     return false;
@@ -142,28 +143,28 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(1.05, telemetryPacket -> {
+                .afterTime(1.75, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(1.55, telemetryPacket -> {
+                .afterTime(1.9, telemetryPacket -> {
                     bot.flippy.setPosition(0.7);
                     return false;
                 })
-                .afterTime(1.7, telemetryPacket -> {
+                .afterTime(2.05, telemetryPacket -> {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.2)
+                .waitSeconds(0.75)
                 .strafeToSplineHeading(new Vector2d(54.1, 55.06), Math.toRadians(-134.88))
-                .waitSeconds(0.4)
+                .waitSeconds(0.8)
                 //TODO: pickup fourth sample
                 .afterTime(0.5, telemetryPacket -> {
-                    bot.setPidValues(0, 800);
-//                    bot.twisty.setPosition(0.8);
+                    bot.setPidValues(0, 600);
+                    bot.twisty.setPosition(bot.scaleTwisty(0.74));
                     return false;
                 })
-                .strafeToSplineHeading(new Vector2d(61.7, 38.48), Math.toRadians(-52.5), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
+                .strafeToSplineHeading(new Vector2d(61.2, 40.48), Math.toRadians(-52.5), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
                 .afterTime(0, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
@@ -172,7 +173,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.grippyClose();
                     return false;
                 })
-                .waitSeconds(0.6)
+                .waitSeconds(0.8)
                 .afterTime(0, telemetryPacket -> {
                     bot.samplePivot();
                     return false;
@@ -200,9 +201,9 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     bot.fullRetract();
                     return false;
                 })
-                .waitSeconds(0.2)
+                .waitSeconds(0.6)
                 .strafeToSplineHeading(new Vector2d(54.1, 55.06), Math.toRadians(-134.88))
-                .waitSeconds(0.4)
+                .waitSeconds(0.8)
 
 
 
