@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class NoSweepySpeci5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
+        Pose2d beginPose = new Pose2d(-15, 61.5, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
         qol q = new qol(bot);

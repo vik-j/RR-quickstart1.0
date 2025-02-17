@@ -23,6 +23,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 //import com.pedropathing.pathgen.PathChain;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -41,6 +42,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import java.util.Map;
+import java.util.Stack;
 
 @Config
 //TODO: change claw opened and closed values
@@ -54,6 +56,7 @@ public class Robot {
     public PIDController armController, slideController;
     public DistanceSensor lookyLeft, lookyRight;
     public Limelight3A limelight;
+    public RevBlinkinLedDriver leds;
     public double epsilon = 0.1;
     public boolean endPID = false;
 
@@ -108,6 +111,8 @@ public class Robot {
 
         flip = hardwareMap.dcMotor.get("flip");
         slide = hardwareMap.dcMotor.get("slide");
+
+//        leds = hardwareMap.get(RevBlinkinLedDriver.class, "leds");
 
         grippy = hardwareMap.servo.get("claw");
         twisty = hardwareMap.servo.get("twist");
@@ -581,13 +586,9 @@ public class Robot {
                 })
                 .afterTime(0.4, telemetryPacket -> {grippyOpen(); return false;})
                 .waitSeconds(0.5)
-                .afterTime(0, telemetryPacket -> {
-                    resetTELE();
-                    return false;
-                })
+                .afterTime(0, new InstantAction(this::specimenDepositTELE))
                 //TODO: pickup 3rd speci
-                .strafeToLinearHeading(new Vector2d(0, -4), Math.toRadians(-90), new TranslationalVelConstraint(10), new ProfileAccelConstraint(-10, 10))
-                .afterTime(0, new InstantAction(this::specimenPickupTELE))
+                .strafeToLinearHeading(new Vector2d(0, -4), Math.toRadians(-90), new TranslationalVelConstraint(70), new ProfileAccelConstraint(-70, 70))
                 .afterTime(0, telemetryPacket -> {endPID = true; return false;})
                 .build(), returnCancelableTelePID()));
     }
@@ -618,13 +619,15 @@ public class Robot {
         slideTarget = 4100;
     }
     public void hang4() {
-        armTarget = 1980;
+        armTarget = 2000;
         slideTarget = 3800;
     }
     public void hang5() {
-        armTarget = 1600;
-        hangUp();
         slideTarget = 1500;
+        armTarget = 1600;
+
+        Actions.runBlocking(new ParallelAction(new SleepAction(0.3), returnTelePid(0.3)));
+        hangUp();
     }
     public void hang6() {
         armTarget = 900;

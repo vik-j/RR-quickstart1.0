@@ -85,8 +85,8 @@ public final class MecanumDrive {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 8;
-        public double lateralGain = 6;
+        public double axialGain = 8.5;
+        public double lateralGain = 6.5;
         public double headingGain = 8; // shared with turn
 
         public double axialVelGain = 0.0;
@@ -120,6 +120,7 @@ public final class MecanumDrive {
     public boolean headingCorrection = true;
     public boolean translationalCorrection = false;
     public double translationalTolerance = 1.0;
+    public double headingTolerance = 1.0;
 
     public double correctionTimeout = 1.0;
     public static Pose2d lastPose = new Pose2d(0,0,0);
