@@ -40,14 +40,12 @@ public class PidfTuner extends OpMode {
 
     public static int armTarget = 0;
     public static int slideTarget = 0;
-    public static double servoTarget = 0.5;
-    
-    public static double multiplier = 0.01;
+
 
     private final double ticks_in_degree = 1850 / 90.0;
 
     private DcMotorEx flip, slide;
-//    private Servo wrist;
+
     MecanumDrive drive;
     Robot bot;
     Pose2d beginPose = new Pose2d(-15, 62, Math.toRadians(270));
@@ -125,7 +123,6 @@ public class PidfTuner extends OpMode {
             FtcDashboard.getInstance().sendTelemetryPacket(packet);
         }
 
-//        wrist.setPosition(servoTarget);
 
         telemetry.addData("armPos", armPos);
         telemetry.addData("slidePos", slidePos);
