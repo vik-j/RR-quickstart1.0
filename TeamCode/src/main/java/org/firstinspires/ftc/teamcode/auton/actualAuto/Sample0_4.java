@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auton.newAuto;
+package org.firstinspires.ftc.teamcode.auton.actualAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
@@ -9,7 +9,6 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.BasketSideMecanumDrive;
@@ -17,7 +16,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 
 @Config
-@Autonomous(name = "Sample0_4", group = "Autonomous", preselectTeleOp = "TeleopV2")
+@Autonomous(name = "🟨🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Sample0_4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
