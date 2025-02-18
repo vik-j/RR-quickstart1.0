@@ -15,14 +15,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.BasketSideMecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
-@Disabled
+
 @Config
 @Autonomous(name = "Sample0_4", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Sample0_4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //old x used to be 40
-        Pose2d beginPose = new Pose2d(40, 64, Math.toRadians(180));
+        Pose2d beginPose = new Pose2d(39, 63.25, Math.toRadians(180));
         BasketSideMecanumDrive drive = new BasketSideMecanumDrive(hardwareMap, beginPose);
         Robot bot = new Robot(hardwareMap);
         bot.resetEncoders();
@@ -48,6 +48,8 @@ public class Sample0_4 extends LinearOpMode {
 //                    bot.flippy.setPosition(0.6);
 //                    return false;
 //                })
+                //score 1st sample
+
                 .afterTime(0.01, telemetryPacket -> {
                     bot.sampleDeposit();
                     return false;
@@ -69,106 +71,114 @@ public class Sample0_4 extends LinearOpMode {
                     bot.sampleUp();
                     return false;
                 })
+                //pickup first sample
                 .afterTime(5, telemetryPacket -> {
                     bot.setPidValues(425, 2300);
                     return false;
                 })
-                .afterTime(6.5, telemetryPacket -> {
+                .afterTime(6, telemetryPacket -> {
                     bot.setPivotMultiplier(0.001);
                     bot.setPidValues(0, 2300);
                     return false;
                 })
-                .afterTime(7.5, telemetryPacket -> {
+                .afterTime(6.4, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
+                    //1st sample picked up
                 })
-                .afterTime(8.5, telemetryPacket -> {
+                //score 2nd sample
+                .afterTime(6.6, telemetryPacket -> {
                     bot.setPivotMultiplier(1);
                     bot.sampleDeposit();
                     return false;
                 })
-                .afterTime(10, telemetryPacket -> {
+                .afterTime(8.1, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(10.5, telemetryPacket -> {
+                .afterTime(8.6, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(10.75, telemetryPacket -> {
+                //pick up 2nd sample
+                .afterTime(8.85, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(11.5, telemetryPacket -> {
+                .afterTime(9.6, telemetryPacket -> {
                     bot.sampleUp();
                     return false;
                 })
-                .afterTime(12.5, telemetryPacket -> {
+                .afterTime(10.6, telemetryPacket -> {
                     bot.setPidValues(425, 2300);
                     return false;
                 })
-                .afterTime(14, telemetryPacket -> {
+                .afterTime(11.6, telemetryPacket -> {
                     bot.setPivotMultiplier(0.001);
                     bot.setPidValues(0, 2300);
                     return false;
                 })
-                .afterTime(15, telemetryPacket -> {
+                .afterTime(12, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(16, telemetryPacket -> {
+                //score 3rd sample
+
+                .afterTime(12.2, telemetryPacket -> {
                     bot.setPivotMultiplier(1);
                     bot.sampleDeposit();
                     return false;
                 })
-                .afterTime(17.5, telemetryPacket -> {
+                .afterTime(13.7, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(18, telemetryPacket -> {
+                .afterTime(14.2, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(18.25, telemetryPacket -> {
+                .afterTime(14.65, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(19, telemetryPacket -> {
+                .afterTime(15.2, telemetryPacket -> {
                     bot.twisty.setPosition(0.86);
                     bot.sampleUp();
                     return false;
                 })
-                .afterTime(20, telemetryPacket -> {
+                //pick up 3rd sample
+                .afterTime(16.2, telemetryPacket -> {
                     bot.setPidValues(425, 2300);
                     return false;
                 })
-                .afterTime(21.5, telemetryPacket -> {
+                .afterTime(17.2, telemetryPacket -> {
                     bot.setPivotMultiplier(0.001);
                     bot.setPidValues(0, 2300);
                     return false;
                 })
-                .afterTime(22.5, telemetryPacket -> {
+                .afterTime(17.6, telemetryPacket -> {
                     bot.grippyClose();
                     return false;
                 })
-                .afterTime(23.5, telemetryPacket -> {
+                .afterTime(17.8, telemetryPacket -> {
                     bot.setPivotMultiplier(1);
                     bot.sampleDeposit();
                     return false;
                 })
-                .afterTime(25, telemetryPacket -> {
+                .afterTime(19.3, telemetryPacket -> {
                     bot.flippy.setPosition(0.9);
                     return false;
                 })
-                .afterTime(25.5, telemetryPacket -> {
+                .afterTime(19.8, telemetryPacket -> {
                     bot.grippyOpen();
                     return false;
                 })
-                .afterTime(25.75, telemetryPacket -> {
+                .afterTime(20.05, telemetryPacket -> {
                     bot.flippy.setPosition(0.4);
                     return false;
                 })
-                .afterTime(26.5, telemetryPacket -> {
+                //score 4th sample
+                .afterTime(20.8, telemetryPacket -> {
                     bot.flippy.setPosition(1);
                     bot.setPidValues(1100, 2000);
                     return false;
@@ -342,24 +352,24 @@ public class Sample0_4 extends LinearOpMode {
         //TODO: 13.38 V
 
         Action driveAction = drive.actionBuilder(beginPose)
-                .strafeToLinearHeading(new Vector2d(48,48), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .strafeToLinearHeading(new Vector2d(48,50), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(0.5)
-                .strafeToConstantHeading(new Vector2d(52.5, 55.5), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .strafeToConstantHeading(new Vector2d(54, 57.5), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(1)
-                .splineToLinearHeading(new Pose2d(54.634, 54.5, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
-                .waitSeconds(3.5)
-                .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .splineToLinearHeading(new Pose2d(53.734, 51.5, Math.toRadians(-98.687)), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
+                .waitSeconds(2.2)
+                .strafeToLinearHeading(new Vector2d(54, 57), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(1.5)
+                .splineToLinearHeading(new Pose2d(58.35, 52.285, Math.toRadians(-87)), Math.toRadians(270), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(2.3)
+                .strafeToLinearHeading(new Vector2d(54, 57), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(1.5)
+                .splineToLinearHeading(new Pose2d(59.185, 48.5, Math.toRadians(-60.88)), Math.toRadians(270), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
                 .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(58.35, 54.285, Math.toRadians(-87)), Math.toRadians(270), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
-                .waitSeconds(3.5)
-                .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(58.185, 52.67, Math.toRadians(-60.88)), Math.toRadians(270), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
-                .waitSeconds(3.5)
-                .strafeToLinearHeading(new Vector2d(52.5, 55.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(36, 20, Math.toRadians(180)), Math.toRadians((180)))
-                .splineToLinearHeading(new Pose2d(15, 20, Math.toRadians(180)), Math.toRadians((180)))
+                .strafeToLinearHeading(new Vector2d(55.5, 57.5), Math.toRadians(225), new TranslationalVelConstraint(40), new ProfileAccelConstraint(-40, 40))
+                .waitSeconds(1.5)
+                .splineToLinearHeading(new Pose2d(36, 22.5, Math.toRadians(180)), Math.toRadians((180)))
+                .splineToLinearHeading(new Pose2d(15, 22.5, Math.toRadians(180)), Math.toRadians((180)))
 //                .strafeToLinearHeading(new Vector2d(52, 55), Math.toRadians(225))
 //                .waitSeconds(4)
 //                .strafeToLinearHeading(new Vector2d(49.5, 48.25), Math.toRadians(270), new TranslationalVelConstraint(60), new ProfileAccelConstraint(-60, 60))
