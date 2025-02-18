@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.BasketSideMecanumDrive;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
-@Autonomous(name = "💉🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
+@Autonomous(name = "🟨🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class ActuallyWorkingSample0_4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.auton.qolActions.qol;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "Sweepy5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+@Autonomous(name = "⬛️🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Sweepy5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

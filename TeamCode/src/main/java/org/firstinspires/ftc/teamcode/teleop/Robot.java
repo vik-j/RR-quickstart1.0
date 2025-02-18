@@ -574,7 +574,7 @@ public class Robot {
                     return false;
                 })
                 //TODO: score 2nd speci
-                .strafeToConstantHeading(new Vector2d(-4 + 35.52, 34.79 - 54))
+                .strafeToConstantHeading(new Vector2d(-4 + 35.52 + 4, 34.79 - 54))
                 .afterTime(0, telemetryPacket -> {endPID = true; return false;})
                 .build(), returnCancelableTelePID()));
     }
