@@ -12,6 +12,7 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -577,6 +578,17 @@ public class Robot {
                 .afterTime(0, telemetryPacket -> {endPID = true; return false;})
                 .build(), returnCancelableTelePID()));
     }
+    public Action waitForArmToReset() {
+        return telemetryPacket -> {
+            telemetryPacket.put("bluh", "bluh");
+            return (Math.abs(armTarget) > 10) && (Math.abs(slideTarget) > 100);
+        };
+    }
+    public void speciScoreAndSample() {
+        Actions.runBlocking(new SequentialAction(new InstantAction(this::specimenDeposit2TELE)
+        , new ParallelAction(new SleepAction(0.3), returnTelePid(0.3)), new InstantAction(this:: grippyOpen),
+                new InstantAction(this::reset)));
+    }
     public void speciPickupAutomated() {
         endPID = false;
         Actions.runBlocking(new ParallelAction(drive.actionBuilder(new Pose2d(-4 - 35.52, 34.79 - 54, Math.toRadians(270)))
@@ -586,7 +598,7 @@ public class Robot {
                 })
                 .afterTime(0.4, telemetryPacket -> {grippyOpen(); return false;})
                 .waitSeconds(0.5)
-                .afterTime(0, new InstantAction(this::specimenDepositTELE))
+                .afterTime(0, new InstantAction(this::specimenPickupTELE))
                 //TODO: pickup 3rd speci
                 .strafeToLinearHeading(new Vector2d(0, -4), Math.toRadians(-90), new TranslationalVelConstraint(70), new ProfileAccelConstraint(-70, 70))
                 .afterTime(0, telemetryPacket -> {endPID = true; return false;})
@@ -675,6 +687,7 @@ public class Robot {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.left_trigger > 0) {
             hangUp();
+            sweepyUp();
         }
         if (gamepad1.right_trigger > 0) {
             flippy.setPosition(1);
@@ -692,7 +705,8 @@ public class Robot {
             speciScoreAutomated();
         }
         else if (gamepad1.left_bumper) {
-            speciPickupAutomated();
+//            speciPickupAutomated();
+            speciScoreAndSample();
         }
         if (gamepad2.y && !(gamepad2.right_trigger > 0)) {
             touchyRetract();
