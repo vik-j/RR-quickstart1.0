@@ -29,7 +29,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
         drive.setCorrectionTimeout(0.75);
 
         bot.grippyClose();
-        bot.flippy.setPosition(1);
+        bot.flippy.setPosition(bot.scaleFlippy(1));
         bot.twisty.setPosition(0);
         bot.resetEncoders();
 
@@ -40,7 +40,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 .afterTime(0, telemetryPacket -> {
                     bot.setPidValues(1875, 0);
                     bot.twisty.setPosition(1);
-                    bot.flippy.setPosition(0.7);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.7));
                     return false;
                 })
                 .afterTime(0.5, telemetryPacket -> {
@@ -50,7 +50,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 //TODO: score first sample
                 .strafeToSplineHeading(new Vector2d(51.2, 52.16), Math.toRadians(-134.88))
                 .afterTime(1.3, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(1.45, telemetryPacket -> {
@@ -58,7 +58,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(1.55, telemetryPacket -> {
-                    bot.flippy.setPosition(0.7);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.7));
                     return false;
                 })
                 .afterTime(1.6, telemetryPacket -> {
@@ -76,7 +76,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 .waitSeconds(0.4)
                 .strafeToSplineHeading(new Vector2d(48.9, 41.75), Math.toRadians(-90), new TranslationalVelConstraint(30), new ProfileAccelConstraint(-30, 30))
                 .afterTime(0, telemetryPacket -> {
-                    bot.flippy.setPosition(0.4);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.4));
                     return false;
                 })
                 .afterTime(0.3, telemetryPacket -> {
@@ -95,7 +95,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 //TODO: score second sample
                 .strafeToSplineHeading(new Vector2d(50.7, 51.86), Math.toRadians(-134.88))
                 .afterTime(1.1, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     bot.sweepyUp();
                     return false;
                 })
@@ -104,7 +104,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(1.75, telemetryPacket -> {
-                    bot.flippy.setPosition(0.7);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.7));
                     return false;
                 })
                 .afterTime(1.9, telemetryPacket -> {
@@ -121,7 +121,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 })
                 .strafeToSplineHeading(new Vector2d(58.91, 40.5), Math.toRadians(-89.75), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
                 .afterTime(0, telemetryPacket -> {
-                    bot.flippy.setPosition(0.4);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.4));
                     return false;
                 })
                 .afterTime(0.3, telemetryPacket -> {
@@ -140,7 +140,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 //TODO: score third sample
                 .strafeToSplineHeading(new Vector2d(51.7, 52.66), Math.toRadians(-134.88))
                 .afterTime(0.9, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(1.75, telemetryPacket -> {
@@ -148,7 +148,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(1.9, telemetryPacket -> {
-                    bot.flippy.setPosition(0.7);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.7));
                     return false;
                 })
                 .afterTime(2.05, telemetryPacket -> {
@@ -166,7 +166,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 })
                 .strafeToSplineHeading(new Vector2d(61.2, 40.48), Math.toRadians(-52.5), new TranslationalVelConstraint(20), new ProfileAccelConstraint(-20, 20))
                 .afterTime(0, telemetryPacket -> {
-                    bot.flippy.setPosition(0.4);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.4));
                     return false;
                 })
                 .afterTime(0.3, telemetryPacket -> {
@@ -186,7 +186,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 //TODO: score fourth sample
                 .strafeToSplineHeading(new Vector2d(50.2, 51.16), Math.toRadians(-134.88))
                 .afterTime(1.1, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(1.25, telemetryPacket -> {
@@ -194,7 +194,7 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(1.65, telemetryPacket -> {
-                    bot.flippy.setPosition(0.7);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.7));
                     return false;
                 })
                 .afterTime(1.75, telemetryPacket -> {

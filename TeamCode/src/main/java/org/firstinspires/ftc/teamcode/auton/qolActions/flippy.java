@@ -16,7 +16,7 @@ public class flippy implements Action {
     }
     @Override
     public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-        bot.flippy.setPosition(pos);
+        bot.flippy.setPosition(bot.scaleFlippy(pos));
         return false;
     }
 }

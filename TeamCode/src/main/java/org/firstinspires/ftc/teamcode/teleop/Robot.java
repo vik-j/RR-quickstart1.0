@@ -247,13 +247,13 @@ public class Robot {
 
     public void autoSamplePickup() {
         twisty.setPosition(scaleTwisty(0.5));
-        flippy.setPosition(0.6);
+        flippy.setPosition(scaleFlippy(0.6));
 
         Actions.runBlocking(setPidVals(0, 2300));
     }
     public void autoSampleSweeping() {
         twisty.setPosition(scaleTwisty(0.58));
-        flippy.setPosition(0.6);
+        flippy.setPosition(scaleFlippy(0.6));
         //TODO: Down is 0.45
 
         Actions.runBlocking(setPidVals(150, 2300));
@@ -278,7 +278,7 @@ public class Robot {
         grippy.setPosition(0);
     }
     public void wallMacro() {
-        flippy.setPosition(0.828);
+        flippy.setPosition(scaleFlippy(0.828));
 
         Actions.runBlocking(setPidVals(915, 1130));
     }
@@ -298,7 +298,7 @@ public class Robot {
     }
     public void newSpeci() {
 //        touchyTouch();
-        flippy.setPosition(0.828);
+        flippy.setPosition(scaleFlippy(0.828));
 //            armTarget = 2120;
 //            slideTarget = 1256;
 
@@ -312,7 +312,7 @@ public class Robot {
     }
     public void newSpeciPivot() {
         touchyRetract();
-        flippy.setPosition(0.828);
+        flippy.setPosition(scaleFlippy(0.828));
         Actions.runBlocking(setPidVals(945, 0));
     }
     public ArmPosition speciDepositPivot() {
@@ -320,7 +320,7 @@ public class Robot {
     }
     public void newSpeciSlides() {
         touchyTouch();
-        flippy.setPosition(0.828);
+        flippy.setPosition(scaleFlippy(0.828));
         Actions.runBlocking(setPidVals(915, 1720));
     }
     public ArmPosition speciDepositSlides() {
@@ -336,32 +336,32 @@ public class Robot {
         return new ArmPosition(1360, 1700, grippy.getPosition(), flippy.getPosition(), twisty.getPosition(), touchy.getPosition());
     }
     public void speciMacroPlus(int change) {
-        flippy.setPosition(0.718);
+        flippy.setPosition(scaleFlippy(0.718));
         twisty.setPosition(scaleTwisty(1));
         Actions.runBlocking(setPidVals(2120, 1050 + change));
     }
     public void specimenPickup() {
         touchyRetract();
-        flippy.setPosition(0.97);
+        flippy.setPosition(scaleFlippy(0.97));
         Actions.runBlocking(setPidVals(2510,0));
         twisty.setPosition(scaleTwisty(0));
         grippyOpen();
     }
     public void specimenPickupTELE() {
         touchyRetract();
-        flippy.setPosition(0.97);
+        flippy.setPosition(scaleFlippy(0.97));
         armTarget = 2510;
         slideTarget = 0;
         twisty.setPosition(scaleTwisty(0));
         grippyOpen();
     }
     public void specimenDeposit() {
-        flippy.setPosition(0.828);
+        flippy.setPosition(scaleFlippy(0.828));
 
         Actions.runBlocking(setPidVals(945, 1560));
     }
     public void specimenDepositTELE() {
-        flippy.setPosition(0.828);
+        flippy.setPosition(scaleFlippy(0.828));
         armTarget = 945;
         slideTarget = 1560;
     }
@@ -374,12 +374,12 @@ public class Robot {
     }
 
     public void sampleDeposit() {
-        flippy.setPosition(0.7);
+        flippy.setPosition(scaleFlippy(0.7));
         twisty.setPosition(scaleTwisty(1));
         Actions.runBlocking(setPidVals(1875, 4700));
     }
     public void samplePivot() {
-        flippy.setPosition(0.7);
+        flippy.setPosition(scaleFlippy(0.7));
         twisty.setPosition(scaleTwisty(1));
         Actions.runBlocking(setPidVals(1875, 0));
     }
@@ -391,7 +391,7 @@ public class Robot {
     }
     public void speciPickup2() {
         grippyOpen();
-        flippy.setPosition(0.778);
+        flippy.setPosition(scaleFlippy(0.778));
         twisty.setPosition(scaleTwisty(0));
     }
     public void fullRetract() {
@@ -401,7 +401,7 @@ public class Robot {
     public void reset() {
         intakeMultiplier = 1;
         Actions.runBlocking(setPidVals(0,0));
-        flippy.setPosition(0.4);
+        flippy.setPosition(scaleFlippy(0.4));
         twisty.setPosition(scaleTwisty(0));
     }
     public void resetTELE() {
@@ -411,19 +411,19 @@ public class Robot {
     public void speciScoreReset() {
         intakeMultiplier = 1;
         Actions.runBlocking(setPidVals(1200,0));
-        flippy.setPosition(0.4);
+        flippy.setPosition(scaleFlippy(0.4));
         twisty.setPosition(scaleTwisty(0));
     }
     public void speciScoreResetTELE() {
         armTarget = 1200;
-        flippy.setPosition(0.4);
+        flippy.setPosition(scaleFlippy(0.4));
         twisty.setPosition(scaleTwisty(0));
     }
     public ArmPosition retract() {
         return new ArmPosition(0,0,0,0.97,0,1);
     }
     public void samplePickup() {
-        flippy.setPosition((0.4));
+        flippy.setPosition(scaleFlippy(0.4));
         grippyOpen();
         twisty.setPosition(scaleTwisty(0));
         Actions.runBlocking(setPidVals(175, 1730));
@@ -436,7 +436,7 @@ public class Robot {
 
         grippy.setPosition(1);
 
-        flippy.setPosition(1);
+        flippy.setPosition(scaleFlippy(1));
 
         twisty.setPosition(scaleTwisty(0));
         Actions.runBlocking(setPidVals(0,0));
@@ -556,17 +556,17 @@ public class Robot {
                     return false;
                 })
                 .afterTime(0.7, telemetryPacket -> {
-                    flippy.setPosition(0.8);
+                    flippy.setPosition(scaleFlippy(0.8));
                     return false;
                 })
                 .waitSeconds(0.15)
                 .afterTime(0, telemetryPacket -> {
-                    flippy.setPosition(0.9);
+                    flippy.setPosition(scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(0.3, telemetryPacket -> {
                     speciScoreResetTELE();
-                    flippy.setPosition(0.9);
+                    flippy.setPosition(scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(1, telemetryPacket -> {
@@ -614,7 +614,7 @@ public class Robot {
     }
     public void hang1() {
         armTarget = 2050;
-        flippy.setPosition(0.4);
+        flippy.setPosition(scaleFlippy(0.4));
         grippyOpen();
         slideTarget = 1600;
         hangUp();
@@ -665,6 +665,10 @@ public class Robot {
             hang6();
         }
     }
+    public void hangAlmostDown() {
+        leftHang.setPosition(0.47);
+        rightHang.setPosition(0.45);
+    }
 
     public void extendIntoSub(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.x) {
@@ -673,7 +677,7 @@ public class Robot {
             slideTarget = 2300;
             armTarget = 240;
             intakeMultiplier = 1;
-            flippy.setPosition(0.4);
+            flippy.setPosition(scaleFlippy(0.4));
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 500) {
                 TeleopPID(gamepad2);
                 arcadeDrive(gamepad1);
@@ -686,11 +690,17 @@ public class Robot {
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.left_trigger > 0) {
+            hangAlmostDown();
+            Actions.runBlocking(new ParallelAction(new SleepAction(0.2), returnTelePid(0.2), returnTeleDriving(0.2, gamepad1)));
+            hangUp();
+            Actions.runBlocking(new ParallelAction(new SleepAction(0.2), returnTelePid(0.2), returnTeleDriving(0.2, gamepad1)));
+            hangAlmostDown();
+            Actions.runBlocking(new ParallelAction(new SleepAction(0.2), returnTelePid(0.2), returnTeleDriving(0.2, gamepad1)));
             hangUp();
             sweepyUp();
         }
         if (gamepad1.right_trigger > 0) {
-            flippy.setPosition(1);
+            flippy.setPosition(scaleFlippy(1));
             armTarget = 2490;
             slideTarget = 0;
             twisty.setPosition(scaleTwisty(0));
@@ -711,7 +721,7 @@ public class Robot {
         if (gamepad2.y && !(gamepad2.right_trigger > 0)) {
             touchyRetract();
             rightBumperCounter = 0;
-            flippy.setPosition(0.828);
+            flippy.setPosition(scaleFlippy(0.828));
             armTarget = 1870;
 
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
@@ -721,24 +731,25 @@ public class Robot {
             }
             slideTarget = 4600;
         }
-        if (gamepad2.left_bumper && !(gamepad2.right_trigger > 0)) flippy.setPosition(0.97);
-        if (gamepad2.right_bumper && !(gamepad2.right_trigger > 0)) flippy.setPosition(0.4);
+        if (gamepad2.left_bumper && !(gamepad2.right_trigger > 0)) flippy.setPosition(scaleFlippy(0.97));
+        if (gamepad2.right_bumper && !(gamepad2.right_trigger > 0)) flippy.setPosition(scaleFlippy(0.4));
         if (gamepad1.b) {
             touchyRetract();
-            armTarget = 1360;
-            Actions.runBlocking(new ParallelAction(new SleepAction(0.35), returnTelePid(0.35)));
+            flippy.setPosition(scaleFlippy(0.8));
+            armTarget = 1600;
+            Actions.runBlocking(new ParallelAction(new SleepAction(0.55), returnTelePid(0.55)));
             grippyOpen();
             Actions.runBlocking(new SleepAction(0.1));
 //            flippy.setPosition(0.748);
 //            armTarget = 0;
 //            slideTarget = 0;
-            flippy.setPosition(1);
-            armTarget = 2490;
+            flippy.setPosition(scaleFlippy(1));
+            armTarget = 2530;
             slideTarget = 0;
             twisty.setPosition(scaleTwisty(0));
         }
         if (gamepad1.x) {
-            touchyTouch();
+//            touchyTouch();
             grippyClose();
 
 //            flippy.setPosition(0.718);
@@ -747,14 +758,14 @@ public class Robot {
 //            armTarget = 2120;
 //            slideTarget = 1256;
             Actions.runBlocking(new SleepAction(0.3));
-            flippy.setPosition(0.828);
+            flippy.setPosition(scaleFlippy(0.55));
 
-            armTarget = 885;
-            slideTarget = 1680;
+            armTarget = 1300;
+            slideTarget = 1700;
         }
         else if (gamepad2.left_stick_button && !(gamepad2.right_trigger > 0)) {
             touchyRetract();
-            flippy.setPosition(0.4);
+            flippy.setPosition(scaleFlippy(0.4));
             armTarget = 1900;
             slideTarget = 4600;
         }
@@ -774,7 +785,7 @@ public class Robot {
         if (gamepad2.a && !(gamepad2.right_trigger > 0)) {
             touchyRetract();
             rightBumperCounter = 0;
-            flippy.setPosition(0.4);
+            flippy.setPosition(scaleFlippy(0.4));
             slideTarget = 0;
             intakeMultiplier = 1;
             while (Math.abs(slideTarget - slide.getCurrentPosition()) > 1000) {
@@ -793,7 +804,7 @@ public class Robot {
             slideTarget = 2300;
             armTarget = 280;
             intakeMultiplier = 1;
-            flippy.setPosition(0.4);
+            flippy.setPosition(scaleFlippy(0.4));
             grippyOpen();
 
             twisty.setPosition(scaleTwisty(0));
@@ -815,7 +826,7 @@ public class Robot {
 
             Actions.runBlocking(new SleepAction(0.5));
 
-            flippy.setPosition(1);
+            flippy.setPosition(scaleFlippy(1));
 
             Actions.runBlocking(new SleepAction(0.25));
 
@@ -867,12 +878,12 @@ public class Robot {
         if (gamepad.left_trigger > 0) {
             leftHang.setPosition(0);
             rightHang.setPosition(0);
-            flippy.setPosition(1);
+            flippy.setPosition(scaleFlippy(1));
         }
         else if (gamepad.right_trigger > 0) {
             leftHang.setPosition(1);
             rightHang.setPosition(1);
-            flippy.setPosition(0.4);
+            flippy.setPosition(scaleFlippy(0.4));
         }
     }
     public void TeleopPID(Gamepad gamepad) {
@@ -886,8 +897,8 @@ public class Robot {
 
         if (slideTarget < 0) slideTarget = 0;
 //        else if (slideTarget > targetLength && flipPos < 1850) slideTarget = targetLength;
-        else if (slideTarget > 4600*2 && armTarget > 1000) slideTarget = 4600*2;
-        else if (slideTarget > 1830*2 && armTarget < 1000) slideTarget = 1830*2;
+        else if (slideTarget > 4600 && armTarget > 1000) slideTarget = 4600;
+        else if (slideTarget > 1830 && armTarget < 1000) slideTarget = 1830;
 
         flipPos = flip.getCurrentPosition();
         slidePos = slide.getCurrentPosition();
@@ -901,7 +912,7 @@ public class Robot {
 
         double pid2 = slideController.calculate(slidePos, scaleSlides(slideTarget));
 
-        slide.setPower(pid2);
+        slide.setPower(-pid2);
 
     }
     public void slidesPID(Gamepad gamepad) {
@@ -915,7 +926,7 @@ public class Robot {
 
         double pid2 = slideController.calculate(slidePos, slideTarget);
 
-        slide.setPower(pid2);
+        slide.setPower(-pid2);
     }
 
     public void extraD1Features(Gamepad gamepad) {
@@ -966,10 +977,13 @@ public class Robot {
 
     public double scaleTwisty(double unscaled) {
 //        return 0.35733*(unscaled*unscaled) + 0.312667*unscaled;
-        return -0.533333*(unscaled*unscaled) - 0.466667*unscaled + 1;
+        return 1 - (-0.533333*(unscaled*unscaled) - 0.466667*unscaled + 1);
+    }
+    public double scaleFlippy(double unscaled) {
+        return 1.81818*unscaled - 0.727272;
     }
     public int scaleSlides(double unscaled) {
-        return (int) (unscaled * 0.7137546468*0.7135416667 * 1.9635036496);
+        return ((int) (unscaled * 0.7137546468*0.7135416667 * 1.9635036496));
     }
     public Action pidToPoint(Pose2d targetPose) {
         return new p2p(this, targetPose);
@@ -1126,7 +1140,7 @@ public class Robot {
 
             double pid2 = slideController.calculate(slidePos, scaleSlides(slideTargetAuto));
 
-            slide.setPower(pid2);
+            slide.setPower(-pid2);
 
             if (Math.abs(flipPos - armTarget) <= 10) {
                 flip.setPower(0);
@@ -1150,7 +1164,7 @@ public class Robot {
 
             double pid2 = slideController.calculate(slidePos, scaleSlides(slideTargetAuto));
 
-            slide.setPower(pid2);
+            slide.setPower(-pid2);
 
 //            try {
 //                Thread.sleep(10); // Adjust the sleep time as needed
@@ -1165,6 +1179,29 @@ public class Robot {
     }
     public Action returnCancelableTelePID() {
         return new pidfLoopActionTeleCancelable();
+    }
+    public Action returnTeleDriving(double timeout, Gamepad gamepad1) {
+        return new driveActionTeleTimeout(timeout, gamepad1);
+    }
+    public class driveActionTeleTimeout implements Action {
+        public double timeout;
+        public ElapsedTime timer = new ElapsedTime();
+        public Gamepad gamepad1;
+        public driveActionTeleTimeout(double timeout, Gamepad gamepad1) {
+            this.timeout = timeout;
+            timer.reset();
+            this.gamepad1 = gamepad1;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            double y = gamepad1.left_stick_y;
+            double x = -gamepad1.left_stick_x;
+            double rx = -0.75*gamepad1.right_stick_x;
+
+            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(-y,x), rx));
+
+            return timer.seconds() <= timeout;
+        }
     }
     public class pidfLoopActionTeleTimeout implements Action {
         public double timeout;
@@ -1187,7 +1224,7 @@ public class Robot {
 
             double pid2 = slideController.calculate(slidePos, scaleSlides(slideTarget));
 
-            slide.setPower(pid2);
+            slide.setPower(-pid2);
 
 //            try {
 //                Thread.sleep(10); // Adjust the sleep time as needed
@@ -1217,7 +1254,7 @@ public class Robot {
 
             double pid2 = slideController.calculate(slidePos, scaleSlides(slideTarget));
 
-            slide.setPower(pid2);
+            slide.setPower(-pid2);
 
             return !endPID;
         }
@@ -1251,7 +1288,7 @@ public class Robot {
 
                 double pid2 = slideController.calculate(slidePos, scaleSlides(slideTargetAuto));
 
-                slide.setPower(pid2);
+                slide.setPower(-pid2);
 
                 try {
                     Thread.sleep(10); // Adjust the sleep time as needed

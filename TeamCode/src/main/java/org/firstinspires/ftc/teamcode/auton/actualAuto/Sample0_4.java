@@ -29,7 +29,7 @@ public class Sample0_4 extends LinearOpMode {
         drive.disableTranslationalCorrection();
 
         bot.grippyClose();
-        bot.flippy.setPosition(1);
+        bot.flippy.setPosition(bot.scaleFlippy(1));
         bot.twisty.setPosition(0);
 
         double optimizationOffset = 1+0.5;
@@ -44,7 +44,7 @@ public class Sample0_4 extends LinearOpMode {
 //                    return false;
 //                })
 //                .afterTime(1.2, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.6);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.6);
 //                    return false;
 //                })
                 //score 1st sample
@@ -54,7 +54,7 @@ public class Sample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(2.5, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(3, telemetryPacket -> {
@@ -62,7 +62,7 @@ public class Sample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(3.5, telemetryPacket -> {
-                    bot.flippy.setPosition(0.4);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.4));
                     return false;
                 })
                 .afterTime(4.25, telemetryPacket -> {
@@ -92,7 +92,7 @@ public class Sample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(8.1, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(8.6, telemetryPacket -> {
@@ -101,7 +101,7 @@ public class Sample0_4 extends LinearOpMode {
                 })
                 //pick up 2nd sample
                 .afterTime(8.85, telemetryPacket -> {
-                    bot.flippy.setPosition(0.4);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.4));
                     return false;
                 })
                 .afterTime(9.6, telemetryPacket -> {
@@ -129,7 +129,7 @@ public class Sample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(13.7, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(14.2, telemetryPacket -> {
@@ -137,7 +137,7 @@ public class Sample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(14.65, telemetryPacket -> {
-                    bot.flippy.setPosition(0.4);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.4));
                     return false;
                 })
                 .afterTime(15.2, telemetryPacket -> {
@@ -165,7 +165,7 @@ public class Sample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(19.3, telemetryPacket -> {
-                    bot.flippy.setPosition(0.9);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.9));
                     return false;
                 })
                 .afterTime(19.8, telemetryPacket -> {
@@ -173,19 +173,19 @@ public class Sample0_4 extends LinearOpMode {
                     return false;
                 })
                 .afterTime(20.05, telemetryPacket -> {
-                    bot.flippy.setPosition(0.4);
+                    bot.flippy.setPosition(bot.scaleFlippy(0.4));
                     return false;
                 })
                 //score 4th sample
                 .afterTime(20.8, telemetryPacket -> {
-                    bot.flippy.setPosition(1);
+                    bot.flippy.setPosition(bot.scaleFlippy(1));
                     bot.setPidValues(1100, 2000);
                     return false;
                 })
 
 //                .afterTime(2.5, telemetryPacket -> {
 //                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.87);
 //                    return false;
 //                })
 //                .afterTime(3.1, telemetryPacket -> {
@@ -216,12 +216,12 @@ public class Sample0_4 extends LinearOpMode {
 //                    return false;
 //                })
 //                .afterTime(9.1 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(1);
+//                    bot.flippy.setPosition(bot.scaleFlippy(1);
 //                    return false;
 //                })
 //                .afterTime(10.25 - optimizationOffset, telemetryPacket -> {
 //                    bot.sampleScore();
-//                    bot.flippy.setPosition(0.6);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.6);
 //                    return false;
 //                })
 //                .afterTime(11.25 - optimizationOffset, telemetryPacket -> {
@@ -230,7 +230,7 @@ public class Sample0_4 extends LinearOpMode {
 //                })
 //                .afterTime(12.35 - optimizationOffset, telemetryPacket -> {
 //                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.87);
 //                    return false;
 //                })
 //                .afterTime(12.75 - optimizationOffset, telemetryPacket -> {
@@ -238,7 +238,7 @@ public class Sample0_4 extends LinearOpMode {
 //                    return false;
 //                })
 //                .afterTime(12.85 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.4);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.4);
 //                    return false;
 //                })
 //                .afterTime(13.15 - optimizationOffset, telemetryPacket -> {
@@ -264,12 +264,12 @@ public class Sample0_4 extends LinearOpMode {
 //                    return false;
 //                })
 //                .afterTime(15.75 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(1);
+//                    bot.flippy.setPosition(bot.scaleFlippy(1);
 //                    return false;
 //                })
 //                .afterTime(16.5 - optimizationOffset, telemetryPacket -> {
 //                    bot.sampleScore();
-//                    bot.flippy.setPosition(0.6);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.6);
 //                    return false;
 //                })
 //                .afterTime(17.25 - optimizationOffset, telemetryPacket -> {
@@ -278,7 +278,7 @@ public class Sample0_4 extends LinearOpMode {
 //                })
 //                .afterTime(18.5 - optimizationOffset, telemetryPacket -> {
 //                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.87);
 //                    return false;
 //                })
 //                .afterTime(18.9 - optimizationOffset, telemetryPacket -> {
@@ -286,7 +286,7 @@ public class Sample0_4 extends LinearOpMode {
 //                    return false;
 //                })
 //                .afterTime(19.1 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.4);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.4);
 //                    return false;
 //                })
 //                .afterTime(19.25 - optimizationOffset, telemetryPacket -> {
@@ -312,12 +312,12 @@ public class Sample0_4 extends LinearOpMode {
 //                    return false;
 //                })
 //                .afterTime(22.75 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(1);
+//                    bot.flippy.setPosition(bot.scaleFlippy(1);
 //                    return false;
 //                })
 //                .afterTime(24.25 - optimizationOffset, telemetryPacket -> {
 //                    bot.sampleScore();
-//                    bot.flippy.setPosition(0.6);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.6);
 //                    return false;
 //                })
 //                .afterTime(25.25 - optimizationOffset, telemetryPacket -> {
@@ -326,7 +326,7 @@ public class Sample0_4 extends LinearOpMode {
 //                })
 //                .afterTime(26.5 - optimizationOffset, telemetryPacket -> {
 //                    bot.sampleScore3();
-//                    bot.flippy.setPosition(0.87);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.87);
 //                    return false;
 //                })
 //                .afterTime(26.9 - optimizationOffset, telemetryPacket -> {
@@ -334,7 +334,7 @@ public class Sample0_4 extends LinearOpMode {
 //                    return false;
 //                })
 //                .afterTime(27 - optimizationOffset, telemetryPacket -> {
-//                    bot.flippy.setPosition(0.4);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.4);
 //                    return false;
 //                })
 //                .afterTime(27.25 - optimizationOffset, telemetryPacket -> {
@@ -343,7 +343,7 @@ public class Sample0_4 extends LinearOpMode {
 //                })
 //                .afterTime(28.25 - optimizationOffset, telemetryPacket -> {
 //                    bot.setPidValues(1100, 2000);
-//                    bot.flippy.setPosition(0.5);
+//                    bot.flippy.setPosition(bot.scaleFlippy(0.5);
 //                    return false;
 //                })
                 .build();

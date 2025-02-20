@@ -36,7 +36,7 @@ public class PidfTuner extends OpMode {
     public static double flippyPos = 0.4;
     public static double leftHang = 1;
     public static double rightHang = 0;
-    public static double sweepyPos = 0;
+    public static double sweepyPos = 1;
 
     public static int armTarget = 0;
     public static int slideTarget = 0;
@@ -99,11 +99,11 @@ public class PidfTuner extends OpMode {
             slidePos = slide.getCurrentPosition();
             double pid2 = slideController.calculate(slidePos, bot.scaleSlides(slideTarget));
 
-            slide.setPower(pid2);
+            slide.setPower(-pid2);
 
             telemetry.addData("flipPower", power);
 
-            bot.flippy.setPosition(flippyPos);
+            bot.flippy.setPosition(bot.scaleFlippy(flippyPos));
             bot.twisty.setPosition(bot.scaleTwisty(twistyPos));
             bot.grippy.setPosition(grippyPos);
             bot.leftHang.setPosition(leftHang);

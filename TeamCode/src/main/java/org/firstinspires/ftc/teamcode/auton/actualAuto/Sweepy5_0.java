@@ -57,23 +57,25 @@ public class Sweepy5_0 extends LinearOpMode {
                 .afterTime(0, q.grippyOpen())
                 .afterTime(0.1, q.combine(q.reset(), q.flippy(1)))
                 .afterTime(1.25, q.autoSampleSweeping())
-                .splineToSplineHeading(new Pose2d(-28.89,39.58, Math.toRadians(-140.26)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-28.19,39.58, Math.toRadians(-140.26)), Math.toRadians(180))
 
                 //TODO: pickup 1st sample
                 // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
                 .afterTime(0, q.combine(q.sweepyDown(), q.flippy(0.42)))
 
                 //TODO: drop off first sample
-                .turnTo(Math.toRadians(128.5), new TurnConstraints(20, -20, 20))
+                .strafeToSplineHeading(new Vector2d(-28.19, 42.58), Math.toRadians(128.5))
+//                .turnTo(Math.toRadians(128.5), new TurnConstraints(20, -20, 20))
                 .afterTime(0, q.combine(q.sweepyUp(), q.flippy(0.6)))
-                .splineToSplineHeading(new Pose2d(-38.45, 39.6, Math.toRadians(-140.91)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-37.85, 39.6, Math.toRadians(-140.91)), Math.toRadians(270))
 
                 //TODO: pick up 2nd sample
                 //.splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
                 .afterTime(0, q.combine(q.sweepyDown(), q.flippy(0.42)))
 
                 //TODO: drop off 2nd sample
-                .turnTo(Math.toRadians(130.4), new TurnConstraints(20, -20, 20))
+                .strafeToSplineHeading(new Vector2d(-37.85, 42.6), Math.toRadians(130.4))
+//                .turnTo(Math.toRadians(130.4), new TurnConstraints(20, -20, 20))
                 .afterTime(0, q.combine(q.sweepyUp(), q.flippy(0.6)))
                 .splineToSplineHeading(new Pose2d(-47.1, 35.5, Math.toRadians(-156.46)), Math.toRadians(270))
 
