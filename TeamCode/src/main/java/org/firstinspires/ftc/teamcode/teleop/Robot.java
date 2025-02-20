@@ -252,11 +252,11 @@ public class Robot {
         Actions.runBlocking(setPidVals(0, 2300));
     }
     public void autoSampleSweeping() {
-        twisty.setPosition(scaleTwisty(0.58));
+        twisty.setPosition(scaleTwisty(0.45));
         flippy.setPosition(scaleFlippy(0.6));
         //TODO: Down is 0.45
 
-        Actions.runBlocking(setPidVals(150, 2300));
+        Actions.runBlocking(setPidVals(250, 2300));
     }
 
     public void sweepyUp() {
