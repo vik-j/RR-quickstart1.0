@@ -154,7 +154,7 @@ public class Sweepy5_0 extends LinearOpMode {
                 //TODO: pick up 5th speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 50), Math.toRadians(-87.5))
                 .waitSeconds(0)
-                .strafeToLinearHeading(new Vector2d(-35.52, 53), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-35.52, 53.3), Math.toRadians(-90))
                 .afterTime(0, q.grippyClose())
                 .afterTime(0.6, q.flippy(0.7))
                 .waitSeconds(0)
@@ -162,7 +162,7 @@ public class Sweepy5_0 extends LinearOpMode {
                 .afterTime(0.4, q.combine(q.speciScoreReset(), q.flippy(0.9)))
                 .afterTime(1.32, q.specimenDeposit())
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(8, 33.6))
+                .strafeToConstantHeading(new Vector2d(8, 33.3))
                 .afterTime(0.15, q.specimenDeposit2())
                 .afterTime(0.47 , q.grippyOpen())
                 .waitSeconds(0.2)
