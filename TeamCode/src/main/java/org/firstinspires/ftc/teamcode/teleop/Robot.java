@@ -43,6 +43,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +93,7 @@ public class Robot {
     public double intakeMultiplier = 1;
     public static double leftHangPosUp = 0.9, leftHangPosDown = 0.4, rightHangPosUp = 0.9, rightHangPosDown = 0.4;
     Thread currentThread = null;
+
     public static final double slidesTTS = 3260 / 20.0;
 
     //TODO: claw extends 2.25 inches away from drivetrain
@@ -167,6 +169,8 @@ public class Robot {
 
         armController = new PIDController(armPIDValues.fP, armPIDValues.fI, armPIDValues.fD);
         slideController = new PIDController(armPIDValues.sP,armPIDValues.sI,armPIDValues.sD);
+
+        hangUp();
     }
 
 
@@ -388,7 +392,7 @@ public class Robot {
         Actions.runBlocking(setPidVals(1900, 0));
     }
     public void sampleSlides() {
-        Actions.runBlocking(setPidVals(1900, 4200));
+        Actions.runBlocking(setPidVals(1900, 4600));
     }
     public void sampleScore3() {
         Actions.runBlocking(setPidVals(2000, 4700));
@@ -694,9 +698,74 @@ public class Robot {
     public void limelightStart() {
         limelight.start();
     }
+    public static double normalizeRadToQ1(double input) {
+        double normalized = AngleUnit.normalizeRadians(input);
+
+        if (normalized < 0) {
+            normalized = -normalized;
+        }
+        if (normalized > Math.PI / 2) {
+            normalized = Math.PI - normalized;
+        }
+        return normalized;
+    }
+    public static double sampleMath(List<Vector2d> poses) {
+        List<Double> angles = new ArrayList<>();
+        List<Double> distances = new ArrayList<>();
+
+        if (poses.size() == 4) {
+            Map<Double, Double> angleToDistance = new HashMap<>();
+
+            // Iterate over unique pairs to compute angles and distances
+            for (int i = 0; i < poses.size(); i++) {
+                for (int j = i + 1; j < poses.size(); j++) {
+                    double deltaX = poses.get(j).x - poses.get(i).x;
+                    double deltaY = poses.get(j).y - poses.get(i).y;
+                    double angle = Math.atan2(deltaY, deltaX);
+                    double normalizedAngle = normalizeRadToQ1(angle);
+                    double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                    angles.add(normalizedAngle);
+                    distances.add(distance);
+
+                    // Map each normalized angle to its distance
+                    angleToDistance.put(normalizedAngle, distance);
+                }
+            }
+
+            List<Double> duplicates = new ArrayList<>();
+            double epsilon = 1e-2;
+
+            for (int i = 0; i < angles.size(); i++) {
+                for (int j = i + 1; j < angles.size(); j++) {
+                    if (Math.abs(angles.get(i) - angles.get(j)) < epsilon && !duplicates.contains(angles.get(i))) {
+                        duplicates.add(angles.get(i));
+                    }
+                }
+            }
+
+            double widthwiseAngle = duplicates.get(0);
+            double minDistance = Double.MAX_VALUE;
+
+            for (double dupAngle : duplicates) {
+                double dist = angleToDistance.get(dupAngle);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    widthwiseAngle = dupAngle;
+                }
+            }
+
+            double lengthwiseAngle = widthwiseAngle + (Math.PI / 2);
+
+            return normalizeRadToQ1(lengthwiseAngle);
+        }
+
+        return angles.get(0);
+    }
     public double getSampleAngle() {
         LLResult result = limelight.getLatestResult();
-        double actualAngle = 0;
+        List<Double> angles = new ArrayList<>();
+        List<Double> distances = new ArrayList<>();
         if (result != null && result.isValid()) {
             List<List<Double>> corners = result.getDetectorResults().get(0).getTargetCorners();
 
@@ -706,37 +775,72 @@ public class Robot {
                 Vector2d vector = new Vector2d(point.get(0), point.get(1));
                 poses.add(vector);
             }
-            List<Double> angles = new ArrayList<>();
+
             if (poses.size() == 4) {
-                int num = 0;
-                for (Vector2d point : poses) {
-                    double angle, deltaX, deltaY;
-                    if (num == 3) {
-                        deltaX = poses.get(0).x - point.x;
-                        deltaY = poses.get(0).y - point.y;
-                    }
-                    else {
-                        deltaX = poses.get(num + 1).x - point.x;
-                        deltaY = poses.get(num + 1).y - point.y;
-                    }
+                Map<Double, Double> angleToDistance = new HashMap<>();
 
-                    angle = Math.atan2(deltaY, deltaX);
+                for (int i = 0; i < poses.size(); i++) {
+                    for (int j = i + 1; j < poses.size(); j++) {
+                        double deltaX = poses.get(j).x - poses.get(i).x;
+                        double deltaY = poses.get(j).y - poses.get(i).y;
+                        double angle = Math.atan2(deltaY, deltaX);
+                        double normalizedAngle = normalizeRadToQ1(angle);
+                        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-                    angles.add(angle);
-                    num++;
+                        angles.add(normalizedAngle);
+                        distances.add(distance);
+
+                        angleToDistance.put(normalizedAngle, distance);
+                    }
                 }
 
-                HashSet<Double> seen = new HashSet<>();
+                List<Double> duplicates = new ArrayList<>();
+                double epsilon = 1e-2;
 
-                for (double angle : angles) {
-                    if (seen.contains(angle)) {
-                        return angle;
+                for (int i = 0; i < angles.size(); i++) {
+                    for (int j = i + 1; j < angles.size(); j++) {
+                        if (Math.abs(angles.get(i) - angles.get(j)) < epsilon && !duplicates.contains(angles.get(i))) {
+                            duplicates.add(angles.get(i));
+                        }
                     }
-                    seen.add(angle);
                 }
+
+                double widthwiseAngle = duplicates.get(0);
+                double minDistance = Double.MAX_VALUE;
+
+                for (double dupAngle : duplicates) {
+                    double dist = angleToDistance.get(dupAngle);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        widthwiseAngle = dupAngle;
+                    }
+                }
+
+                double lengthwiseAngle = widthwiseAngle + (Math.PI / 2);
+
+                return normalizeRadToQ1(lengthwiseAngle);
             }
         }
         return 0;
+    }
+    public double convertToClawDegree(double radians) {
+        return Math.round(Math.toDegrees(normalizeRadToQ1(radians)));
+    }
+    public double normalizeToQ2Q3(double degrees) {
+        degrees = ((degrees % 360) + 360) % 360;
+
+        if (degrees < 90) {
+            degrees += 180;
+        }
+        else if (degrees > 270) {
+            degrees -= 180;
+        }
+
+        return degrees;
+    }
+    public double convertDegreesToTwisty(double degrees) {
+        double normalized = normalizeToQ2Q3(degrees);
+        return (normalized - 90) / 180;
     }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
@@ -749,6 +853,9 @@ public class Robot {
             Actions.runBlocking(new ParallelAction(new SleepAction(0.2), returnTelePid(0.2), returnTeleDriving(0.2, gamepad1)));
             hangUp();
             sweepyUp();
+        }
+        if (gamepad1.dpad_up) {
+            twisty.setPosition(convertDegreesToTwisty(getSampleAngle()));
         }
         if (gamepad1.right_trigger > 0) {
             flippy.setPosition(scaleFlippy(1));
