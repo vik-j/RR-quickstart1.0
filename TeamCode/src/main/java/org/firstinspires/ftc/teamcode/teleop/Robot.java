@@ -42,8 +42,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.Vector;
 
 @Config
 //TODO: change claw opened and closed values
@@ -146,7 +150,7 @@ public class Robot {
 
         twisty.setDirection(Servo.Direction.REVERSE);
 
-//        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
 //        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 //        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -256,7 +260,7 @@ public class Robot {
         flippy.setPosition(scaleFlippy(0.6));
         //TODO: Down is 0.45
 
-        Actions.runBlocking(setPidVals(250, 2300));
+        Actions.runBlocking(setPidVals(150, 2300));
     }
 
     public void sweepyUp() {
@@ -379,12 +383,12 @@ public class Robot {
         Actions.runBlocking(setPidVals(1875, 4700));
     }
     public void samplePivot() {
-        flippy.setPosition(scaleFlippy(0.7));
+        flippy.setPosition(scaleFlippy(0.75));
         twisty.setPosition(scaleTwisty(1));
-        Actions.runBlocking(setPidVals(1875, 0));
+        Actions.runBlocking(setPidVals(1900, 0));
     }
     public void sampleSlides() {
-        Actions.runBlocking(setPidVals(1875, 4700));
+        Actions.runBlocking(setPidVals(1900, 4200));
     }
     public void sampleScore3() {
         Actions.runBlocking(setPidVals(2000, 4700));
@@ -687,6 +691,53 @@ public class Robot {
             grippy.setPosition(0);
         }
     }
+    public void limelightStart() {
+        limelight.start();
+    }
+    public double getSampleAngle() {
+        LLResult result = limelight.getLatestResult();
+        double actualAngle = 0;
+        if (result != null && result.isValid()) {
+            List<List<Double>> corners = result.getDetectorResults().get(0).getTargetCorners();
+
+            List<Vector2d> poses = new ArrayList<>();
+
+            for (List<Double> point: corners) {
+                Vector2d vector = new Vector2d(point.get(0), point.get(1));
+                poses.add(vector);
+            }
+            List<Double> angles = new ArrayList<>();
+            if (poses.size() == 4) {
+                int num = 0;
+                for (Vector2d point : poses) {
+                    double angle, deltaX, deltaY;
+                    if (num == 3) {
+                        deltaX = poses.get(0).x - point.x;
+                        deltaY = poses.get(0).y - point.y;
+                    }
+                    else {
+                        deltaX = poses.get(num + 1).x - point.x;
+                        deltaY = poses.get(num + 1).y - point.y;
+                    }
+
+                    angle = Math.atan2(deltaY, deltaX);
+
+                    angles.add(angle);
+                    num++;
+                }
+
+                HashSet<Double> seen = new HashSet<>();
+
+                for (double angle : angles) {
+                    if (seen.contains(angle)) {
+                        return angle;
+                    }
+                    seen.add(angle);
+                }
+            }
+        }
+        return 0;
+    }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.left_trigger > 0) {
@@ -721,8 +772,8 @@ public class Robot {
         if (gamepad2.y && !(gamepad2.right_trigger > 0)) {
             touchyRetract();
             rightBumperCounter = 0;
-            flippy.setPosition(scaleFlippy(0.828));
-            armTarget = 1870;
+            flippy.setPosition(scaleFlippy(0.7));
+            armTarget = 1900;
 
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
@@ -887,8 +938,8 @@ public class Robot {
         }
     }
     public void TeleopPID(Gamepad gamepad) {
-        armTarget += (int) ((int) -gamepad.right_stick_y * 200);
-        slideTarget += (int) -gamepad.left_stick_y * 200;
+        armTarget += (int) ((int) -gamepad.right_stick_y * 100);
+        slideTarget += (int) -gamepad.left_stick_y * 100;
 //        int targetLength = (int) (1750*(1/Math.cos(Math.toRadians(flipPos/armPIDValues.ticks_in_degree))));
 //        slideExtensionLimit = targetLength;
 

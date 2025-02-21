@@ -23,6 +23,12 @@ public class qol {
         return new SequentialAction(actions);
     }
 
+    public Action samplePivot() {
+        return new InstantAction(() -> bot.samplePivot());
+    }
+    public Action sampleSlides() {
+        return new InstantAction(() -> bot.sampleSlides());
+    }
     public Action firstSpeci() {
         return new InstantAction(() -> bot.newSpeci());
     }
