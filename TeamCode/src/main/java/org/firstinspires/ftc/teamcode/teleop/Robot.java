@@ -775,51 +775,51 @@ public class Robot {
                 Vector2d vector = new Vector2d(point.get(0), point.get(1));
                 poses.add(vector);
             }
+            if (poses.size() != 4) throw new IllegalArgumentException("Rectangles have 4 corners");
 
-            if (poses.size() == 4) {
-                Map<Double, Double> angleToDistance = new HashMap<>();
+            poses.size();
+            Map<Double, Double> angleToDistance = new HashMap<>();
 
-                for (int i = 0; i < poses.size(); i++) {
-                    for (int j = i + 1; j < poses.size(); j++) {
-                        double deltaX = poses.get(j).x - poses.get(i).x;
-                        double deltaY = poses.get(j).y - poses.get(i).y;
-                        double angle = Math.atan2(deltaY, deltaX);
-                        double normalizedAngle = normalizeRadToQ1(angle);
-                        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            for (int i = 0; i < poses.size(); i++) {
+                for (int j = i + 1; j < poses.size(); j++) {
+                    double deltaX = poses.get(j).x - poses.get(i).x;
+                    double deltaY = poses.get(j).y - poses.get(i).y;
+                    double angle = Math.atan2(deltaY, deltaX);
+                    double normalizedAngle = normalizeRadToQ1(angle);
+                    double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-                        angles.add(normalizedAngle);
-                        distances.add(distance);
+                    angles.add(normalizedAngle);
+                    distances.add(distance);
 
-                        angleToDistance.put(normalizedAngle, distance);
-                    }
+                    angleToDistance.put(normalizedAngle, distance);
                 }
-
-                List<Double> duplicates = new ArrayList<>();
-                double epsilon = 1e-2;
-
-                for (int i = 0; i < angles.size(); i++) {
-                    for (int j = i + 1; j < angles.size(); j++) {
-                        if (Math.abs(angles.get(i) - angles.get(j)) < epsilon && !duplicates.contains(angles.get(i))) {
-                            duplicates.add(angles.get(i));
-                        }
-                    }
-                }
-
-                double widthwiseAngle = duplicates.get(0);
-                double minDistance = Double.MAX_VALUE;
-
-                for (double dupAngle : duplicates) {
-                    double dist = angleToDistance.get(dupAngle);
-                    if (dist < minDistance) {
-                        minDistance = dist;
-                        widthwiseAngle = dupAngle;
-                    }
-                }
-
-                double lengthwiseAngle = widthwiseAngle + (Math.PI / 2);
-
-                return normalizeRadToQ1(lengthwiseAngle);
             }
+
+            List<Double> duplicates = new ArrayList<>();
+            double epsilon = 1e-2;
+
+            for (int i = 0; i < angles.size(); i++) {
+                for (int j = i + 1; j < angles.size(); j++) {
+                    if (Math.abs(angles.get(i) - angles.get(j)) < epsilon && !duplicates.contains(angles.get(i))) {
+                        duplicates.add(angles.get(i));
+                    }
+                }
+            }
+
+            double widthwiseAngle = duplicates.get(0);
+            double minDistance = Double.MAX_VALUE;
+
+            for (double dupAngle : duplicates) {
+                double dist = angleToDistance.get(dupAngle);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    widthwiseAngle = dupAngle;
+                }
+            }
+
+            double lengthwiseAngle = widthwiseAngle + (Math.PI / 2);
+
+            return normalizeRadToQ1(lengthwiseAngle);
         }
         return 0;
     }
@@ -840,7 +840,8 @@ public class Robot {
     }
     public double convertDegreesToTwisty(double degrees) {
         double normalized = normalizeToQ2Q3(degrees);
-        return (normalized - 90) / 180;
+        if (normalized == 270) return 0;
+        else return (normalized - 90) / 180;
     }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
