@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.auton.qolActions.qol;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "⬛️🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
+@Autonomous(name = "Sweepy5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Sweepy5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -30,7 +30,7 @@ public class Sweepy5_0 extends LinearOpMode {
 
         drive.enableHeadingCorrection();
         drive.enableTranslationalCorrection(1.0);
-        drive.setCorrectionTimeout(1.0);
+        drive.setCorrectionTimeout(0.5);
 
         bot.grippyClose();
         bot.flippy.setPosition(1);
@@ -57,35 +57,36 @@ public class Sweepy5_0 extends LinearOpMode {
                 .afterTime(0, q.grippyOpen())
                 .afterTime(0.1, q.combine(q.reset(), q.flippy(1)))
                 .afterTime(1.25, q.autoSampleSweeping())
-                .splineToSplineHeading(new Pose2d(-26.4,39.58, Math.toRadians(-140.26)), Math.toRadians(180))
+                .afterTime(1.5, q.sweepyDown())
+                .splineToSplineHeading(new Pose2d(-36.61,47.9, Math.toRadians(-106.99)), Math.toRadians(180))
+                .afterTime(0, q.flippy(0.4))
 
                 //TODO: pickup 1st sample
                 // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
-                .afterTime(0, q.combine(q.sweepyDown(), q.flippy(0.43)))
 
                 //TODO: drop off first sample
 //                .strafeToSplineHeading(new Vector2d(-28.19, 42.58), Math.toRadians(128.5))
-                .turnTo(Math.toRadians(128.5), new TurnConstraints(20, -20, 20))
-                .afterTime(0, q.combine(q.sweepyUp(), q.flippy(0.6)))
-                .splineToSplineHeading(new Pose2d(-36.5, 39.6, Math.toRadians(-140.91)), Math.toRadians(270))
+                .turnTo(Math.toRadians(147.6), new TurnConstraints(20, -20, 20))
+                .afterTime(0, q.flippy(0.65))
+                .splineToSplineHeading(new Pose2d(-45, 45.39, Math.toRadians(-113.26)), Math.toRadians(270))
+                .afterTime(0, q.flippy(0.4))
 
                 //TODO: pick up 2nd sample
                 //.splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
-                .afterTime(0, q.combine(q.sweepyDown(), q.flippy(0.43)))
 
                 //TODO: drop off 2nd sample
 //                .strafeToSplineHeading(new Vector2d(-37.85, 42.6), Math.toRadians(130.4))
-                .turnTo(Math.toRadians(126.4), new TurnConstraints(20, -20, 20))
-                .afterTime(0, q.combine(q.sweepyUp(), q.flippy(0.6)))
-                .splineToSplineHeading(new Pose2d(-45.1, 35, Math.toRadians(-156.46)), Math.toRadians(270))
+                .turnTo(Math.toRadians(139.3), new TurnConstraints(20, -20, 20))
+                .afterTime(0, q.flippy(0.6))
+                .splineToSplineHeading(new Pose2d(-51, 35.01, Math.toRadians(-137.92)), Math.toRadians(270))
+                .afterTime(0, q.flippy(0.42))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
-                .afterTime(0, q.combine(q.sweepyDown(), q.flippy(0.43)))
 
                 //TODO: drop off 3rd sample
-                .strafeToSplineHeading(new Vector2d(-44.2, 41.83), Math.toRadians(128))
-                .afterTime(0, q.combine(q.sweepyUp(), q.flippy(0.6)))
+                .strafeToSplineHeading(new Vector2d(-41.11, 46.26), Math.toRadians(138.31))
+                .afterTime(0, q.combine(q.flippy(0.6), q.sweepyUp()))
 
 
                 .afterTime(0.75, q.specimenPickup())
@@ -139,14 +140,13 @@ public class Sweepy5_0 extends LinearOpMode {
                 .waitSeconds(0)
                 .afterTime(0, q.flippy(0.9))
                 .afterTime(0.4, q.combine(q.speciScoreReset(), q.flippy(0.9)))
-                .afterTime(1.22, q.specimenDeposit())
+                .afterTime(1.37, q.specimenDeposit())
                 //TODO: drop off 4th speci
                 .strafeToConstantHeading(new Vector2d(5, 33.9))
                 .afterTime(0.3, q.specimenDeposit2())
                 .afterTime(0.65, q.grippyOpen())
                 .waitSeconds(0.05)
 
-                // TODO: COMMENT EVERYTHING OUT FROM UNDER HERE AND UNCOMMENT PARK FOR 4+0
 
                 .afterTime(0.75, q.specimenPickup())
 

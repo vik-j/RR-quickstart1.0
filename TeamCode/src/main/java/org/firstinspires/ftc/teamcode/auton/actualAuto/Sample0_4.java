@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 
 @Config
-@Autonomous(name = "🟨🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
+@Autonomous(name = "Cooked", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Sample0_4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

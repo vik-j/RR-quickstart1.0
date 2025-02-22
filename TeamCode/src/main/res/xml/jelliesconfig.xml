@@ -8,10 +8,11 @@
             <goBILDA5202SeriesMotor name="leftFront" port="2" />
             <goBILDA5202SeriesMotor name="rightFront" port="3" />
             <!-- Servos -->
-            <Servo name="flippy" port="0" />
-            <Servo name="claw" port="1" />
-            <Servo name="twist" port="2" />
+            <Servo name="claw" port="0" />
+
+            <Servo name="flippy" port="2" />
             <Servo name="touchy" port="3" />
+            <Servo name = "sweepy" port = "5"/>
             <!-- I2C -->
             <LynxEmbeddedIMU name="imu" bus="0" port="0" />
         </LynxModule>
@@ -20,6 +21,9 @@
             <goBILDA5202SeriesMotor name="slide" port="2" />
             <goBILDA5202SeriesMotor name="flip" port="3" />
             <!-- Servos -->
+            <Servo name = "leftHang" port = "2"/>
+            <Servo name = "rightHang" port = "3"/>
+            <Servo name = "twist" port = "5"/>
             <!-- Analog -->
             <REV_VL53L0X_RANGE_SENSOR name="lookyLeft" bus="0" port="0" />
             <REV_VL53L0X_RANGE_SENSOR name="lookyRight" bus="1" port="0" />

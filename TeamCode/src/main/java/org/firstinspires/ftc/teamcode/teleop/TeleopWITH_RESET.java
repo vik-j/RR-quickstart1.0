@@ -47,9 +47,9 @@ public class TeleopWITH_RESET extends LinearOpMode {
 //            telemetry.addData("intakeRight", bot.intakeRight.getPower());
             telemetry.addData("degrees", bot.flip.getCurrentPosition() / (2048/90.0));
             telemetry.addData("limit", bot.slideExtensionLimit);
-            telemetry.addData("Left Distance", bot.lookyLeft.getDistance(DistanceUnit.INCH));
-            telemetry.addData("Right Distance", bot.lookyRight.getDistance(DistanceUnit.INCH));
-            telemetry.addData("Robot Angle", bot.findAngle());
+//            telemetry.addData("Left Distance", bot.lookyLeft.getDistance(DistanceUnit.INCH));
+//            telemetry.addData("Right Distance", bot.lookyRight.getDistance(DistanceUnit.INCH));
+//            telemetry.addData("Robot Angle", bot.findAngle());
             telemetry.addData("Hang Cheat Code", "A B X Y UP DOWN");
             telemetry.update();
         }

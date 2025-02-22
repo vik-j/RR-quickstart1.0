@@ -56,6 +56,12 @@ public class qol {
     public Action specimenDeposit2() {
         return new InstantAction(() -> bot.specimenDeposit2());
     }
+    public Action hangUp() {
+        return new InstantAction(() -> bot.hangUp());
+    }
+    public Action hangDown() {
+        return new InstantAction(() -> bot.hangDown());
+    }
 
     public Action grippyOpen() {
         return new InstantAction(() -> bot.grippyOpen());

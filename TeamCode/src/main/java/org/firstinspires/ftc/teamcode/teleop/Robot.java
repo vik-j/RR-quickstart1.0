@@ -130,8 +130,8 @@ public class Robot {
         leftHang = hardwareMap.servo.get("leftHang");
         rightHang = hardwareMap.servo.get("rightHang");
 
-        lookyLeft = hardwareMap.get(DistanceSensor.class, "lookyLeft");
-        lookyRight = hardwareMap.get(DistanceSensor.class, "lookyRight");
+//        lookyLeft = hardwareMap.get(DistanceSensor.class, "lookyLeft");
+//        lookyRight = hardwareMap.get(DistanceSensor.class, "lookyRight");
 //        List<DcMotor> motors = Arrays.asList(leftBack, leftFront, rightBack, rightFront, flip, slide);
 
 //        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -254,17 +254,17 @@ public class Robot {
     }
 
     public void autoSamplePickup() {
-        twisty.setPosition(scaleTwisty(0.5));
+        twisty.setPosition(scaleTwisty(0.75));
         flippy.setPosition(scaleFlippy(0.6));
 
         Actions.runBlocking(setPidVals(0, 2300));
     }
     public void autoSampleSweeping() {
-        twisty.setPosition(scaleTwisty(0.45));
-        flippy.setPosition(scaleFlippy(0.6));
-        //TODO: Down is 0.45
+        twisty.setPosition(scaleTwisty(0.75));
+        flippy.setPosition(scaleFlippy(0.65));
+        //TODO: Down is 0.42
 
-        Actions.runBlocking(setPidVals(150, 2300));
+        Actions.runBlocking(setPidVals(220, 2300));
     }
 
     public void sweepyUp() {
@@ -302,7 +302,7 @@ public class Robot {
         Actions.runBlocking(setPidVals(1360, 1130));
     }
     public void badClose() {
-        grippy.setPosition(0.92);
+        grippy.setPosition(0.98);
     }
     public void newSpeci() {
 //        touchyTouch();
@@ -351,7 +351,7 @@ public class Robot {
     public void specimenPickup() {
         touchyRetract();
         flippy.setPosition(scaleFlippy(0.97));
-        Actions.runBlocking(setPidVals(2510,0));
+        Actions.runBlocking(setPidVals(2540,0));
         twisty.setPosition(scaleTwisty(0));
         grippyOpen();
     }
@@ -388,7 +388,7 @@ public class Robot {
     }
     public void samplePivot() {
         flippy.setPosition(scaleFlippy(0.75));
-        twisty.setPosition(scaleTwisty(1));
+        twisty.setPosition(scaleTwisty(0));
         Actions.runBlocking(setPidVals(1900, 0));
     }
     public void sampleSlides() {
@@ -560,7 +560,7 @@ public class Robot {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0, Math.toRadians(270)));
         Actions.runBlocking(new ParallelAction(drive.actionBuilder(new Pose2d(0,0,Math.toRadians(270)))
                 .afterTime(0.1, telemetryPacket -> {
-                    grippyClose();
+                    badClose();
                     return false;
                 })
                 .afterTime(0.7, telemetryPacket -> {
@@ -628,11 +628,11 @@ public class Robot {
         hangUp();
     }
     public void hang2() {
-        slideTarget = 400;
+        slideTarget = 440;
         hangDown();
 
-        Actions.runBlocking(new ParallelAction(new SleepAction(0.2), returnTelePid(0.2)));
-        armTarget = 1710;
+        Actions.runBlocking(new ParallelAction(new SleepAction(0.75), returnTelePid(0.75)));
+        armTarget = 1650;
     }
     public void hang3() {
         armTarget = 1600;
@@ -767,7 +767,7 @@ public class Robot {
         List<Double> angles = new ArrayList<>();
         List<Double> distances = new ArrayList<>();
         if (result != null && result.isValid()) {
-            List<List<Double>> corners = result.getDetectorResults().get(0).getTargetCorners();
+            List<List<Double>> corners = result.getColorResults().get(0).getTargetCorners();
 
             List<Vector2d> poses = new ArrayList<>();
 
@@ -775,51 +775,51 @@ public class Robot {
                 Vector2d vector = new Vector2d(point.get(0), point.get(1));
                 poses.add(vector);
             }
-            if (poses.size() != 4) throw new IllegalArgumentException("Rectangles have 4 corners");
 
-            poses.size();
-            Map<Double, Double> angleToDistance = new HashMap<>();
+            if (poses.size() == 4) {
+                Map<Double, Double> angleToDistance = new HashMap<>();
 
-            for (int i = 0; i < poses.size(); i++) {
-                for (int j = i + 1; j < poses.size(); j++) {
-                    double deltaX = poses.get(j).x - poses.get(i).x;
-                    double deltaY = poses.get(j).y - poses.get(i).y;
-                    double angle = Math.atan2(deltaY, deltaX);
-                    double normalizedAngle = normalizeRadToQ1(angle);
-                    double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                for (int i = 0; i < poses.size(); i++) {
+                    for (int j = i + 1; j < poses.size(); j++) {
+                        double deltaX = poses.get(j).x - poses.get(i).x;
+                        double deltaY = poses.get(j).y - poses.get(i).y;
+                        double angle = Math.atan2(deltaY, deltaX);
+                        double normalizedAngle = normalizeRadToQ1(angle);
+                        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-                    angles.add(normalizedAngle);
-                    distances.add(distance);
+                        angles.add(normalizedAngle);
+                        distances.add(distance);
 
-                    angleToDistance.put(normalizedAngle, distance);
-                }
-            }
-
-            List<Double> duplicates = new ArrayList<>();
-            double epsilon = 1e-2;
-
-            for (int i = 0; i < angles.size(); i++) {
-                for (int j = i + 1; j < angles.size(); j++) {
-                    if (Math.abs(angles.get(i) - angles.get(j)) < epsilon && !duplicates.contains(angles.get(i))) {
-                        duplicates.add(angles.get(i));
+                        angleToDistance.put(normalizedAngle, distance);
                     }
                 }
-            }
 
-            double widthwiseAngle = duplicates.get(0);
-            double minDistance = Double.MAX_VALUE;
+                List<Double> duplicates = new ArrayList<>();
+                double epsilon = 1e-1;
 
-            for (double dupAngle : duplicates) {
-                double dist = angleToDistance.get(dupAngle);
-                if (dist < minDistance) {
-                    minDistance = dist;
-                    widthwiseAngle = dupAngle;
+                for (int i = 0; i < angles.size(); i++) {
+                    for (int j = i + 1; j < angles.size(); j++) {
+                        if (Math.abs(angles.get(i) - angles.get(j)) < epsilon && !duplicates.contains(angles.get(i))) {
+                            duplicates.add(angles.get(i));
+                        }
+                    }
                 }
+
+                double widthwiseAngle = 0;
+                double minDistance = Double.MAX_VALUE;
+
+                for (double dupAngle : duplicates) {
+                    double dist = angleToDistance.get(dupAngle);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        widthwiseAngle = dupAngle;
+                    }
+                }
+
+                double lengthwiseAngle = widthwiseAngle + (Math.PI / 2);
+
+                return normalizeRadToQ1(lengthwiseAngle);
             }
-
-            double lengthwiseAngle = widthwiseAngle + (Math.PI / 2);
-
-            return normalizeRadToQ1(lengthwiseAngle);
         }
         return 0;
     }
@@ -843,6 +843,15 @@ public class Robot {
         if (normalized == 270) return 0;
         else return (normalized - 90) / 180;
     }
+    public void hangReleaseString() {
+        hangAlmostDown();
+        Actions.runBlocking(new ParallelAction(new SleepAction(0.2)));
+        hangUp();
+        Actions.runBlocking(new ParallelAction(new SleepAction(0.2)));
+        hangAlmostDown();
+        Actions.runBlocking(new ParallelAction(new SleepAction(0.2)));
+        hangUp();
+    }
     public void scoringMacro(Gamepad gamepad1, Gamepad gamepad2) {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         if (gamepad2.left_trigger > 0) {
@@ -856,7 +865,7 @@ public class Robot {
             sweepyUp();
         }
         if (gamepad1.dpad_up) {
-            twisty.setPosition(convertDegreesToTwisty(getSampleAngle()));
+            twisty.setPosition(convertDegreesToTwisty(convertToClawDegree(getSampleAngle())));
         }
         if (gamepad1.right_trigger > 0) {
             flippy.setPosition(scaleFlippy(1));
@@ -880,6 +889,7 @@ public class Robot {
         if (gamepad2.y && !(gamepad2.right_trigger > 0)) {
             touchyRetract();
             rightBumperCounter = 0;
+            twisty.setPosition(scaleTwisty(0));
             flippy.setPosition(scaleFlippy(0.7));
             armTarget = 1900;
 
@@ -894,6 +904,7 @@ public class Robot {
         if (gamepad2.right_bumper && !(gamepad2.right_trigger > 0)) flippy.setPosition(scaleFlippy(0.4));
         if (gamepad1.b) {
             touchyRetract();
+            grippyClose();
             flippy.setPosition(scaleFlippy(0.8));
             armTarget = 1600;
             Actions.runBlocking(new ParallelAction(new SleepAction(0.55), returnTelePid(0.55)));
@@ -909,7 +920,7 @@ public class Robot {
         }
         if (gamepad1.x) {
 //            touchyTouch();
-            grippyClose();
+            badClose();
 
 //            flippy.setPosition(0.718);
 //            twisty.setPosition(1);
@@ -1030,8 +1041,8 @@ public class Robot {
         else if (gamepad.dpad_right) grippy.setPosition(1);
     }
     public void twistyControl(Gamepad gamepad) {
-        if (gamepad.dpad_up) twisty.setPosition(0);
-        else if (gamepad.dpad_down) twisty.setPosition(0.5);
+        if (gamepad.dpad_up && !(gamepad.left_trigger > 0)) twisty.setPosition(0);
+        else if (gamepad.dpad_down && !(gamepad.left_trigger > 0)) twisty.setPosition(0.5);
     }
     public void hangControl(Gamepad gamepad) {
         if (gamepad.left_trigger > 0) {
@@ -1136,7 +1147,7 @@ public class Robot {
 
     public double scaleTwisty(double unscaled) {
 //        return 0.35733*(unscaled*unscaled) + 0.312667*unscaled;
-        return 1 - (-0.533333*(unscaled*unscaled) - 0.466667*unscaled + 1);
+        return (-0.533333*(unscaled*unscaled) - 0.466667*unscaled + 1);
     }
     public double scaleFlippy(double unscaled) {
         return 1.81818*unscaled - 0.727272;
