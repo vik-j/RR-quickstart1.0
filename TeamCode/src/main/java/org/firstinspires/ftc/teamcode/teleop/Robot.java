@@ -259,6 +259,14 @@ public class Robot {
 
         Actions.runBlocking(setPidVals(0, 2300));
     }
+
+    public void autoSamplePickup2() {
+        twisty.setPosition(scaleTwisty(0.75));
+        flippy.setPosition(scaleFlippy(0.6));
+
+        Actions.runBlocking(setPidVals(0, 1800));
+    }
+
     public void autoSampleSweeping() {
         twisty.setPosition(scaleTwisty(0.75));
         flippy.setPosition(scaleFlippy(0.65));
