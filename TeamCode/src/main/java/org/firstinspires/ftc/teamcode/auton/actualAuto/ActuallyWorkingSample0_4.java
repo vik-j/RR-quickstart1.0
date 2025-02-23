@@ -114,8 +114,8 @@ public class ActuallyWorkingSample0_4 extends LinearOpMode {
                 .afterTime(1, q.hangDown())
                 .afterTime(1.2, q.hangUp())
                 .waitSeconds(1.4)
-                .afterTime(0, q.combine(q.flippy(1), q.arm(1100, 2000)))
                 .splineToLinearHeading(new Pose2d(36, 12.5, Math.toRadians(180)), Math.toRadians((180)))
+                .afterTime(0, q.combine(q.flippy(1), q.arm(1100, 2000)))
                 .splineToLinearHeading(new Pose2d(15, 12.5, Math.toRadians(180)), Math.toRadians((180)))
 
                 .build();

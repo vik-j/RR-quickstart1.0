@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auton.actualAuto;
+package org.firstinspires.ftc.teamcode.auton.compAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.auton.qolActions.qol;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "⬛️🐖", group = "Autonomous", preselectTeleOp = "TeleopV2")
-public class NoSweepySpeci5_0 extends LinearOpMode {
+@Autonomous(name = "Gold1Blue5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+public class Gold1Blue5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-15, 61.5, Math.toRadians(270));
@@ -35,7 +35,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
         //TODO: AUTO TUNED TO OLD BLUE SIDE AT HOME FIELD
         //TODO: Positive offset is amount pushed away from sub
 
-        double wallOffset = 0.6;
+        double wallOffset = Robot.CompFieldOffsets.Gold1Blue;
 
         //TODO: IDEAL DISTANCE TO BAR FROM FRONT OF ROBOT: 32.56 inches
         //TODO: Diag to wall 49 inch. bar at sub bottom 2 inch tall
