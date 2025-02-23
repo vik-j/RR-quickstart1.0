@@ -35,7 +35,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
         //TODO: AUTO TUNED TO OLD BLUE SIDE AT HOME FIELD
         //TODO: Positive offset is amount pushed away from sub
 
-        double wallOffset = 0.2716666596;
+        double wallOffset = 0.1016666596;
 
         //TODO: IDEAL DISTANCE TO BAR FROM FRONT OF ROBOT: 32.56 inches
         //TODO: Diag to wall 49 inch. bar at sub bottom 2 inch tall

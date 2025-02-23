@@ -66,6 +66,8 @@ public class Robot {
     public double epsilon = 0.1;
     public boolean endPID = false;
 
+    public static double robotX = 0, robotY = 0, robotH = 0;
+
     public PIDCoefficients x = new PIDCoefficients(0,0,0);
     public PIDCoefficients h = new PIDCoefficients(0,0,0);
     public double lateralMultiplier = 1;
@@ -435,6 +437,12 @@ public class Robot {
         flippy.setPosition(scaleFlippy(0.4));
         twisty.setPosition(scaleTwisty(0));
     }
+    public void newNewSpeciScoreTELE() {
+        flippy.setPosition(scaleFlippy(0.4));
+
+        armTarget = 1250;
+        slideTarget = 2700;
+    }
     public ArmPosition retract() {
         return new ArmPosition(0,0,0,0.97,0,1);
     }
@@ -563,6 +571,35 @@ public class Robot {
 
     }
 
+    public void newSpeciScoreAutomated() {
+        endPID = false;
+        drive = new MecanumDrive(hardwareMap, new Pose2d(0,0, Math.toRadians(270)));
+        Actions.runBlocking(new ParallelAction(drive.actionBuilder(new Pose2d(0,0,Math.toRadians(270)))
+                .afterTime(0.1, telemetryPacket -> {
+                    grippyClose();
+                    return false;
+                })
+                .afterTime(0.7, telemetryPacket -> {
+                    flippy.setPosition(scaleFlippy(0.8));
+                    return false;
+                })
+                .waitSeconds(0.15)
+                .afterTime(0.8, telemetryPacket -> {
+                    newNewSpeciScoreTELE();
+                    return false;
+                })
+                //TODO: score 2nd speci
+                .splineToConstantHeading(new Vector2d(-4 + 35.52 + 4, 34.79 - 54), Math.toRadians(270))
+                .afterTime(0, telemetryPacket -> {endPID = true; return false;})
+                .build(), returnCancelableTelePID()));
+    }
+    public void newSpeciPickupAutomated() {
+        endPID = false;
+        Actions.runBlocking(new ParallelAction(drive.actionBuilder(new Pose2d(-4 - 35.52, 34.79 - 54, Math.toRadians(270)))
+                .splineToConstantHeading(new Vector2d(0, -4), Math.toRadians(90))
+                .afterTime(0, telemetryPacket -> {endPID = true; return false;})
+                .build(), returnCancelableTelePID()));
+    }
     public void speciScoreAutomated() {
         endPID = false;
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0, Math.toRadians(270)));
@@ -636,7 +673,7 @@ public class Robot {
         hangUp();
     }
     public void hang2() {
-        slideTarget = 530;
+        slideTarget = 625;
         hangDown();
 
         Actions.runBlocking(new ParallelAction(new SleepAction(0.75), returnTelePid(0.75)));
@@ -679,6 +716,12 @@ public class Robot {
         }
         else if (gamepad2.dpad_down && gamepad2.right_trigger > 0) {
             hang6();
+        }
+        else if (gamepad2.dpad_left && gamepad2.right_trigger > 0) {
+            slideTarget += 10;
+        }
+        else if (gamepad2.dpad_right && gamepad2.right_trigger > 0) {
+            slideTarget -= 10;
         }
     }
     public void hangAlmostDown() {
@@ -898,6 +941,12 @@ public class Robot {
         GamepadEx gamepad1Ex = new GamepadEx(gamepad1);
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+//        if (gamepad1.right_bumper) {
+//            newSpeciScoreAutomated();
+//        }
+//        if (gamepad1.left_bumper) {
+//            newSpeciPickupAutomated();
+//        }
         if (gamepad2.left_trigger > 0) {
             hangAlmostDown();
             Actions.runBlocking(new ParallelAction(new SleepAction(0.2), returnTelePid(0.2), returnTeleDriving(0.2, gamepad1)));
@@ -934,7 +983,7 @@ public class Robot {
             rightBumperCounter = 0;
             twisty.setPosition(scaleTwisty(0));
             flippy.setPosition(scaleFlippy(0.828));
-            armTarget = 1985;
+            armTarget = 1940;
 
             while (Math.abs(armTarget - flip.getCurrentPosition()) > 1000) {
                 TeleopPID(gamepad2);
@@ -1051,6 +1100,9 @@ public class Robot {
             }
         }
         gamepad1Ex.readButtons();
+        robotX = drive.pose.position.x;
+        robotY = drive.pose.position.y;
+        robotH = drive.pose.heading.toDouble();
     }
     /*
     public Action followPathInstant(Follower follower, PathChain path) {
@@ -1079,17 +1131,17 @@ public class Robot {
     */
      
     public void clawControl(Gamepad gamepad) {
-        if (gamepad.dpad_left && flipPos < 1800 && slidePos < 4400) grippy.setPosition(0);
-        else if (gamepad.dpad_left && flipPos > 1800 && slidePos > 4400) {
+        if (gamepad.dpad_left && flipPos < 1800 && slidePos < 4400 && !(gamepad.left_trigger > 0)) grippy.setPosition(0);
+        else if (gamepad.dpad_left && flipPos > 1800 && slidePos > 4400 && !(gamepad.left_trigger > 0)) {
             grippyOpen();
             Actions.runBlocking(new ParallelAction(new SleepAction(0.2), returnTeleDriving(0.2, gamepad1), returnTelePid(0.2)));
             flippy.setPosition(scaleFlippy(0.4));
         }
-        else if (gamepad.dpad_left && slidePos < 1000) {
+        else if (gamepad.dpad_left && slidePos < 1000 && !(gamepad.left_trigger > 0)) {
             grippyOpen();
         }
 
-        else if (gamepad.dpad_right) grippy.setPosition(1);
+        else if (gamepad.dpad_right && !(gamepad.left_trigger > 0)) grippy.setPosition(1);
     }
     public void twistyControl(Gamepad gamepad) {
         if (gamepad.dpad_up && !(gamepad.left_trigger > 0)) twisty.setPosition(0);

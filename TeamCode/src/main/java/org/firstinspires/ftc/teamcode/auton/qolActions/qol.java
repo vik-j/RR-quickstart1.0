@@ -41,7 +41,8 @@ public class qol {
     public Action autoSamplePickup() {
         return new InstantAction(() -> bot.autoSamplePickup());
     }
-    public Action autoSamplePickup2() {return new InstantAction(() -> bot.autoSamplePickup2());
+    public Action autoSamplePickup2() {
+        return new InstantAction(() -> bot.autoSamplePickup2());
     }
     public Action autoSampleSweeping() {
         return new InstantAction(() -> bot.autoSampleSweeping());
