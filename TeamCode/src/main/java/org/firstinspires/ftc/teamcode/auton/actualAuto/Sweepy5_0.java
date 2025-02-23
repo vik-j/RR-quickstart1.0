@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TurnConstraints;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.auton.qolActions.qol;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
+@Disabled
 @Config
 @Autonomous(name = "Sweepy5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Sweepy5_0 extends LinearOpMode {
