@@ -23,6 +23,9 @@ public class qol {
         return new SequentialAction(actions);
     }
 
+    public Action newAutoSpeci() {
+        return new InstantAction(() -> bot.newAutoSpeci());
+    }
     public Action samplePivot() {
         return new InstantAction(() -> bot.samplePivot());
     }

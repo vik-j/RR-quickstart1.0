@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.auton.qolActions.qol;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @Config
-@Autonomous(name = "Silicon1Red5_0", group = "Autonomous", preselectTeleOp = "TeleopV2")
+@Autonomous(name = "ThisOne", group = "Autonomous", preselectTeleOp = "TeleopV2")
 public class Silicon1Red5_0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,7 +35,7 @@ public class Silicon1Red5_0 extends LinearOpMode {
         //TODO: AUTO TUNED TO OLD BLUE SIDE AT HOME FIELD
         //TODO: Positive offset is amount pushed away from sub
 
-        double wallOffset = Robot.CompFieldOffsets.Silicon1Red;
+        double wallOffset = -0.02;
 
         //TODO: IDEAL DISTANCE TO BAR FROM FRONT OF ROBOT: 32.56 inches
         //TODO: Diag to wall 49 inch. bar at sub bottom 2 inch tall
@@ -74,7 +74,7 @@ public class Silicon1Red5_0 extends LinearOpMode {
                 .afterTime(0.2, q.flippy(0.4))
                 .afterTime(0.42, q.grippyClose())
                 .afterTime(0.9, q.flippy(0.6))
-                .waitSeconds(0.3)
+                .waitSeconds(0.5)
 
                 //TODO: drop off first sample
                 .turnTo(Math.toRadians(123.5), new TurnConstraints(20, -20, 20))
@@ -88,7 +88,7 @@ public class Silicon1Red5_0 extends LinearOpMode {
                 .afterTime(0.9, q.flippy(0.6))
 
                 //TODO: drop off 2nd sample
-                .waitSeconds(0.35)
+                .waitSeconds(0.55)
                 .turnTo(Math.toRadians(121.95), new TurnConstraints(20, -20, 20))
                 .afterTime(0, q.combine(q.grippyOpen(), new InstantAction(() -> drive.setCorrectionTimeout(1.25))))
                 .splineToSplineHeading(new Pose2d(-46.85, 39.5, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -99,7 +99,7 @@ public class Silicon1Red5_0 extends LinearOpMode {
                 .afterTime(0.52, q.combine(q.grippyClose(), new InstantAction(() -> drive.setCorrectionTimeout(1))))
                 .afterTime(1.05, q.combine(q.twisty(0.75), q.flippy(0.6)))
                 .afterTime(1.3, q.combine(q.reset(), q.flippy(0.6)))
-                .waitSeconds(0.45)
+                .waitSeconds(0.65)
                 .afterTime(0.6, q.arm(0, 800))
 
                 //TODO: drop off 3rd sample
@@ -108,7 +108,7 @@ public class Silicon1Red5_0 extends LinearOpMode {
 
 
                 .afterTime(0.75, q.specimenPickup())
-                .waitSeconds(0.3)
+                .waitSeconds(0.5)
                 //TODO: pickup 2nd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 47), Math.toRadians(-90))
                 .waitSeconds(0.1)
@@ -188,10 +188,10 @@ public class Silicon1Red5_0 extends LinearOpMode {
                 .afterTime(0.2, q.hangAlmostDown())
                 .afterTime(0.4, q.hangUp())
 
-                .afterTime(2, q.reset())
+//                .afterTime(2, q.reset())
 
-                //TODO: park
-                .strafeToConstantHeading(new Vector2d(-60, 60), new TranslationalVelConstraint(120), new ProfileAccelConstraint(-120, 120))
+//                //TODO: park
+//                .strafeToConstantHeading(new Vector2d(-60, 60), new TranslationalVelConstraint(120), new ProfileAccelConstraint(-120, 120))
 
 //                .waitSeconds(0.3)
 //                .strafeTo(new Vector2d(0, 49))

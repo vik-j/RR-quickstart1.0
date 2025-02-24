@@ -119,7 +119,7 @@ public class Robot {
 
         public static double Silicon1Red = 0.8108696933;
         public static double Silicon1Blue = 0.5605981613;
-        public static double Silicon2Red = 0.7808369606;
+        public static double Silicon2Red = 0.4808369606;
         public static double Silicon2Blue = 0.7508042686;
     }
     public static Action driveAction(MecanumDrive drive, Pose2d beginPose, qol q, double wallOffset) {
@@ -127,25 +127,25 @@ public class Robot {
                 //TODO: 1st speci
 
                 .afterTime(0.01, q.firstSpeci())
-                .strafeToConstantHeading(new Vector2d(-8.5, 34.4 + wallOffset))
+                .strafeToConstantHeading(new Vector2d(-8.5, 34.65 + wallOffset))
                 .afterTime(0, q.firstSpeci2())
                 .waitSeconds(0.2)
                 .afterTime(0, q.grippyOpen())
                 .afterTime(0.1, q.combine(q.reset(), q.flippy(1)))
                 .afterTime(1, q.autoSamplePickup())
-                .splineToSplineHeading(new Pose2d(-28.1,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-27.85,41.25, Math.toRadians(-145.5)), Math.toRadians(180))
 
                 //TODO: pickup 1st sample
                 // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
                 .afterTime(0.2, q.flippy(0.4))
                 .afterTime(0.42, q.grippyClose())
                 .afterTime(0.9, q.flippy(0.6))
-                .waitSeconds(0.3)
+                .waitSeconds(0.5)
 
                 //TODO: drop off first sample
                 .turnTo(Math.toRadians(123.5), new TurnConstraints(20, -20, 20))
                 .afterTime(0, q.grippyOpen())
-                .splineToSplineHeading(new Pose2d(-38.1, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-38.1, 41.28, Math.toRadians(-146.44)), Math.toRadians(270))
 
                 //TODO: pick up 2nd sample
                 //.splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
@@ -154,10 +154,10 @@ public class Robot {
                 .afterTime(0.9, q.flippy(0.6))
 
                 //TODO: drop off 2nd sample
-                .waitSeconds(0.35)
+                .waitSeconds(0.55)
                 .turnTo(Math.toRadians(121.95), new TurnConstraints(20, -20, 20))
                 .afterTime(0, q.combine(q.grippyOpen(), new InstantAction(() -> drive.setCorrectionTimeout(1.25))))
-                .splineToSplineHeading(new Pose2d(-46.85, 39.5, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.85, 41.3, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -165,16 +165,16 @@ public class Robot {
                 .afterTime(0.52, q.combine(q.grippyClose(), new InstantAction(() -> drive.setCorrectionTimeout(1))))
                 .afterTime(1.05, q.combine(q.twisty(0.75), q.flippy(0.6)))
                 .afterTime(1.3, q.combine(q.reset(), q.flippy(0.6)))
-                .waitSeconds(0.45)
+                .waitSeconds(0.65)
                 .afterTime(0.6, q.arm(0, 800))
 
                 //TODO: drop off 3rd sample
-                .strafeToSplineHeading(new Vector2d(-39.2, 48.193), Math.toRadians(120.3))
+                .strafeToSplineHeading(new Vector2d(-38.2, 48.193), Math.toRadians(120.3))
                 .afterTime(0, q.grippyOpen())
 
 
                 .afterTime(0.75, q.specimenPickup())
-                .waitSeconds(0.3)
+                .waitSeconds(0.5)
                 //TODO: pickup 2nd speci
                 .strafeToLinearHeading(new Vector2d(-35.52, 47), Math.toRadians(-90))
                 .waitSeconds(0.1)
@@ -186,7 +186,7 @@ public class Robot {
                 .afterTime(0.3, q.combine(q.speciScoreReset(), q.flippy(0.9)))
                 .afterTime(1.05, q.specimenDeposit())
                 //TODO: score 2nd speci
-                .strafeToConstantHeading(new Vector2d(-3, 34.4 + wallOffset))
+                .strafeToConstantHeading(new Vector2d(-3, 35.15 + wallOffset))
 
                 .afterTime(0.2, q.specimenDeposit2())
                 .afterTime(0.5, q.grippyOpen())
@@ -206,11 +206,11 @@ public class Robot {
                 .afterTime(1.2, q.specimenDeposit())
 
                 //TODO: score 3rd speci
-                .strafeToConstantHeading(new Vector2d(0, 34.14 + wallOffset))
+                .strafeToConstantHeading(new Vector2d(0, 34.18 + wallOffset))
 
                 .afterTime(0.2, q.specimenDeposit2())
                 .afterTime(0.45, q.grippyOpen())
-                .waitSeconds(0)
+                .waitSeconds(0.1)
 
 
                 .afterTime(0.75, q.specimenPickup())
@@ -226,10 +226,10 @@ public class Robot {
                 .afterTime(0.4, q.combine(q.speciScoreReset(), q.flippy(0.9)))
                 .afterTime(1.37, q.specimenDeposit())
                 //TODO: drop off 4th speci
-                .strafeToConstantHeading(new Vector2d(5, 33.9 + wallOffset))
+                .strafeToConstantHeading(new Vector2d(5, 34.32 + wallOffset))
                 .afterTime(0.3, q.specimenDeposit2())
                 .afterTime(0.65, q.grippyOpen())
-                .waitSeconds(0.05)
+                .waitSeconds(0.12)
 
 
                 .afterTime(0.75, q.specimenPickup())
@@ -246,7 +246,7 @@ public class Robot {
                 .afterTime(0.4, q.combine(q.speciScoreReset(), q.flippy(0.9)))
                 .afterTime(1.32, q.specimenDeposit())
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(7, 33.2 + wallOffset))
+                .strafeToConstantHeading(new Vector2d(7, 34 + wallOffset))
                 .afterTime(0.15, q.specimenDeposit2())
                 .afterTime(0.47 , q.grippyOpen())
                 .waitSeconds(0.2)
@@ -254,10 +254,10 @@ public class Robot {
                 .afterTime(0.2, q.hangAlmostDown())
                 .afterTime(0.4, q.hangUp())
 
-                .afterTime(2, q.reset())
+//                .afterTime(2, q.reset())
 
                 //TODO: park
-                .strafeToConstantHeading(new Vector2d(-60, 60), new TranslationalVelConstraint(120), new ProfileAccelConstraint(-120, 120))
+//                .strafeToConstantHeading(new Vector2d(-60, 60), new TranslationalVelConstraint(120), new ProfileAccelConstraint(-120, 120))
 
 
                 .build();
@@ -439,6 +439,11 @@ public class Robot {
         flippy.setPosition(scaleFlippy(0.6));
 
         Actions.runBlocking(setPidVals(0, 1800));
+    }
+    public void newAutoSpeci() {
+        flippy.setPosition(scaleFlippy(0.4));
+
+        Actions.runBlocking(setPidVals(1250, 2700));
     }
 
     public void autoSampleSweeping() {

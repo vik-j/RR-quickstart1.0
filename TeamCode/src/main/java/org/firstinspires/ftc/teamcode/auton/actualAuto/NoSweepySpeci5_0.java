@@ -58,16 +58,14 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
         //TODO: 13.38 V
 
         Action driveAction = drive.actionBuilder(beginPose)
-                //TODO: 1st speci
-
                 .afterTime(0.01, q.firstSpeci())
                 .strafeToConstantHeading(new Vector2d(-8.5, 34.4 + wallOffset))
                 .afterTime(0, q.firstSpeci2())
                 .waitSeconds(0.2)
                 .afterTime(0, q.grippyOpen())
                 .afterTime(0.1, q.combine(q.reset(), q.flippy(1)))
-                .afterTime(1.25, q.autoSamplePickup())
-                .splineToSplineHeading(new Pose2d(-27.8,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
+                .afterTime(1, q.autoSamplePickup())
+                .splineToSplineHeading(new Pose2d(-27.85,40.22, Math.toRadians(-145.5)), Math.toRadians(180))
 
                 //TODO: pickup 1st sample
                 // .splineToSplineHeading(new Pose2d(-28.07,39.92, Math.toRadians(-145.5)), Math.toRadians(180))
@@ -79,7 +77,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 //TODO: drop off first sample
                 .turnTo(Math.toRadians(123.5), new TurnConstraints(20, -20, 20))
                 .afterTime(0, q.grippyOpen())
-                .splineToSplineHeading(new Pose2d(-38.25, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-38.1, 40.78, Math.toRadians(-146.44)), Math.toRadians(270))
 
                 //TODO: pick up 2nd sample
                 //.splineToSplineHeading(new Pose2d(-39.15, 40.48, Math.toRadians(-146.44)), Math.toRadians(270))
@@ -91,7 +89,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 .waitSeconds(0.35)
                 .turnTo(Math.toRadians(121.95), new TurnConstraints(20, -20, 20))
                 .afterTime(0, q.combine(q.grippyOpen(), new InstantAction(() -> drive.setCorrectionTimeout(1.25))))
-                .splineToSplineHeading(new Pose2d(-46.85, 39.5, Math.toRadians(-151.7)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-46.85, 39.8, Math.toRadians(-151.7)), Math.toRadians(270))
 
                 //TODO: pick up 3rd sample
                 // .splineToSplineHeading(new Pose2d(-45.97, 39.097, Math.toRadians(-151.7)), Math.toRadians(270))
@@ -118,11 +116,12 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 .waitSeconds(0.15)
                 .afterTime(0, q.flippy(0.9))
                 .afterTime(0.3, q.combine(q.speciScoreReset(), q.flippy(0.9)))
-                .afterTime(1.05, q.specimenDeposit())
+//                .afterTime(1.05, q.specimenDeposit())
+                .afterTime(0.7, q.newAutoSpeci())
                 //TODO: score 2nd speci
                 .strafeToConstantHeading(new Vector2d(-3, 34.4 + wallOffset))
 
-                .afterTime(0.2, q.specimenDeposit2())
+//                .afterTime(0.2, q.specimenDeposit2())
                 .afterTime(0.5, q.grippyOpen())
                 .waitSeconds(0.1)
 
@@ -137,12 +136,13 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 .waitSeconds(0)
                 .afterTime(0, q.flippy(0.9))
                 .afterTime(0.35, q.combine(q.speciScoreReset(), q.flippy(0.9)))
-                .afterTime(1.2, q.specimenDeposit())
+//                .afterTime(1.2, q.specimenDeposit())
+                .afterTime(0.8, q.newAutoSpeci())
 
                 //TODO: score 3rd speci
                 .strafeToConstantHeading(new Vector2d(0, 34.14 + wallOffset))
 
-                .afterTime(0.2, q.specimenDeposit2())
+//                .afterTime(0.2, q.specimenDeposit2())
                 .afterTime(0.45, q.grippyOpen())
                 .waitSeconds(0)
 
@@ -158,10 +158,11 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 .waitSeconds(0)
                 .afterTime(0, q.flippy(0.9))
                 .afterTime(0.4, q.combine(q.speciScoreReset(), q.flippy(0.9)))
-                .afterTime(1.37, q.specimenDeposit())
+//                .afterTime(1.37, q.specimenDeposit())
+                .afterTime(1, q.newAutoSpeci())
                 //TODO: drop off 4th speci
                 .strafeToConstantHeading(new Vector2d(5, 33.9 + wallOffset))
-                .afterTime(0.3, q.specimenDeposit2())
+//                .afterTime(0.3, q.specimenDeposit2())
                 .afterTime(0.65, q.grippyOpen())
                 .waitSeconds(0.05)
 
@@ -178,10 +179,11 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
                 .waitSeconds(0)
                 .afterTime(0, q.flippy(0.9))
                 .afterTime(0.4, q.combine(q.speciScoreReset(), q.flippy(0.9)))
-                .afterTime(1.32, q.specimenDeposit())
+//                .afterTime(1.32, q.specimenDeposit())
+                .afterTime(1, q.newAutoSpeci())
                 //TODO: drop off 5th speci
-                .strafeToConstantHeading(new Vector2d(7, 32.7 + wallOffset))
-                .afterTime(0.15, q.specimenDeposit2())
+                .strafeToConstantHeading(new Vector2d(7, 33.5 + wallOffset))
+//                .afterTime(0.15, q.specimenDeposit2())
                 .afterTime(0.47 , q.grippyOpen())
                 .waitSeconds(0.2)
                 .afterTime(0, q.hangUp())
@@ -206,7 +208,7 @@ public class NoSweepySpeci5_0 extends LinearOpMode {
 
         Actions.runBlocking(
                 new ParallelAction(
-                        Robot.driveAction(drive, beginPose, q, wallOffset), bot.getPIDAction()
+                        driveAction, bot.getPIDAction()
                 )
         );
     }
